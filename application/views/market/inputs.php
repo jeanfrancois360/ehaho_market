@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
-	<link rel="icon" href="assets/images/favicon.ico">
+	<link rel="icon" href="assets/images/logo-login.ico">
 
 	<!-- CSS
 	============================================ -->
@@ -93,7 +93,7 @@
 						<!-- logo -->
 						<div class="logo mt-15 mb-15">
 							<a href="index.html">
-								<img src="assets/images/logo.png" class="img-fluid" alt="">
+								<img src="assets/images/logo-login.png" class="img-fluid" alt="">
 							</a>
 						</div>
 						<!-- end of logo -->
