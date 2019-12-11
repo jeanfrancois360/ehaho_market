@@ -12,9 +12,9 @@ class Food_market extends CI_Controller
     {
         $this->load->view('market/index.php');
     }
-    public function shop()
+    public function food_shop()
     {
-        $this->load->view('market/shop.php');
+        $this->load->view('market/food_shop.php');
     }
     public function cart()
     {

@@ -49,13 +49,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Market';
+$route['default_controller'] = 'Food_market';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
-$route['market'] = 'market';
+$route['market'] = 'food_market';
 $route['inputs'] = 'Inputs_market/inputs';
-$route['shop'] = 'Food_market/shop';
-$route['cart'] = 'market/cart';
-$route['wishlist'] = 'market/wishlist';
-$route['compare'] = 'market/compare';
-$route['checkout'] = 'market/checkout';
+$route['shop'] = 'food_market/food_shop';
+$route['cart'] = 'food_market/cart';
+$route['wishlist'] = 'food_market/wishlist';
+$route['compare'] = 'food_market/compare';
+$route['checkout'] = 'food_market/checkout';
