@@ -93,7 +93,7 @@
 						<!-- logo -->
 						<div class="logo mt-15 mb-15">
 							<a href="index.html">
-								<img src="assets/images/logo-login.png" class="img-fluid" style="height:110px !important;" alt="">
+								<img src="assets/images/logo-login.png" class="img-fluid" style="max-height:110px !important;" alt="">
 							</a>
 						</div>
 						<!-- end of logo -->
