@@ -8,8 +8,21 @@ class Inputs_market extends CI_Controller{
       $this->load->helper('url');
     }
     public function inputs(){
-        
+      $this->load->view('market/inputs_shop.php');
     }
+    public function checkout(){
+        $this->load->view('market/inputs_checkout.php');
+    }
+    public function cart(){
+        $this->load->view('market/inputs_cart.php');
+    }
+    public function wishlist(){
+        $this->load->view('market/inputs_wishlist.php');
+    }
+    public function compare(){
+        $this->load->view('market/inputs_compare.php');
+    }
+  
 
 }
 ?>

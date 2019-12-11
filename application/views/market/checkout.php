@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
-	<link rel="icon" href="assets/images/favicon.ico">
+	<link rel="icon" href="assets/images/logo-login.ico">
 
 	<!-- CSS
 	============================================ -->
@@ -94,7 +94,7 @@
 						<!-- logo -->
 						<div class="logo mt-15 mb-15">
 							<a href="index.html">
-								<img src="assets/images/logo.png" class="img-fluid" alt="">
+								<img src="assets/images/logo-login.png" class="img-fluid" style="max-height:110px !important;" alt="">
 							</a>
 						</div>
 						<!-- end of logo -->
@@ -126,9 +126,9 @@
 										<span class="icon_bag_alt"></span>
 									</div>
 									<div class="cart-info d-inline-block">
-										<p>Shopping Cart 
+										<p>Shopping Cart
 											<span>
-												0 items - $0.00 
+												0 items - $0.00
 											</span>
 										</p>
 									</div>
@@ -215,7 +215,7 @@
 													<li><a href="single-product-sticky-left.html">Sticky Left</a></li>
 													<li><a href="single-product-sticky-right.html">Sticky Right</a></li>
 													<li><a href="single-product-slider-box.html">Slider Box</a></li>
-													
+
 												</ul>
 											</li>
 										</ul>
@@ -227,7 +227,7 @@
 													<li><a href="cart.html">Cart</a></li>
 													<li><a href="checkout.html">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
-													
+
 												</ul>
 											</li>
 											<li><a href="#">Column Two</a>
@@ -282,7 +282,7 @@
     <!--=============================================
     =            breadcrumb area         =
     =============================================-->
-    
+
     <div class="breadcrumb-area mb-50">
         <div class="container">
             <div class="row">
@@ -297,61 +297,61 @@
             </div>
         </div>
     </div>
-    
+
 	<!--=====  End of breadcrumb area  ======-->
 
 	<!--=============================================
 	=            Checkout page content         =
 	=============================================-->
-	
+
 	<div class="page-section section mb-50">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					
+
 					<!-- Checkout Form s-->
 					<form action="#" class="checkout-form">
 						<div class="row row-40">
-							
+
 							<div class="col-lg-7 mb-20">
-								
+
 								<!-- Billing Address -->
 								<div id="billing-form" class="mb-40">
 									<h4 class="checkout-title">Billing Address</h4>
-	
+
 									<div class="row">
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>First Name*</label>
 											<input type="text" placeholder="First Name">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Last Name*</label>
 											<input type="text" placeholder="Last Name">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Email Address*</label>
 											<input type="email" placeholder="Email Address">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Phone no*</label>
 											<input type="text" placeholder="Phone number">
 										</div>
-	
+
 										<div class="col-12 mb-20">
 											<label>Company Name</label>
 											<input type="text" placeholder="Company Name">
 										</div>
-	
+
 										<div class="col-12 mb-20">
 											<label>Address*</label>
 											<input type="text" placeholder="Address line 1">
 											<input type="text" placeholder="Address line 2">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Country*</label>
 											<select class="nice-select">
@@ -362,22 +362,22 @@
 												<option>Japan</option>
 											</select>
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Town/City*</label>
 											<input type="text" placeholder="Town/City">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>State*</label>
 											<input type="text" placeholder="State">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Zip Code*</label>
 											<input type="text" placeholder="Zip Code">
 										</div>
-	
+
 										<div class="col-12 mb-20">
 											<div class="check-box">
 												<input type="checkbox" id="create_account">
@@ -388,48 +388,48 @@
 												<label for="shiping_address">Ship to Different Address</label>
 											</div>
 										</div>
-	
+
 									</div>
-	
+
 								</div>
-								
+
 								<!-- Shipping Address -->
 								<div id="shipping-form" class="mb-40">
 									<h4 class="checkout-title">Shipping Address</h4>
-	
+
 									<div class="row">
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>First Name*</label>
 											<input type="text" placeholder="First Name">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Last Name*</label>
 											<input type="text" placeholder="Last Name">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Email Address*</label>
 											<input type="email" placeholder="Email Address">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Phone no*</label>
 											<input type="text" placeholder="Phone number">
 										</div>
-	
+
 										<div class="col-12 mb-20">
 											<label>Company Name</label>
 											<input type="text" placeholder="Company Name">
 										</div>
-	
+
 										<div class="col-12 mb-20">
 											<label>Address*</label>
 											<input type="text" placeholder="Address line 1">
 											<input type="text" placeholder="Address line 2">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Country*</label>
 											<select class="nice-select">
@@ -440,144 +440,144 @@
 												<option>Japan</option>
 											</select>
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Town/City*</label>
 											<input type="text" placeholder="Town/City">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>State*</label>
 											<input type="text" placeholder="State">
 										</div>
-	
+
 										<div class="col-md-6 col-12 mb-20">
 											<label>Zip Code*</label>
 											<input type="text" placeholder="Zip Code">
 										</div>
-	
+
 									</div>
-	
+
 								</div>
-								
+
 							</div>
-							
+
 							<div class="col-lg-5">
 								<div class="row">
-									
+
 									<!-- Cart Total -->
 									<div class="col-12 mb-60">
-									
+
 										<h4 class="checkout-title">Cart Total</h4>
-								
+
 										<div class="checkout-cart-total">
-	
+
 											<h4>Product <span>Total</span></h4>
-											
+
 											<ul>
 												<li>Cillum dolore tortor nisl X 01 <span>$25.00</span></li>
 												<li>Auctor gravida pellentesque X 02 <span>$50.00</span></li>
 												<li>Condimentum posuere consectetur X 01 <span>$29.00</span></li>
 												<li>Habitasse dictumst elementum X 01 <span>$10.00</span></li>
 											</ul>
-											
+
 											<p>Sub Total <span>$104.00</span></p>
 											<p>Shipping Fee <span>$00.00</span></p>
-											
+
 											<h4>Grand Total <span>$104.00</span></h4>
-											
+
 										</div>
-										
+
 									</div>
-									
+
 									<!-- Payment Method -->
 									<div class="col-12">
-									
+
 										<h4 class="checkout-title">Payment Method</h4>
-								
+
 										<div class="checkout-payment-method">
-											
+
 											<div class="single-method">
 												<input type="radio" id="payment_check" name="payment-method" value="check">
 												<label for="payment_check">Check Payment</label>
 												<p data-method="check">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
-											
+
 											<div class="single-method">
 												<input type="radio" id="payment_bank" name="payment-method" value="bank">
 												<label for="payment_bank">Direct Bank Transfer</label>
 												<p data-method="bank">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
-											
+
 											<div class="single-method">
 												<input type="radio" id="payment_cash" name="payment-method" value="cash">
 												<label for="payment_cash">Cash on Delivery</label>
 												<p data-method="cash">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
-											
+
 											<div class="single-method">
 												<input type="radio" id="payment_paypal" name="payment-method" value="paypal">
 												<label for="payment_paypal">Paypal</label>
 												<p data-method="paypal">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
-											
+
 											<div class="single-method">
 												<input type="radio" id="payment_payoneer" name="payment-method" value="payoneer">
 												<label for="payment_payoneer">Payoneer</label>
 												<p data-method="payoneer">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
-											
+
 											<div class="single-method">
 												<input type="checkbox" id="accept_terms">
 												<label for="accept_terms">I’ve read and accept the terms & conditions</label>
 											</div>
-											
+
 										</div>
-										
+
 										<button class="place-order">Place order</button>
-										
+
 									</div>
-									
+
 								</div>
 							</div>
-							
+
 						</div>
 					</form>
-					
+
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!--=====  End of Checkout page content  ======-->
-	
+
 
 	<!--=============================================
 	=            Footer         =
 	=============================================-->
-	
+
 	<footer>
 		<!--=======  newsletter section  =======-->
-		
+
 		<div class="newsletter-section pt-50 pb-50">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-12 col-sm-12 mb-sm-20 mb-xs-20">
 						<!--=======  newsletter title =======-->
-						
+
 						<div class="newsletter-title">
 							<h1>
 								<img src="assets/images/icon-newsletter.png" alt="">
 								Send Newsletter
 							</h1>
 						</div>
-						
+
 						<!--=======  End of newsletter title  =======-->
 					</div>
 
 					<div class="col-lg-8 col-md-12 col-sm-12">
 						<!--=======  subscription-form wrapper  =======-->
-						
+
 						<div class="subscription-form-wrapper d-flex flex-wrap flex-sm-nowrap">
 							<p class="mb-xs-20">Sign up for our newsletter to get up-to-date from us</p>
 							<div class="subscription-form">
@@ -594,23 +594,23 @@
 								</div><!-- mailchimp-alerts end -->
 							</div>
 						</div>
-						
+
 						<!--=======  End of subscription-form wrapper  =======-->
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of newsletter section  =======-->
 
 		<!--=======  social contact section  =======-->
-		
+
 		<div class="social-contact-section pt-50 pb-50">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-12 order-2 order-md-2 order-sm-2 order-lg-1">
 						<!--=======  social media links  =======-->
-						
+
 						<div class="social-media-section">
 							<h2>Follow us</h2>
 							<div class="social-links">
@@ -621,21 +621,21 @@
 								<a class="rss" href="http://www.rss.com/" data-tooltip="RSS"><i class="fa fa-rss"></i></a>
 							</div>
 						</div>
-						
+
 						<!--=======  End of social media links  =======-->
-						
+
 					</div>
 					<div class="col-lg-8 col-md-12 order-1 order-md-1 order-sm-1 order-lg-2  mb-sm-50 mb-xs-50">
 						<!--=======  contact summery  =======-->
-						
+
 						<div class="contact-summery">
 							<h2>Contact us</h2>
 
 							<!--=======  contact segments  =======-->
-							
-							<div class="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap"> 
+
+							<div class="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap">
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex mb-xs-20">
 									<div class="icon">
 										<span class="icon_pin_alt"></span>
@@ -644,10 +644,10 @@
 										<p>Address: <span>123 New Design Str, Melbourne, Australia</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex mb-xs-20">
 									<div class="icon">
 										<span class="icon_mobile"></span>
@@ -656,10 +656,10 @@
 										<p>Phone: <span>1-888-123-456-89</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex">
 									<div class="icon">
 										<span class="icon_mail_alt"></span>
@@ -668,33 +668,33 @@
 										<p>Email: <span>support@hastech.company</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 							</div>
-							
+
 							<!--=======  End of contact segments  =======-->
 
-							
-							
+
+
 						</div>
-						
+
 						<!--=======  End of contact summery  =======-->
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of social contact section  =======-->
 
 		<!--=======  footer navigation  =======-->
-		
+
 		<div class="footer-navigation-section pt-40 pb-40">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">INFORMATION</h3>
 							<ul>
@@ -704,12 +704,12 @@
 								<li> <a href="#">Terms & Condition</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">MY ACCOUNT</h3>
 							<ul>
@@ -719,12 +719,12 @@
 								<li> <a href="#">Newsletter</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">CUSTOMER SERVICE</h3>
 							<ul>
@@ -734,12 +734,12 @@
 								<li> <a href="#">SITE MAP</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">Extras</h3>
 							<ul>
@@ -749,24 +749,24 @@
 								<li> <a href="#">SPECIALS</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of footer navigation  =======-->
 
 
 		<!--=======  copyright section  =======-->
-		
+
 		<div class="copyright-section pt-35 pb-35">
 			<div class="container">
 				<div class="row align-items-md-center align-items-sm-center">
 					<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
 						<!--=======  copyright text	  =======-->
-						
+
 						<div class="copyright-segment">
 							<p>
 								<a href="#">Privacy Policy</a>
@@ -775,34 +775,34 @@
 							</p>
 							<p class="copyright-text">&copy; 2018 <a href="http://demo.devitems.com/">Greenfarm</a>. All Rights Reserved</p>
 						</div>
-						
+
 						<!--=======  End of copyright text	  =======-->
-						
+
 					</div>
 					<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
 						<!--=======  payment info  =======-->
-						
+
 						<div class="payment-info text-center text-md-right">
 							<p>Allow payment base on <img src="assets/images/payment-icon.png" class="img-fluid" alt=""></p>
 						</div>
-						
+
 						<!--=======  End of payment info  =======-->
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of copyright section  =======-->
 	</footer>
-	
+
 	<!--=====  End of Footer  ======-->
 
 
 	<!-- scroll to top  -->
 	<a href="#" class="scroll-top"></a>
 	<!-- end of scroll to top -->
-	
+
 	<!-- JS
 	============================================ -->
 	<!-- jQuery JS -->

@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>E-haho</title>
+	<title>Greenfarm - Organic Food eCommerce Bootstrap 4 Template</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
@@ -106,7 +106,7 @@
 									<img src="assets/images/icon-phone.png" class="img-fluid" alt="">
 								</div>
 								<div class="phone-number">
-									Phone: <span class="number">+250788647117</span>
+									Phone: <span class="number">1-888-123-456-89</span>
 								</div>
 							</div>
 							<!-- end of header phone number -->
@@ -316,8 +316,14 @@
 						<div class="sidebar mb-35">
 							<h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
 							<ul class="product-categories">
-								<li><a class="active" href="shop">Food</a></li>
-								<li><a href="inputs">Inputs</a></li>
+								<li><a class="active" href="shop-left-sidebar.html">Beans</a></li>
+								<li><a href="shop-left-sidebar.html">Bread</a></li>
+								<li><a href="shop-left-sidebar.html">Eggs</a></li>
+								<li><a href="shop-left-sidebar.html">Fruits</a></li>
+								<li><a href="shop-left-sidebar.html">Salads</a></li>
+								<li><a href="shop-left-sidebar.html">Fast Foods</a></li>
+								<li><a href="shop-left-sidebar.html">Fish & Meats</a></li>
+								<li><a href="shop-left-sidebar.html">Uncategorized</a></li>
 							</ul>
 						</div>
 
