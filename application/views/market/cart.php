@@ -107,7 +107,7 @@
 									<img src="assets/images/icon-phone.png" class="img-fluid" alt="">
 								</div>
 								<div class="phone-number">
-									Phone: <span class="number">1-888-123-456-89</span>
+									Phone: <span class="number">+250-788-647-117</span>
 								</div>
 							</div>
 							<!-- end of header phone number -->
@@ -126,9 +126,9 @@
 										<span class="icon_bag_alt"></span>
 									</div>
 									<div class="cart-info d-inline-block">
-										<p>Shopping Cart 
-											<span>
-												0 items - $0.00 
+										<p>Shopping Cart
+											<span id="cart-title">
+												0 items - 0.00 RWF
 											</span>
 										</p>
 									</div>
@@ -136,32 +136,12 @@
 							<!-- end of shopping cart -->
 
 							<!-- cart floating box -->
-							<div class="cart-floating-box" id="cart-floating-box">
-								<div class="cart-items">
-									<div class="cart-float-single-item d-flex">
-										<span class="remove-item"><a href="#"><i class="fa fa-times"></i></a></span>
-										<div class="cart-float-single-item-image">
-											<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>
-										</div>
-										<div class="cart-float-single-item-desc">
-											<p class="product-title"> <a href="single-product.html">Duis pulvinar obortis eleifend </a></p>
-											<p class="price"><span class="count">1x</span> $20.50</p>
-										</div>
-									</div>
-									<div class="cart-float-single-item d-flex">
-										<span class="remove-item"><a href="#"><i class="fa fa-times"></i></a></span>
-										<div class="cart-float-single-item-image">
-											<a href="single-product.html"><img src="assets/images/products/product02.jpg" class="img-fluid" alt=""></a>
-										</div>
-										<div class="cart-float-single-item-desc">
-											<p class="product-title"> <a href="single-product.html">Fusce ultricies dolor vitae</a></p>
-											<p class="price"><span class="count">1x</span> $20.50</p>
-										</div>
-									</div>
+							<div class="cart-floating-box" id="cart-floating-box" style="height: auto !important;">
+								<div class="cart-items" id="cart-items" style="padding-right: 20px !important; max-height: 180px !important; overflow-y: scroll !important;">
 								</div>
 								<div class="cart-calculation">
 									<div class="calculation-details">
-										<p class="total">Subtotal <span>$22</span></p>
+										<p class="total">Subtotal <span id="subtotal">0 RWF</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
 										<a href="checkout.html">Checkout</a>
@@ -215,7 +195,7 @@
 													<li><a href="single-product-sticky-left.html">Sticky Left</a></li>
 													<li><a href="single-product-sticky-right.html">Sticky Right</a></li>
 													<li><a href="single-product-slider-box.html">Slider Box</a></li>
-													
+
 												</ul>
 											</li>
 										</ul>
@@ -227,7 +207,7 @@
 													<li><a href="cart.html">Cart</a></li>
 													<li><a href="checkout.html">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
-													
+
 												</ul>
 											</li>
 											<li><a href="#">Column Two</a>
@@ -282,7 +262,7 @@
     <!--=============================================
     =            breadcrumb area         =
     =============================================-->
-    
+
     <div class="breadcrumb-area mb-50">
         <div class="container">
             <div class="row">
@@ -297,22 +277,22 @@
             </div>
         </div>
     </div>
-    
+
     <!--=====  End of breadcrumb area  ======-->
-    
+
 
     <!--=============================================
     =            Cart page content         =
     =============================================-->
-    
+
 
     <div class="page-section section mb-50">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="#">				
+                    <form action="#">
                         <!--=======  cart table  =======-->
-                        
+
                         <div class="cart-table table-responsive mb-40">
                             <table class="table">
                                 <thead>
@@ -330,7 +310,7 @@
                                         <td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a></td>
                                         <td class="pro-title"><a href="#">Cillum dolore tortor nisl fermentum</a></td>
                                         <td class="pro-price"><span>$29.00</span></td>
-                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"></div></td> 
+                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"></div></td>
                                         <td class="pro-subtotal"><span>$29.00</span></td>
                                         <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
@@ -361,17 +341,17 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <!--=======  End of cart table  =======-->
-                        
-                        
-                    </form>	
-                        
+
+
+                    </form>
+
                     <div class="row">
-    
+
                         <div class="col-lg-6 col-12">
                             <!--=======  Calculate Shipping  =======-->
-                            
+
                             <div class="calculate-shipping">
                                 <h4>Calculate Shipping</h4>
                                 <form action="#">
@@ -403,11 +383,11 @@
                                     </div>
                                 </form>
                             </div>
-                            
+
                             <!--=======  End of Calculate Shipping  =======-->
-                            
+
                             <!--=======  Discount Coupon  =======-->
-                            
+
                             <div class="discount-coupon">
                                 <h4>Discount Coupon Code</h4>
                                 <form action="#">
@@ -421,15 +401,15 @@
                                     </div>
                                 </form>
                             </div>
-                            
+
                             <!--=======  End of Discount Coupon  =======-->
-                            
+
                         </div>
-    
-                       
+
+
                         <div class="col-lg-6 col-12 d-flex">
                             <!--=======  Cart summery  =======-->
-                        
+
                             <div class="cart-summary">
                                 <div class="cart-summary-wrap">
                                     <h4>Cart Summary</h4>
@@ -442,47 +422,47 @@
                                     <button class="update-btn">Update Cart</button>
                                 </div>
                             </div>
-                        
+
                             <!--=======  End of Cart summery  =======-->
-                            
+
                         </div>
-    
+
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!--=====  End of Cart page content  ======-->
-	
+
 
 	<!--=============================================
 	=            Footer         =
 	=============================================-->
-	
+
 	<footer>
 		<!--=======  newsletter section  =======-->
-		
+
 		<div class="newsletter-section pt-50 pb-50">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-12 col-sm-12 mb-sm-20 mb-xs-20">
 						<!--=======  newsletter title =======-->
-						
+
 						<div class="newsletter-title">
 							<h1>
 								<img src="assets/images/icon-newsletter.png" alt="">
 								Send Newsletter
 							</h1>
 						</div>
-						
+
 						<!--=======  End of newsletter title  =======-->
 					</div>
 
 					<div class="col-lg-8 col-md-12 col-sm-12">
 						<!--=======  subscription-form wrapper  =======-->
-						
+
 						<div class="subscription-form-wrapper d-flex flex-wrap flex-sm-nowrap">
 							<p class="mb-xs-20">Sign up for our newsletter to get up-to-date from us</p>
 							<div class="subscription-form">
@@ -499,23 +479,23 @@
 								</div><!-- mailchimp-alerts end -->
 							</div>
 						</div>
-						
+
 						<!--=======  End of subscription-form wrapper  =======-->
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of newsletter section  =======-->
 
 		<!--=======  social contact section  =======-->
-		
+
 		<div class="social-contact-section pt-50 pb-50">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-12 order-2 order-md-2 order-sm-2 order-lg-1">
 						<!--=======  social media links  =======-->
-						
+
 						<div class="social-media-section">
 							<h2>Follow us</h2>
 							<div class="social-links">
@@ -526,21 +506,21 @@
 								<a class="rss" href="http://www.rss.com/" data-tooltip="RSS"><i class="fa fa-rss"></i></a>
 							</div>
 						</div>
-						
+
 						<!--=======  End of social media links  =======-->
-						
+
 					</div>
 					<div class="col-lg-8 col-md-12 order-1 order-md-1 order-sm-1 order-lg-2  mb-sm-50 mb-xs-50">
 						<!--=======  contact summery  =======-->
-						
+
 						<div class="contact-summery">
 							<h2>Contact us</h2>
 
 							<!--=======  contact segments  =======-->
-							
-							<div class="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap"> 
+
+							<div class="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap">
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex mb-xs-20">
 									<div class="icon">
 										<span class="icon_pin_alt"></span>
@@ -549,10 +529,10 @@
 										<p>Address: <span>123 New Design Str, Melbourne, Australia</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex mb-xs-20">
 									<div class="icon">
 										<span class="icon_mobile"></span>
@@ -561,10 +541,10 @@
 										<p>Phone: <span>1-888-123-456-89</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 								<!--=======  single contact  =======-->
-							
+
 								<div class="single-contact d-flex">
 									<div class="icon">
 										<span class="icon_mail_alt"></span>
@@ -573,33 +553,33 @@
 										<p>Email: <span>support@hastech.company</span></p>
 									</div>
 								</div>
-								
+
 								<!--=======  End of single contact  =======-->
 							</div>
-							
+
 							<!--=======  End of contact segments  =======-->
 
-							
-							
+
+
 						</div>
-						
+
 						<!--=======  End of contact summery  =======-->
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of social contact section  =======-->
 
 		<!--=======  footer navigation  =======-->
-		
+
 		<div class="footer-navigation-section pt-40 pb-40">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">INFORMATION</h3>
 							<ul>
@@ -609,12 +589,12 @@
 								<li> <a href="#">Terms & Condition</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">MY ACCOUNT</h3>
 							<ul>
@@ -624,12 +604,12 @@
 								<li> <a href="#">Newsletter</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">CUSTOMER SERVICE</h3>
 							<ul>
@@ -639,12 +619,12 @@
 								<li> <a href="#">SITE MAP</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<!--=======  single navigation section  =======-->
-						
+
 						<div class="single-navigation-section">
 							<h3 class="nav-section-title">Extras</h3>
 							<ul>
@@ -654,24 +634,24 @@
 								<li> <a href="#">SPECIALS</a></li>
 							</ul>
 						</div>
-						
+
 						<!--=======  End of single navigation section  =======-->
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of footer navigation  =======-->
 
 
 		<!--=======  copyright section  =======-->
-		
+
 		<div class="copyright-section pt-35 pb-35">
 			<div class="container">
 				<div class="row align-items-md-center align-items-sm-center">
 					<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
 						<!--=======  copyright text	  =======-->
-						
+
 						<div class="copyright-segment">
 							<p>
 								<a href="#">Privacy Policy</a>
@@ -680,34 +660,34 @@
 							</p>
 							<p class="copyright-text">&copy; 2018 <a href="http://demo.devitems.com/">Greenfarm</a>. All Rights Reserved</p>
 						</div>
-						
+
 						<!--=======  End of copyright text	  =======-->
-						
+
 					</div>
 					<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
 						<!--=======  payment info  =======-->
-						
+
 						<div class="payment-info text-center text-md-right">
 							<p>Allow payment base on <img src="assets/images/payment-icon.png" class="img-fluid" alt=""></p>
 						</div>
-						
+
 						<!--=======  End of payment info  =======-->
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--=======  End of copyright section  =======-->
 	</footer>
-	
+
 	<!--=====  End of Footer  ======-->
 
 
 	<!-- scroll to top  -->
 	<a href="#" class="scroll-top"></a>
 	<!-- end of scroll to top -->
-	
+
 	<!-- JS
 	============================================ -->
 	<!-- jQuery JS -->

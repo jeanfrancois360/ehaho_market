@@ -157,7 +157,6 @@ ul {
   list-style: outside none none;
   margin: 0;
   padding: 0; }
-
 /*-- Tab Content & Pane Fix --*/
 .tab-content {
   width: 100%; }
@@ -603,6 +602,7 @@ header {
   top: 80px;
   z-index: 999999;
   right: 0;
+  height: 200px !important;
   width: 360px;
   background-color: #ffffff;
   padding: 20px;

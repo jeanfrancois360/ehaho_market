@@ -34,7 +34,30 @@
 
 	<!-- Modernizer JS -->
 	<script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+	<style>
+	/* scrollbar customization */
+	::-webkit-scrollbar {
+	  width:5px;
+	}
 
+	/* Track */
+	::-webkit-scrollbar-track {
+	  background: #f1f1f1;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	  background: green;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+	  background: green;
+	}
+	.cart-floating-box{
+		height: auto !important;
+	}
+	</style>
 </head>
 
 <body>
@@ -106,7 +129,7 @@
 									<img src="assets/images/icon-phone.png" class="img-fluid" alt="">
 								</div>
 								<div class="phone-number">
-									Phone: <span class="number">1-888-123-456-89</span>
+									Phone: <span class="number">+250-788-647-117</span>
 								</div>
 							</div>
 							<!-- end of header phone number -->
@@ -126,8 +149,8 @@
 									</div>
 									<div class="cart-info d-inline-block">
 										<p>Shopping Cart
-											<span>
-												0 items - $0.00
+											<span id="cart-title">
+												0 items - 0.00 RWF
 											</span>
 										</p>
 									</div>
@@ -135,32 +158,12 @@
 							<!-- end of shopping cart -->
 
 							<!-- cart floating box -->
-							<div class="cart-floating-box" id="cart-floating-box">
-								<div class="cart-items">
-									<div class="cart-float-single-item d-flex">
-										<span class="remove-item"><a href="#"><i class="fa fa-times"></i></a></span>
-										<div class="cart-float-single-item-image">
-											<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>
-										</div>
-										<div class="cart-float-single-item-desc">
-											<p class="product-title"> <a href="single-product.html">Duis pulvinar obortis eleifend </a></p>
-											<p class="price"><span class="count">1x</span> $20.50</p>
-										</div>
-									</div>
-									<div class="cart-float-single-item d-flex">
-										<span class="remove-item"><a href="#"><i class="fa fa-times"></i></a></span>
-										<div class="cart-float-single-item-image">
-											<a href="single-product.html"><img src="assets/images/products/product02.jpg" class="img-fluid" alt=""></a>
-										</div>
-										<div class="cart-float-single-item-desc">
-											<p class="product-title"> <a href="single-product.html">Fusce ultricies dolor vitae</a></p>
-											<p class="price"><span class="count">1x</span> $20.50</p>
-										</div>
-									</div>
+							<div class="cart-floating-box" id="cart-floating-box" style="height: auto !important;">
+								<div class="cart-items" id="cart-items" style="padding-right: 20px !important; max-height: 180px !important; overflow-y: scroll !important;">
 								</div>
 								<div class="cart-calculation">
 									<div class="calculation-details">
-										<p class="total">Subtotal <span>$22</span></p>
+										<p class="total">Subtotal <span id="subtotal">0 RWF</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
 										<a href="checkout.html">Checkout</a>
@@ -556,7 +559,11 @@
 					<!--=======  Grid list view  =======-->
 
 					<div class="shop-product-wrap grid row no-gutters mb-35">
-
+					<?php
+                        $i = 1;
+                        foreach ($content as $food) {
+                            $prod1 = "product".$i;
+                            $prod2 = "product0".$i; ?>
 						<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 								<!--=======  Grid view product  =======-->
 
@@ -564,10 +571,10 @@
 									<div class="image">
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product03.jpg" class="img-fluid" alt="">
+											<img src="assets/images/products/<?php echo $i > 9 ? $prod1 : $prod2; ?>.jpg" class="img-fluid" alt="">
 										</a>
 										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
+											<a href="#" data-tooltip="Add to cart" onclick="addToCart(<?php echo $food['m_id']; ?>)"> <span class="icon_cart_alt"></span></a>
 											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
 											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
@@ -575,13 +582,12 @@
 									</div>
 									<div class="product-content">
 										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
+											<a href="shop-left-sidebar.html"><?php echo $food['variety']; ?></a>
 										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
+										<h3 class="product-title"><a href="single-product.html"><?php echo $food['product_name']; ?></a></h3>
 										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
+											<span class="discounted-price"><?php echo $food['price_unit']." RWF /". $food['unit']; ?></span>
+											<!-- <span class="discounted-price">$80.00</span> -->
 										</div>
 									</div>
 
@@ -595,7 +601,7 @@
 									<div class="image">
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product03.jpg" class="img-fluid" alt="">
+											<img src="assets/images/products/<?php echo $i > 9 ? $prod1 : $prod2; ?>.jpg" class="img-fluid" alt="">
 										</a>
 										<div class="product-hover-icons">
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
@@ -603,15 +609,15 @@
 									</div>
 									<div class="product-content">
 										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
+											<a href="shop-left-sidebar.html"><?php echo $food['variety']; ?></a>
 										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
+										<h3 class="product-title"><a href="single-product.html"><?php echo $food['product_name']; ?></a></h3>
 										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
+											<span class="main-price"><?php echo $food['price_unit']." RWF /". $food['unit']; ?></span>
+											<!-- <span class="discounted-price">$80.00</span> -->
 										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
+										<p class="product-description">Name:&nbsp;<?php echo $food['name']; ?></p>
+										<p class="product-description">Phone:&nbsp;<?php echo $food['phone']; ?></p>
 										<div class="list-product-icons">
 											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
 											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
@@ -623,550 +629,15 @@
 
 							<!--=======  End of Shop list view product  =======-->
 							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product04.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product04.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product05.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product05.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product06.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product06.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product07.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product07.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product08.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product08.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product10.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product10.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product11.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product11.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-								<!--=======  Grid view product  =======-->
-
-								<div class="gf-product shop-grid-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product12.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-									</div>
-
-								</div>
-
-								<!--=======  End of Grid view product  =======-->
-
-								<!--=======  Shop list view product  =======-->
-
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="single-product.html">
-											<span class="onsale">Sale!</span>
-											<img src="assets/images/products/product12.jpg" class="img-fluid" alt="">
-										</a>
-										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
-										</div>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a href="shop-left-sidebar.html">Fast Foods</a>,
-											<a href="shop-left-sidebar.html">Vegetables</a>
-										</div>
-										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
-										<div class="price-box mb-20">
-											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
-										</div>
-										<p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
-										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-										</div>
-									</div>
-
-								</div>
-
-							<!--=======  End of Shop list view product  =======-->
-							</div>
-
-					</div>
-
-					<!--=======  End of Grid list view  =======-->
-
+						<?php
+                        $i++;
+                            if ($i == 16) {
+                                $i == 1;
+                            }
+                        } ?>
 					<!--=======  Pagination container  =======-->
 
-					<div class="pagination-container">
+					<div class="pagination-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="container">
 							<div class="row">
 								<div class="col-lg-12">
@@ -1582,6 +1053,13 @@
 
 	<!-- Main JS -->
 	<script src="assets/js/main.js"></script>
+	<!-- add to cart script -->
+	<script src="assets/js/cart-operations.js"></script>
+	<script>
+	$(document).ready(function(){
+		showCart();
+	});
+	</script>
 
 </body>
 
