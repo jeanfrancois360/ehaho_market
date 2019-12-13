@@ -34,7 +34,30 @@
 
 	<!-- Modernizer JS -->
 	<script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+	<style>
+	/* scrollbar customization */
+	::-webkit-scrollbar {
+		width:5px;
+	}
 
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #fff;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #3a8245;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #3a8278;
+	}
+	.cart-floating-box{
+		height: auto !important;
+	}
+	</style>
 </head>
 
 <body>
@@ -74,7 +97,7 @@
 							<ul>
 								<li><a href="my-account.html">My account</a></li>
 								<li><a href="wishlist.html">Wishlist</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
+								<li><a href="checkout">Checkout</a></li>
 							</ul>
 						</div>
 						<!-- end of header top menu -->
@@ -144,8 +167,8 @@
 										<p class="total">Subtotal <span id="subtotal">0 RWF</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
-										<a href="checkout.html">Checkout</a>
-										<a href="cart.html">View Cart</a>
+										<a href="checkout">Checkout</a>
+										<a href="cart">View Cart</a>
 									</div>
 								</div>
 							</div>
@@ -205,7 +228,7 @@
 											<li><a href="#">Column One</a>
 												<ul>
 													<li><a href="cart.html">Cart</a></li>
-													<li><a href="checkout.html">Checkout</a></li>
+													<li><a href="checkout">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
 
 												</ul>
@@ -705,6 +728,13 @@
 	<!-- Main JS -->
 	<script src="assets/js/main.js"></script>
 
+	<!-- add to cart script -->
+	<script src="assets/js/cart-operations.js"></script>
+	<script>
+	$(document).ready(function(){
+		showCart();
+	});
+	</script>
 </body>
 
 

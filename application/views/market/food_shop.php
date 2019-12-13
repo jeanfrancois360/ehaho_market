@@ -18,7 +18,8 @@
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- FontAwesome CSS -->
-	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+	<!-- <link href="assets/css/font-awesome.min.css" rel="stylesheet"> -->
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	<!-- Elegent CSS -->
 	<link href="assets/css/elegent.min.css" rel="stylesheet">
@@ -34,6 +35,7 @@
 
 	<!-- Modernizer JS -->
 	<script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
 	<style>
 	/* scrollbar customization */
 	::-webkit-scrollbar {
@@ -42,17 +44,17 @@
 
 	/* Track */
 	::-webkit-scrollbar-track {
-	  background: #f1f1f1;
+	  background: #fff;
 	}
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
-	  background: green;
+	  background: #3a8245;
 	}
 
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
-	  background: green;
+	  background: #3a8278;
 	}
 	.cart-floating-box{
 		height: auto !important;
@@ -96,7 +98,7 @@
 							<ul>
 								<li><a href="my-account.html">My account</a></li>
 								<li><a href="wishlist.html">Wishlist</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
+								<li><a href="checkout">Checkout</a></li>
 							</ul>
 						</div>
 						<!-- end of header top menu -->
@@ -166,8 +168,8 @@
 										<p class="total">Subtotal <span id="subtotal">0 RWF</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
-										<a href="checkout.html">Checkout</a>
-										<a href="cart.html">View Cart</a>
+										<a href="checkout">Checkout</a>
+										<a href="cart">View Cart</a>
 									</div>
 								</div>
 							</div>
@@ -227,7 +229,7 @@
 											<li><a href="#">Column One</a>
 												<ul>
 													<li><a href="cart.html">Cart</a></li>
-													<li><a href="checkout.html">Checkout</a></li>
+													<li><a href="checkout">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
 
 												</ul>
@@ -613,7 +615,7 @@
 										</div>
 										<h3 class="product-title"><a href="single-product.html"><?php echo $food['product_name']; ?></a></h3>
 										<div class="price-box mb-20">
-											<span class="main-price"><?php echo $food['price_unit']." RWF /". $food['unit']; ?></span>
+											<span class="discounted-price"><?php echo $food['price_unit']." RWF /". $food['unit']; ?></span>
 											<!-- <span class="discounted-price">$80.00</span> -->
 										</div>
 										<p class="product-description">Name:&nbsp;<?php echo $food['name']; ?></p>
@@ -1053,6 +1055,7 @@
 
 	<!-- Main JS -->
 	<script src="assets/js/main.js"></script>
+
 	<!-- add to cart script -->
 	<script src="assets/js/cart-operations.js"></script>
 	<script>
@@ -1060,7 +1063,6 @@
 		showCart();
 	});
 	</script>
-
 </body>
 
 

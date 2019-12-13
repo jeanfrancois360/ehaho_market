@@ -74,7 +74,7 @@
 							<ul>
 								<li><a href="my-account.html">My account</a></li>
 								<li><a href="wishlist.html">Wishlist</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
+								<li><a href="checkout">Checkout</a></li>
 							</ul>
 						</div>
 						<!-- end of header top menu -->
@@ -164,8 +164,8 @@
 										<p class="total">Subtotal <span>$22</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
-										<a href="checkout.html">Checkout</a>
-										<a href="cart.html">View Cart</a>
+										<a href="checkout">Checkout</a>
+										<a href="cart">View Cart</a>
 									</div>
 								</div>
 							</div>
@@ -225,7 +225,7 @@
 											<li><a href="#">Column One</a>
 												<ul>
 													<li><a href="cart.html">Cart</a></li>
-													<li><a href="checkout.html">Checkout</a></li>
+													<li><a href="checkout">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
 
 												</ul>

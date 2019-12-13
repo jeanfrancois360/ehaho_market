@@ -48,4 +48,10 @@ class Food_market extends CI_Controller
     {
         echo $this->Food_model->show_cart();
     }
+    public function removeItem()
+    {
+        $id = $_POST['id'];
+        $key = array_search($id, $_SESSION['cart_items']);
+        unset($_SESSION['cart_items'][$key]);
+    }
 }

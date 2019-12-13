@@ -17,7 +17,7 @@ function showCart() {
 	jQuery.ajax({
 		url: 'food_market/show_cart',
 		data: '',
-		Type: 'POST',
+		type: 'POST',
 		success: function(html, textStatus) {
 			var response = JSON.parse(html);
 			var subtotal = 0;
@@ -27,7 +27,7 @@ function showCart() {
 			$.each(response, function(item, value) {
 				i++;
 				cart_data = '<div class="cart-float-single-item d-flex">';
-				cart_data += '<span class="remove-item"><a href="#"><i class="fa fa-times"></i></a></span>';
+				cart_data += '<span class="remove-item"><a onclick="remove_from_cart(' + this.m_id + ')"><i class="fa fa-times" style="color:red;"></i></a></span>';
 				cart_data += '<div class="cart-float-single-item-image">';
 				cart_data += '<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
 				cart_data += '</div>';
@@ -45,4 +45,19 @@ function showCart() {
 			$('#subtotal').append(subtotal);
 		}
 	});
+}
+
+function remove_from_cart(id) {
+	if (id != "") {
+		jQuery.ajax({
+			url: 'food_market/removeItem',
+			data: {
+				id: id
+			},
+			type: 'POST',
+			success: function(data) {
+				showCart();
+			}
+		});
+	}
 }
