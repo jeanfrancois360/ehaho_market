@@ -328,40 +328,9 @@
                                         <th class="pro-remove">Remove</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a></td>
-                                        <td class="pro-title"><a href="#">Cillum dolore tortor nisl fermentum</a></td>
-                                        <td class="pro-price"><span>$29.00</span></td>
-                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"></div></td>
-                                        <td class="pro-subtotal"><span>$29.00</span></td>
-                                        <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product02.jpg" class="img-fluid" alt="Product"></a></td>
-                                        <td class="pro-title"><a href="#">Auctor gravida pellentesque</a></td>
-                                        <td class="pro-price"><span>$30.00</span></td>
-                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="2"></div></td>
-                                        <td class="pro-subtotal"><span>$60.00</span></td>
-                                        <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product03.jpg" class="img-fluid" alt="Product"></a></td>
-                                        <td class="pro-title"><a href="#">Condimentum posuere consectetur</a></td>
-                                        <td class="pro-price"><span>$25.00</span></td>
-                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"></div></td>
-                                        <td class="pro-subtotal"><span>$25.00</span></td>
-                                        <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product04.jpg" class="img-fluid" alt="Product"></a></td>
-                                        <td class="pro-title"><a href="#">Habitasse dictumst elementum</a></td>
-                                        <td class="pro-price"><span>$11.00</span></td>
-                                        <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"></div></td>
-                                        <td class="pro-subtotal"><span>$11.00</span></td>
-                                        <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
+                                <tbody id="viewCart">
                                 </tbody>
+																<input type="hidden" id="total" value="0" />
                             </table>
                         </div>
 
@@ -733,6 +702,7 @@
 	<script>
 	$(document).ready(function(){
 		showCart();
+		viewCart();
 	});
 	</script>
 </body>

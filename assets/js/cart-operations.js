@@ -47,6 +47,41 @@ function showCart() {
 	});
 }
 
+function viewCart() {
+	jQuery.ajax({
+		url: 'food_market/show_cart',
+		data: '',
+		type: 'POST',
+		success: function(html, textStatus) {
+			var response = JSON.parse(html);
+			var subtotal = 0;
+			$('#subtotal').html("");
+			$('#cart-items').html("");
+			var i = 0;
+			$.each(response, function(item, value) {
+				i++;
+				cart_data = '<tr>';
+				cart_data += '<td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a></td>';
+				cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a></td>';
+				cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"></td>';
+				cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
+				cart_data += '<td class="pro-subtotal"><span id="pro-subtotal' + i + '">' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="total_price' + i + '"></td>';
+				cart_data += '<td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a><td>';
+				cart_data += '<tr>';
+				subtotal += parseInt(this.price_unit);
+				$('#viewCart').append(cart_data);
+			});
+			total = subtotal;
+			subtotal = subtotal + " RWF";
+			$('#cart-title').html("");
+			$('#cart-title').append(i + " items" + " - " + subtotal);
+			$('tbody').data("subtotal", subtotal);
+			$('#subtotal').append(subtotal);
+			$('#total').val(total);
+		}
+	});
+}
+
 function remove_from_cart(id) {
 	if (id != "") {
 		jQuery.ajax({
@@ -60,4 +95,20 @@ function remove_from_cart(id) {
 			}
 		});
 	}
+}
+
+function calc(t) {
+	var subtotal, price_unit, total_price, old_price, quantity;
+	old_price = $('#total_price' + t).val();
+	price_unit = $('#unit_price' + t).val();
+	quantity = $('#qty' + t).val();
+	subtotal = $('#total').val();
+	total_price = parseInt(price_unit) * parseInt(quantity);
+	isNaN(total_price) ? total_price = 0 : total_price = total_price;
+	isNaN(old_price) ? old_price = 0 : old_price = old_price;
+	subtotal = parseInt(subtotal) + (parseInt(total_price) - parseInt(old_price));
+	$('#total_price' + t).val(total_price);
+	$('#pro-subtotal' + t).html('');
+	$('#pro-subtotal' + t).append(total_price + '&nbsp;RWF');
+	$('#total').val(subtotal);
 }
