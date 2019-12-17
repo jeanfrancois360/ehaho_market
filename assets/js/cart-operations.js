@@ -1,6 +1,7 @@
 var items = "";
 
-function addToCart(market_id) {
+function addToCart(market_id, e) {
+	e.preventDefault();
 	if (market_id != "") {
 		jQuery.ajax({
 			url: 'food_market/add_to_cart',
@@ -9,7 +10,36 @@ function addToCart(market_id) {
 			},
 			type: 'POST',
 			success: function(data) {
+				$('#add_to_cart' + market_id).css("background", "red");
+				$("#add_to_cart" + market_id).attr("data-tooltip", "Added to cart");
+				$("#add_to_cart" + market_id).attr("onclick", "remove_from_cart(" + market_id + ",event)");
+				$('#add_to_cart_list' + market_id).css("background", "red");
+				$("#add_to_cart_list" + market_id).attr("data-tooltip", "Added to cart");
+				$("#add_to_cart_list" + market_id).attr("onclick", "remove_from_cart(" + market_id + ",event)");
 				showCart();
+			}
+		});
+	}
+}
+
+function remove_from_cart(id, e) {
+	e.preventDefault();
+	if (id != "") {
+		jQuery.ajax({
+			url: 'food_market/removeItem',
+			data: {
+				id: id
+			},
+			type: 'POST',
+			success: function(data) {
+				$("#add_to_cart" + id).css("background", "#3a8245");
+				$("#add_to_cart" + id).attr("onclick", "addToCart(" + id + ",event)");
+				$("#add_to_cart" + id).attr("data-tooltip", "Add to cart");
+				$('#add_to_cart_list' + id).css("background", "#3a8245");
+				$("#add_to_cart_list" + id).attr("data-tooltip", "Add to cart");
+				$("#add_to_cart_list" + id).attr("onclick", "addToCart(" + id + ",event)");
+				showCart();
+				viewCart();
 			}
 		});
 	}
@@ -29,7 +59,7 @@ function showCart() {
 			$.each(response, function(item, value) {
 				i++;
 				cart_data = '<div class="cart-float-single-item d-flex">';
-				cart_data += '<span class="remove-item"><a onclick="remove_from_cart(' + this.m_id + ')"><i class="fa fa-times" style="color:red;"></i></a></span>';
+				cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.m_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 				cart_data += '<div class="cart-float-single-item-image">';
 				cart_data += '<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
 				cart_data += '</div>';
@@ -59,20 +89,26 @@ function viewCart() {
 			var subtotal = 0;
 			$('#subtotal').html("");
 			$('#cart-items').html("");
+			$('#viewCart').html('');
 			var i = 0;
-			$.each(response, function(item, value) {
-				i++;
-				cart_data = '<tr>';
-				cart_data += '<td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a></td>';
-				cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a></td>';
-				cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"></td>';
-				cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
-				cart_data += '<td class="pro-subtotal"><span id="pro-subtotal' + i + '">' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="total_price' + i + '"></td>';
-				cart_data += '<td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a><td>';
-				cart_data += '<tr>';
-				$('#viewCart').append(cart_data);
-				subtotal += parseInt(this.price_unit);
-			});
+			if (response.length === 0) {
+				cart_datae = '<tr><td colspan="7"><h4>Cart is empty</h4></td></tr>';
+				$('#viewCart').append(cart_datae);
+			} else {
+				$.each(response, function(item, value) {
+					i++;
+					cart_data = '<tr>';
+					cart_data += '<td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a></td>';
+					cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a></td>';
+					cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"></td>';
+					cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
+					cart_data += '<td class="pro-subtotal"><span id="pro-subtotal' + i + '">' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="total_price' + i + '"></td>';
+					cart_data += '<td class="pro-remove"><a href="#" onclick="remove_from_cart(' + this.m_id + ', event)"><i class="fa fa-trash-o"></i></a><td>';
+					cart_data += '<tr>';
+					$('#viewCart').append(cart_data);
+					subtotal += parseInt(this.price_unit);
+				});
+			}
 			total = subtotal;
 			subtotal = subtotal + " RWF";
 			$('#cart-title').html("");
@@ -87,21 +123,6 @@ function viewCart() {
 			$('#grand_total').append(subtotal + '&nbsp;RWF');
 		}
 	});
-}
-
-function remove_from_cart(id) {
-	if (id != "") {
-		jQuery.ajax({
-			url: 'food_market/removeItem',
-			data: {
-				id: id
-			},
-			type: 'POST',
-			success: function(data) {
-				showCart();
-			}
-		});
-	}
 }
 
 function calc(t) {
@@ -128,4 +149,8 @@ function calc(t) {
 	$('#overall_subtotal').append(subtotal + '&nbsp;RWF');
 	$('#grand_total').html('');
 	$('#grand_total').append(subtotal + '&nbsp;RWF');
+}
+
+function checkout() {
+
 }

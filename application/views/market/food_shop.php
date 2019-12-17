@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Greenfarm - Organic Food eCommerce Bootstrap 4 Template</title>
+	<title><?php echo $title; ?></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
@@ -145,7 +145,7 @@
 							<!-- end of search bar -->
 							<!-- shopping cart -->
 							<div class="shopping-cart" id="shopping-cart">
-								<a href="cart.html">
+								<a href="cart">
 									<div class="cart-icon d-inline-block">
 										<span class="icon_bag_alt"></span>
 									</div>
@@ -228,7 +228,7 @@
 										<ul class="mega-menu three-column">
 											<li><a href="#">Column One</a>
 												<ul>
-													<li><a href="cart.html">Cart</a></li>
+													<li><a href="cart">Cart</a></li>
 													<li><a href="checkout">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
 
@@ -564,6 +564,7 @@
 					<?php
                         $i = 1;
                         foreach ($content as $food) {
+                            $id = $food['m_id'];
                             $prod1 = "product".$i;
                             $prod2 = "product0".$i; ?>
 						<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -576,7 +577,8 @@
 											<img src="assets/images/products/<?php echo $i > 9 ? $prod1 : $prod2; ?>.jpg" class="img-fluid" alt="">
 										</a>
 										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart" onclick="addToCart(<?php echo $food['m_id']; ?>)"> <span class="icon_cart_alt"></span></a>
+											<a href="#" data-tooltip="<?php echo in_array($food['m_id'], $_SESSION['cart_items'])? "Added to cart": "Add to cart"; ?>" id="add_to_cart<?php echo $food['m_id']; ?>"
+												onclick="<?php echo in_array($id, $_SESSION['cart_items']) ? "remove_from_cart($id, event)" : "addToCart($id, event)"; ?>"  style="<?php echo in_array($food['m_id'], $_SESSION['cart_items']) ? "background:red;": ""; ?>"> <span class="icon_cart_alt"></span></a>
 											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
 											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
@@ -621,7 +623,8 @@
 										<p class="product-description">Name:&nbsp;<?php echo $food['name']; ?></p>
 										<p class="product-description">Phone:&nbsp;<?php echo $food['phone']; ?></p>
 										<div class="list-product-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
+											<a href="#" id="add_to_cart_list<?php echo $food['m_id']; ?>" data-tooltip="<?php echo in_array($food['m_id'], $_SESSION['cart_items'])? "Added to cart": "Add to cart"; ?>"
+												onclick="<?php echo in_array($id, $_SESSION['cart_items']) ? "remove_from_cart($id, event)" : "addToCart($id, event)"; ?>"  style="<?php echo in_array($food['m_id'], $_SESSION['cart_items']) ? "background:red;": ""; ?>"> <span class="icon_cart_alt"></span></a>
 											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
 											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
 										</div>
@@ -835,7 +838,7 @@
 							<ul>
 								<li> <a href="my-account.html">My Account</a></li>
 								<li> <a href="wishlist.html">Wishlist</a></li>
-								<li> <a href="cart.html">Shopping Cart</a></li>
+								<li> <a href="cart">Shopping Cart</a></li>
 								<li> <a href="#">Newsletter</a></li>
 							</ul>
 						</div>

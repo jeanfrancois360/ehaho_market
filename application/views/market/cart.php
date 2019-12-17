@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Greenfarm - Organic Food eCommerce Bootstrap 4 Template</title>
+	<title><?php echo $title; ?></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
@@ -144,7 +144,7 @@
 							<!-- end of search bar -->
 							<!-- shopping cart -->
 							<div class="shopping-cart" id="shopping-cart">
-								<a href="cart.html">
+								<a href="cart">
 									<div class="cart-icon d-inline-block">
 										<span class="icon_bag_alt"></span>
 									</div>
@@ -227,7 +227,7 @@
 										<ul class="mega-menu three-column">
 											<li><a href="#">Column One</a>
 												<ul>
-													<li><a href="cart.html">Cart</a></li>
+													<li><a href="cart">Cart</a></li>
 													<li><a href="checkout">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
 
@@ -411,7 +411,7 @@
                                     <h2>Grand Total <span id="grand_total">00.00 RWF</span></h2>
                                 </div>
                                 <div class="cart-summary-button">
-                                    <button class="checkout-btn">Checkout</button>
+                                    <button class="checkout-btn" onclick="checkout()">Checkout</button>
                                     <button class="update-btn">Update Cart</button>
                                 </div>
                             </div>
@@ -593,7 +593,7 @@
 							<ul>
 								<li> <a href="my-account.html">My Account</a></li>
 								<li> <a href="wishlist.html">Wishlist</a></li>
-								<li> <a href="cart.html">Shopping Cart</a></li>
+								<li> <a href="cart">Shopping Cart</a></li>
 								<li> <a href="#">Newsletter</a></li>
 							</ul>
 						</div>

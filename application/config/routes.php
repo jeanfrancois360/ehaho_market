@@ -59,3 +59,4 @@ $route['cart'] = 'food_market/cart';
 $route['wishlist'] = 'food_market/wishlist';
 $route['compare'] = 'food_market/compare';
 $route['checkout'] = 'food_market/checkout';
+$route['compare'] = 'food_market/compare';
