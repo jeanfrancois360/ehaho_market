@@ -1,3 +1,5 @@
+var items = "";
+
 function addToCart(market_id) {
 	if (market_id != "") {
 		jQuery.ajax({
@@ -33,7 +35,7 @@ function showCart() {
 				cart_data += '</div>';
 				cart_data += '<div class="cart-float-single-item-desc">';
 				cart_data += '<p class="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
-				cart_data += '<p class="price"><span class="count">1x</span>' + this.price_unit + ' /' + this.unit + '</p>';
+				cart_data += '<p class="price" id="price"><span class="count" id="count' + i + '">1x</span>' + this.price_unit + ' /' + this.unit + '</p>';
 				cart_data += '</div>';
 				cart_data += '</div>';
 				subtotal += parseInt(this.price_unit);
@@ -68,16 +70,21 @@ function viewCart() {
 				cart_data += '<td class="pro-subtotal"><span id="pro-subtotal' + i + '">' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="total_price' + i + '"></td>';
 				cart_data += '<td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a><td>';
 				cart_data += '<tr>';
-				subtotal += parseInt(this.price_unit);
 				$('#viewCart').append(cart_data);
+				subtotal += parseInt(this.price_unit);
 			});
 			total = subtotal;
 			subtotal = subtotal + " RWF";
 			$('#cart-title').html("");
 			$('#cart-title').append(i + " items" + " - " + subtotal);
+			items = i;
 			$('tbody').data("subtotal", subtotal);
 			$('#subtotal').append(subtotal);
 			$('#total').val(total);
+			$('#overall_subtotal').html('');
+			$('#overall_subtotal').append(subtotal + '&nbsp;RWF');
+			$('#grand_total').html('');
+			$('#grand_total').append(subtotal + '&nbsp;RWF');
 		}
 	});
 }
@@ -108,7 +115,17 @@ function calc(t) {
 	isNaN(old_price) ? old_price = 0 : old_price = old_price;
 	subtotal = parseInt(subtotal) + (parseInt(total_price) - parseInt(old_price));
 	$('#total_price' + t).val(total_price);
+	$('#count' + t).html('');
+	$('#count' + t).append(quantity + 'x');
 	$('#pro-subtotal' + t).html('');
 	$('#pro-subtotal' + t).append(total_price + '&nbsp;RWF');
+	$('#cart-title').html('');
+	$('#cart-title').append(items + " items" + " - " + subtotal + '&nbsp;RWF');
+	$('#subtotal').html('');
+	$('#subtotal').append(subtotal + '&nbsp;RWF');
 	$('#total').val(subtotal);
+	$('#overall_subtotal').html('');
+	$('#overall_subtotal').append(subtotal + '&nbsp;RWF');
+	$('#grand_total').html('');
+	$('#grand_total').append(subtotal + '&nbsp;RWF');
 }

@@ -326,6 +326,7 @@
                                         <th class="pro-quantity">Quantity</th>
                                         <th class="pro-subtotal">Total</th>
                                         <th class="pro-remove">Remove</th>
+																				<th class ="pro-remove"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="viewCart">
@@ -405,9 +406,9 @@
                             <div class="cart-summary">
                                 <div class="cart-summary-wrap">
                                     <h4>Cart Summary</h4>
-                                    <p>Sub Total <span>$1250.00</span></p>
-                                    <p>Shipping Cost <span>$00.00</span></p>
-                                    <h2>Grand Total <span>$1250.00</span></h2>
+                                    <p>Sub Total <span id="overall_subtotal">00.00 RWF</span></p>
+                                    <p>Shipping Cost <span id="shipping_cost">00.00 RWF</span></p>
+                                    <h2>Grand Total <span id="grand_total">00.00 RWF</span></h2>
                                 </div>
                                 <div class="cart-summary-button">
                                     <button class="checkout-btn">Checkout</button>
