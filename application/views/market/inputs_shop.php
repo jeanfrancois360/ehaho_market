@@ -289,7 +289,7 @@
 					<div class="breadcrumb-container">
 						<ul>
 							<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-							<li class="active">Shop</li>
+							<li class="active">Input Shop</li>
 						</ul>
 					</div>
 				</div>
@@ -316,8 +316,8 @@
 						<div class="sidebar mb-35">
 							<h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
 							<ul class="product-categories">
-								<li><a class="active" href="shop">Food</a></li>
-								<li><a href="inputs">Inputs</a></li>
+								<li><a href="shop">Food</a></li>
+								<li><a class="active" href="inputs">Inputs</a></li>
 							</ul>
 						</div>
 
@@ -561,8 +561,8 @@
 											<img src="assets/images/products/product03.jpg" class="img-fluid" alt="">
 										</a>
 										<div class="product-hover-icons">
-											<a href="#" data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
-											<a href="#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
+											<a href="#" data-tooltip="Add to cart" id="add_to_cart" onclick="add_to_cart();" > <span class="icon_cart_alt"></span></a>
+											<a href="#" data-tooltip="Add to wishlist" id="add_to_wishlist" onclick="add_to_wishlist();" > <span class="icon_heart_alt"></span> </a>
 											<a href="#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
 										</div>
@@ -575,10 +575,9 @@
 										<h3 class="product-title"><a href="single-product.html">Ornare sed consequat nisl eget</a></h3>
 										<div class="price-box">
 											<span class="main-price">$89.00</span>
-											<span class="discounted-price">$80.00</span>
+											<span class="discounted-price">$80000.00</span>
 										</div>
 									</div>
-
 								</div>
 
 								<!--=======  End of Grid view product  =======-->
@@ -815,7 +814,7 @@
 									</div>
 
 								</div>
-
+                              
 							<!--=======  End of Shop list view product  =======-->
 							</div>
 
@@ -850,7 +849,7 @@
 								</div>
 
 								<!--=======  End of Grid view product  =======-->
-
+								 
 								<!--=======  Shop list view product  =======-->
 
 								<div class="gf-product shop-list-view-product">
@@ -1150,14 +1149,26 @@
 									</div>
 
 								</div>
-
+                                
 							<!--=======  End of Shop list view product  =======-->
 							</div>
 
 					</div>
 
 					<!--=======  End of Grid list view  =======-->
-
+					               <ul>
+									<?php
+									if($inputs_content['bool'] == true){
+										foreach($inputs_content['d'] as $inputs){?>
+										
+											 <li><?php echo $inputs['name']?></li>
+										 
+									   <?php }
+									}
+									else{ ?>
+										<p class="text-warning" >No data found</p>
+									<?php }?>
+									</ul>
 					<!--=======  Pagination container  =======-->
 
 					<div class="pagination-container">
