@@ -993,7 +993,7 @@
 	/*--
     Nice Select
     ------------------------*/
-	$('.nice-select').niceSelect();
+	// $('.nice-select').niceSelect();
 
 	/*-----
 	Shipping Form Toggle

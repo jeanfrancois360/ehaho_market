@@ -8,6 +8,9 @@ class Food_market extends CI_Controller
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('Food_model');
+        if (empty($_SESSION['cart_items'])) {
+            $_SESSION['cart_items'] = array();
+        }
     }
     public function index()
     {
@@ -19,17 +22,24 @@ class Food_market extends CI_Controller
         $data['title'] = 'Ehaho - Shop';
         $data['content'] = $this->Food_model->get_all_food();
         // var_dump($data);
-        $this->load->view('market/food_shop.php', $data);
+        $this->load->view('market/header', $data);
+        $this->load->view('market/food_shop.php');
+        $this->load->view('market/footer');
     }
     public function cart()
     {
         $data['title'] = 'Ehaho - Shopping Cart';
-        $this->load->view('market/cart', $data);
+        $this->load->view('market/header', $data);
+        $this->load->view('market/cart');
+        $this->load->view('market/footer');
     }
     public function checkout()
     {
         $data['title'] = 'Ehaho - Checkout';
-        $this->load->view('market/checkout', $data);
+        $data['provinces'] = $this->Food_model->all_provinces();
+        $this->load->view('market/header', $data);
+        $this->load->view('market/checkout');
+        $this->load->view('market/footer');
     }
     public function wishlist()
     {
@@ -53,6 +63,11 @@ class Food_market extends CI_Controller
     {
         echo $this->Food_model->show_cart();
     }
+    public function show_single_cart()
+    {
+        $market_id = $_POST['market_id'];
+        echo $this->Food_model->show_single_cart($market_id);
+    }
     public function removeItem()
     {
         $id = $_POST['id'];
@@ -63,5 +78,41 @@ class Food_market extends CI_Controller
     {
         $data['title'] = 'Ehaho - Product Comparison';
         $this->load->view('market/compare', $data);
+    }
+    public function get_districts()
+    {
+        $cat=$this->input->post('name');
+        $table='district';
+        $where=array('province_id' => $cat);
+        $data['districts']=$this->Food_model->all_location($table, $where);
+        $sc=json_encode($data['districts']);
+        echo $sc;
+    }
+    public function get_sectors()
+    {
+        $cat=$this->input->post('name');
+        $table='sector';
+        $where=array('district_id' => $cat);
+        $data['sectors']=$this->Food_model->all_location($table, $where);
+        $sc=json_encode($data['sectors']);
+        echo $sc;
+    }
+    public function get_cells()
+    {
+        $cat=$this->input->post('name');
+        $table='cell';
+        $where=array('sector_id' => $cat);
+        $data['cells']=$this->Food_model->all_location($table, $where);
+        $sc=json_encode($data['cells']);
+        echo $sc;
+    }
+    public function get_villages()
+    {
+        $cat=$this->input->post('name');
+        $table='village';
+        $where=array('cell_id' => $cat);
+        $data['villages']=$this->Food_model->all_location($table, $where);
+        $sc=json_encode($data['villages']);
+        echo $sc;
     }
 }
