@@ -38,25 +38,25 @@
 							<ul class="product-categories">
 								<li>
                   <div class="single-method check">
-                    <input type="checkbox" id="payment_paypal" name="payment-method" value="paypal">
+                    <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
                     <label for="payment_paypal">Vegetables and legumes</label>
                   </div>
                 </li>
 								<li>
                   <div class="single-method check">
-                    <input type="checkbox" id="payment_paypal2" name="payment-method" value="paypal">
+                    <input type="radio" id="payment_paypal2" name="payment-method" value="paypal">
                     <label for="payment_paypal2">Fruits</label>
                   </div>
                 </li>
 								<li>
                   <div class="single-method check">
-                    <input type="checkbox" id="payment_paypal3" name="payment-method" value="paypal" checked>
+                    <input type="radio" id="payment_paypal3" name="payment-method" value="paypal" checked>
                     <label for="payment_paypal3">Grain(cereal) foods</label>
                   </div>
                 </li>
 								<li>
                   <div class="single-method check">
-                    <input type="checkbox" id="payment_paypal4" name="payment-method" value="paypal">
+                    <input type="radio" id="payment_paypal4" name="payment-method" value="paypal">
                     <label for="payment_paypal4">nuts, seeds and beans</label>
                   </div>
                 </li>
@@ -137,7 +137,7 @@
 								<div class="single-top-rated-product d-flex align-content-center">
 									<div class="image">
 										<a href="single-product.html">
-											<img src="assets/images/products/product01.jpg" class="img-fluid" alt="">
+											<img src="<?php echo base_url();?>assets/images/products/product01.jpg" class="img-fluid" alt="">
 										</a>
 									</div>
 									<div class="content">
@@ -164,7 +164,7 @@
 								<div class="single-top-rated-product d-flex align-content-center">
 									<div class="image">
 										<a href="single-product.html">
-											<img src="assets/images/products/product02.jpg" class="img-fluid" alt="">
+											<img src="<?php echo base_url();?>assets/images/products/product02.jpg" class="img-fluid" alt="">
 										</a>
 									</div>
 									<div class="content">
@@ -191,7 +191,7 @@
 								<div class="single-top-rated-product d-flex align-content-center">
 									<div class="image">
 										<a href="single-product.html">
-											<img src="assets/images/products/product03.jpg" class="img-fluid" alt="">
+											<img src="<?php echo base_url();?>assets/images/products/product03.jpg" class="img-fluid" alt="">
 										</a>
 									</div>
 									<div class="content">
@@ -252,7 +252,7 @@
 
 					<div class="shop-page-banner mb-35">
 						<a href="shop-left-sidebar.html">
-							<img src="assets/images/banners/shop-banner.jpg" class="img-fluid" alt="">
+							<img src="<?php echo base_url();?>assets/images/banners/shop-banner.jpg" class="img-fluid" alt="">
 						</a>
 					</div>
 
@@ -313,7 +313,7 @@
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
 											<!-- <img src="assets/images/products/<?php //echo $i > 9 ? $prod1 : $prod2;?>.jpg" class="img-fluid" alt=""> -->
-											<img src="../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="">
+											<img src="<?php echo base_url(); ?>../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="" style="height: 200px;">
 										</a>
 										<div class="product-hover-icons">
 											<a href="#" data-tooltip="<?php echo in_array($food['m_id'], $_SESSION['cart_items'])? "Added to cart": "Add to cart"; ?>" id="add_to_cart<?php echo $food['m_id']; ?>"
@@ -345,7 +345,7 @@
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
 											<!-- <img src="assets/images/products/<?php //echo $i > 9 ? $prod1 : $prod2;?>.jpg" class="img-fluid" alt=""> -->
-											<img src="../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="">
+											<img src="<?php echo base_url(); ?>../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="" style="height: 200px;">
 										</a>
 										<div class="product-hover-icons">
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
@@ -388,15 +388,7 @@
 								<div class="col-lg-12">
 									<!--=======  pagination-content  =======-->
 
-									<div class="pagination-content text-center">
-										<ul>
-											<li><a class="active" href="#">1</a></li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li><a href="#">4</a></li>
-											<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-										</ul>
-									</div>
+                  <?php echo $this->pagination->create_links(); ?>
 
 									<!--=======  End of pagination-content  =======-->
 								</div>

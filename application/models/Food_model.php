@@ -10,7 +10,12 @@ class Food_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    public function get_all_food()
+    // Count Total List
+    public function count_list()
+    {
+        return $this->db->count_all_results('market_place');
+    }
+    public function get_all_food($start)
     {
         $response = array();
         $response_list = array();
@@ -27,7 +32,7 @@ class Food_model extends CI_Model
         $this->db->where('market_place.product_id = product.id');
         $this->db->where('market_place.unit = unit.id');
         $this->db->order_by('market_place.m_id', 'DESC');
-        $this->db->limit(12, 0);
+        $this->db->limit(12, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $arr = $query->result_array();

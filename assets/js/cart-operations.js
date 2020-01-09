@@ -4,7 +4,7 @@ function addToCart(market_id, e) {
 	e.preventDefault();
 	if (market_id != "") {
 		jQuery.ajax({
-			url: 'food_market/add_to_cart',
+			url: base_url + 'food_market/add_to_cart',
 			data: {
 				market_id: market_id
 			},
@@ -27,7 +27,7 @@ function remove_from_cart(id, e) {
 	e.preventDefault();
 	if (id != "") {
 		jQuery.ajax({
-			url: 'food_market/removeItem',
+			url: base_url + 'food_market/removeItem',
 			data: {
 				id: id
 			},
@@ -59,7 +59,7 @@ function remove_from_cart(id, e) {
 
 function showCart() {
 	jQuery.ajax({
-		url: 'food_market/show_cart',
+		url: base_url + 'food_market/show_cart',
 		data: '',
 		type: 'POST',
 		success: function(html, textStatus) {
@@ -75,7 +75,7 @@ function showCart() {
 					cart_data = '<div class="cart-float-single-item d-flex">';
 					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.market_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -91,7 +91,7 @@ function showCart() {
 					cart_data = '<div class="cart-float-single-item d-flex">';
 					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.m_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -112,7 +112,7 @@ function showCart() {
 
 function viewCart() {
 	jQuery.ajax({
-		url: 'food_market/show_cart',
+		url: base_url + 'food_market/show_cart',
 		data: '',
 		type: 'POST',
 		success: function(html, textStatus) {
@@ -129,7 +129,7 @@ function viewCart() {
 					$.each(response, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.m_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.m_id + '" id="market_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -144,7 +144,7 @@ function viewCart() {
 					$.each(order, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.market_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.market_id + '" id="market_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.unit_price + '&nbsp;RWF</span><input type="hidden" value="' + this.unit_price + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="' + this.qty + '" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -237,7 +237,11 @@ function checkout() {
 
 function redirectToCheckout() {
 	checkout();
-	window.location.href = "http://www.ehaho.rw/marketPlaces/checkout";
+	window.location.href = "https://ehaho.rw/marketPlaces/checkout";
+}
+
+function redirectToShop() {
+	window.location.href = "https://ehaho.rw/marketPlaces/shop";
 }
 
 function checkout_processing() {
@@ -431,7 +435,7 @@ $('#cell').change(function() {
 
 function addToStorage(market_id) {
 	$.ajax({
-		url: 'food_market/show_single_cart',
+		url: base_url + 'food_market/show_single_cart',
 		type: 'POST',
 		data: {
 			market_id: market_id

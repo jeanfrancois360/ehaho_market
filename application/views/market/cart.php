@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="cart-summary-button">
                                     <button class="checkout-btn" onclick="redirectToCheckout()">Checkout</button>
-                                    <button class="update-btn">Update Cart</button>
+                                    <button class="update-btn" onclick="redirectToShop()">Update Cart</button>
                                 </div>
                             </div>
 

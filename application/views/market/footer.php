@@ -13,7 +13,7 @@
 
           <div class="newsletter-title">
             <h1>
-              <img src="assets/images/icon-newsletter.png" alt="">
+              <img src="<?php echo base_url();?>assets/images/icon-newsletter.png" alt="">
               Send Newsletter
             </h1>
           </div>
@@ -229,7 +229,7 @@
           <!--=======  payment info  =======-->
 
           <div class="payment-info text-center text-md-right">
-            <p>Allow payment base on <img src="assets/images/payment-icon.png" class="img-fluid" alt=""></p>
+            <p>Allow payment base on <img src="<?php echo base_url();?>assets/images/payment-icon.png" class="img-fluid" alt=""></p>
           </div>
 
           <!--=======  End of payment info  =======-->
@@ -252,22 +252,25 @@
 <!-- JS
 ============================================ -->
 <!-- jQuery JS -->
-<script src="assets/js/vendor/jquery.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/vendor/jquery.min.js"></script>
 
 <!-- Popper JS -->
-<script src="assets/js/popper.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/popper.min.js"></script>
 
 <!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 
 <!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins.js"></script>
 
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+<script src="<?php echo base_url();?>assets/js/main.js"></script>
+
+<!-- base_url -->
+<script>var base_url = '<?php echo base_url() ?>';</script>
 
 <!-- add to cart script -->
-<script src="assets/js/cart-operations.js"></script>
+<script src="<?php echo base_url();?>assets/js/cart-operations.js"></script>
 <script>
 $(document).ready(function(){
   $("select").niceSelect();

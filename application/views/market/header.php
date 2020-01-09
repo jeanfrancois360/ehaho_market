@@ -10,30 +10,30 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
-	<link rel="icon" href="assets/images/logo-login.ico">
+	<link rel="icon" href="<?php echo base_url();?>assets/images/logo-login.ico">
 
 	<!-- CSS
 	============================================ -->
 	<!-- Bootstrap CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- FontAwesome CSS -->
-	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- Elegent CSS -->
-	<link href="assets/css/elegent.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/elegent.min.css" rel="stylesheet">
 
 	<!-- Plugins CSS -->
-	<link href="assets/css/plugins.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/plugins.css" rel="stylesheet">
 
 	<!-- Helper CSS -->
-	<link href="assets/css/helper.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/helper.css" rel="stylesheet">
 
 	<!-- Main CSS -->
-	<link href="assets/css/main.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/main.css" rel="stylesheet">
 
 	<!-- Modernizer JS -->
-	<script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="<?php echo base_url();?>assets/js/vendor/modernizr-2.8.3.min.js"></script>
 
 	<style>
 		/* scrollbar customization */
@@ -115,7 +115,7 @@
 						<!-- logo -->
 						<div class="logo mt-15 mb-15">
 							<a href="index.html">
-								<img src="assets/images/logo-login.png" class="img-fluid" style="max-height:110px !important;" alt="">
+								<img src="<?php echo base_url();?>assets/images/logo-login.png" class="img-fluid" style="max-height:110px !important;" alt="">
 							</a>
 						</div>
 						<!-- end of logo -->
@@ -125,7 +125,7 @@
 							<!-- header phone number -->
 							<div class="header-contact d-flex">
 								<div class="phone-icon">
-									<img src="assets/images/icon-phone.png" class="img-fluid" alt="">
+									<img src="<?php echo base_url();?>assets/images/icon-phone.png" class="img-fluid" alt="">
 								</div>
 								<div class="phone-number">
 									Phone: <span class="number">+250-788-647-117</span>
@@ -142,7 +142,7 @@
 							<!-- end of search bar -->
 							<!-- shopping cart -->
 							<div class="shopping-cart" id="shopping-cart">
-								<a href="cart">
+								<a href="<?php echo base_url();?>cart">
 									<div class="cart-icon d-inline-block">
 										<span class="icon_bag_alt"></span>
 									</div>
@@ -165,8 +165,8 @@
 										<p class="total">Subtotal <span id="subtotal">0 RWF</span></p>
 									</div>
 									<div class="floating-cart-btn text-center">
-										<a href="checkout">Checkout</a>
-										<a href="cart">View Cart</a>
+										<a href="<?php echo base_url();?>checkout">Checkout</a>
+										<a href="<?php echo base_url();?>cart">View Cart</a>
 									</div>
 								</div>
 							</div>

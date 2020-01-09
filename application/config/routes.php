@@ -52,11 +52,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'Food_market';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
-$route['market'] = 'food_market';
+// Routes for inputs
 $route['inputs'] = 'Inputs_market/inputs';
+$route['inputs_checkout'] = 'Inputs_market/checkout';
+$route['inputs_cart'] = 'Inputs_market/cart';
+$route['inputs_compare'] = 'Inputs_market/compare';
+$route['inputs_wishlist'] = 'Inputs_market/wishlist';
+// Routes for food
+$route['market'] = 'food_market';
 $route['shop'] = 'food_market/food_shop';
+$route['shop/(:num)'] = 'food_market/food_shop';
 $route['cart'] = 'food_market/cart';
 $route['wishlist'] = 'food_market/wishlist';
 $route['compare'] = 'food_market/compare';
 $route['checkout'] = 'food_market/checkout';
-$route['compare'] = 'food_market/compare';

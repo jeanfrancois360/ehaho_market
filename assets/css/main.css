@@ -373,6 +373,7 @@ select {
   height: 30px;
   width: 30px;
   line-height: 30px;
+  margin: 2px;
   border-radius: 3px; }
   .pagination-content ul li a {
     background-color: #666666;
@@ -4910,6 +4911,32 @@ p.result-show-message {
         width: 10px;
         text-align: center;
         height: 10px;
+        -webkit-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s; }
+      .single-method.check input[type="radio"] + label::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        display: block;
+        border: 2px solid #999999;
+        content: "";
+        -webkit-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s; }
+      .single-method.check input[type="radio"] + label::after {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        display: block;
+        content: "";
+        opacity: 0;
+        background-color: #3e8949;
+        width: 6px;
+        text-align: center;
+        height: 6px;
         -webkit-transition: all 0.3s ease 0s;
         -o-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s; }
