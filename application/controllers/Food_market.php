@@ -28,11 +28,11 @@ class Food_market extends CI_Controller
         $config['full_tag_open'] = '<div class="pagination-content text-center"><ul>';
         $config['full_tag_close'] = '</ul></div>';
 
-        $config['first_link'] = '<<<';
+        $config['first_link'] = 'First';
         $config['first_tag_open'] = '<li>';
         $config['first_tag_close'] = '</li>';
 
-        $config['last_link'] = '>>>';
+        $config['last_link'] = 'Last';
         $config['last_tag_open'] = '<li>';
         $config['last_tag_close'] = '</li>';
 

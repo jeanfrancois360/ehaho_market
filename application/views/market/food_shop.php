@@ -31,62 +31,62 @@
 					<!--=======  sidebar area  =======-->
 
 					<div class="sidebar-area">
+
 						<!--=======  single sidebar  =======-->
 
 						<div class="sidebar mb-35">
 							<h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
 							<ul class="product-categories">
-								<li>
+								<li><a class="active" href="<?php echo base_url();?>shop">Food</a></li>
+								<li><a href="<?php echo base_url();?>inputs">Inputs</a></li>
+							</ul>
+						</div>
+
+						<!--=======  End of single sidebar  =======-->
+
+            <!--=======  single sidebar  =======-->
+
+            <div class="sidebar mb-35">
+              <h3 class="sidebar-title">FILTER BY</h3>
+              <ul class="product-categories">
+                <li>
                   <div class="single-method check">
                     <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
                     <label for="payment_paypal">Vegetables and legumes</label>
                   </div>
                 </li>
-								<li>
+                <li>
                   <div class="single-method check">
                     <input type="radio" id="payment_paypal2" name="payment-method" value="paypal">
                     <label for="payment_paypal2">Fruits</label>
                   </div>
                 </li>
-								<li>
+                <li>
                   <div class="single-method check">
                     <input type="radio" id="payment_paypal3" name="payment-method" value="paypal" checked>
                     <label for="payment_paypal3">Grain(cereal) foods</label>
                   </div>
                 </li>
-								<li>
+                <li>
                   <div class="single-method check">
                     <input type="radio" id="payment_paypal4" name="payment-method" value="paypal">
                     <label for="payment_paypal4">nuts, seeds and beans</label>
                   </div>
                 </li>
-								<!-- <li>
-                  <div class="single-method check">
-                    <input type="checkbox" id="payment_paypal5" name="payment-method" value="paypal">
-                    <label for="payment_paypal5">Pay with VisaCard or CreditCard</label>
-                  </div>
-                </li> -->
-							</ul>
-						</div>
+                <!-- <li>
+                <div class="single-method check">
+                <input type="checkbox" id="payment_paypal5" name="payment-method" value="paypal">
+                <label for="payment_paypal5">Pay with VisaCard or CreditCard</label>
+              </div>
+            </li> -->
+          </ul>
+        </div>
 
-						<!--=======  End of single sidebar  =======-->
-
-						<!--=======  single sidebar  =======-->
-
-						<div class="sidebar mb-35">
-							<h3 class="sidebar-title">Filter By</h3>
-							<ul class="product-categories">
-								<li><a class="active" href="shop-left-sidebar.html">Gold</a></li>
-								<li><a href="shop-left-sidebar.html">Green</a></li>
-								<li><a href="shop-left-sidebar.html">White</a></li>
-							</ul>
-						</div>
-
-						<!--=======  End of single sidebar  =======-->
+        <!--=======  End of single sidebar  =======-->
 
 						<!--=======  single sidebar  =======-->
 
-						<div class="sidebar mb-35">
+						<div class="sidebar mb-35" style="display:none;">
 							<h3 class="sidebar-title">Filter By Price</h3>
 							<div class="sidebar-price">
 								<div id="price-range"></div>
@@ -126,7 +126,7 @@
 
 						<!--=======  single sidebar  =======-->
 
-						<div class="sidebar mb-35">
+						<div class="sidebar mb-35" style="display:none;">
 							<h3 class="sidebar-title">Top rated products</h3>
 
 							<!--=======  top rated product container  =======-->

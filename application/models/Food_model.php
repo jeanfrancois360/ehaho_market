@@ -47,6 +47,7 @@ class Food_model extends CI_Model
             $response['product_name'] = $row['product_name'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
+            $response['variety'] = "-";
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -63,7 +64,9 @@ class Food_model extends CI_Model
             $var = $query22->result_array();
             foreach ($var as $val22) {
                 $variety = $val22['variety_name'];
-                $response['variety'] = $variety;
+                if (!empty($variety)) {
+                    $response['variety'] = $variety;
+                }
             }
             if ($row['role'] === 'farmer') {
                 $this->db->reset_query();
@@ -182,6 +185,7 @@ class Food_model extends CI_Model
                 $response['product_name'] = $row['product_name'];
                 $response['product_id'] = $row['product_id'];
                 $response['unit'] = $row['unit'];
+                $response['variety'] = "-";
                 $this->db->reset_query();
                 $this->db->limit(1, 0);
                 $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -198,7 +202,9 @@ class Food_model extends CI_Model
                 $var = $query22->result_array();
                 foreach ($var as $val22) {
                     $variety = $val22['variety_name'];
-                    $response['variety'] = $variety;
+                    if (!empty($variety)) {
+                        $response['variety'] = $variety;
+                    }
                 }
                 if ($row['role'] === 'farmer') {
                     $this->db->reset_query();
@@ -348,6 +354,7 @@ class Food_model extends CI_Model
             $response['product_name'] = $row['product_name'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
+            $response['variety'] = "-";
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -364,7 +371,9 @@ class Food_model extends CI_Model
             $var = $query22->result_array();
             foreach ($var as $val22) {
                 $variety = $val22['variety_name'];
-                $response['variety'] = $variety;
+                if (!empty($variety)) {
+                    $response['variety'] = $variety;
+                }
             }
             if ($row['role'] === 'farmer') {
                 $this->db->reset_query();
