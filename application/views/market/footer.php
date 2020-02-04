@@ -249,10 +249,12 @@
 <a href="#" class="scroll-top"></a>
 <!-- end of scroll to top -->
 
-<!-- JS
-============================================ -->
+<!-- JS============================================ -->
 <!-- jQuery JS -->
 <script src="<?php echo base_url();?>assets/js/vendor/jquery.min.js"></script>
+
+<!-- jQuery Validation -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 
 <!-- Popper JS -->
 <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>

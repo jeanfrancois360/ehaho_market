@@ -27,42 +27,43 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-
 					<!-- Checkout Form s-->
-					<form action="#" class="checkout-form">
+					<form class="checkout-form" name="checkoutForm">
 						<div class="row row-40">
 
 							<div class="col-lg-7 mb-20">
 
-								<!-- Billing Address -->
-								<div id="billing-form" class="mb-40">
-									<h4 class="checkout-title">Billing Address</h4>
+                  <div id="errors">
+                  </div>
+                  <!-- Billing Address -->
+                  <div id="billing-form" class="mb-40">
+                  <h4 class="checkout-title">Billing Address</h4>
 
 									<div class="row">
 
 										<div class="col-md-6 col-12 mb-20">
-											<label>First Name*</label>
-											<input type="text" placeholder="First Name">
+											<label for="fname">First Name*</label>
+											<input type="text" placeholder="First Name" id="fname" name="fname" required>
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
-											<label>Last Name*</label>
-											<input type="text" placeholder="Last Name">
+											<label for="lname">Last Name*</label>
+											<input type="text" placeholder="Last Name" id="lname" name="lname">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Email Address*</label>
-											<input type="email" placeholder="Email Address">
+											<input type="email" placeholder="Email Address" id="email" name="email" required>
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Phone no*</label>
-											<input type="text" placeholder="Phone number">
+											<input type="tel" placeholder="Phone number" id="phone" name="phone" min="10" max="10" required>
 										</div>
 
 										<div class="col-12 mb-20">
 											<label>National Id / Passport Id*</label>
-											<input type="text" placeholder="National Id / Passport Id">
+											<input type="text" placeholder="National Id / Passport Id" id="identity" name="identity" min="16" max="16" required>
 										</div>
 
 										<!-- <div class="col-12 mb-20">
@@ -73,14 +74,14 @@
 
                     <div class="col-md-6 col-12 mb-20">
 											<label>Country*</label>
-											<select class="nice-select">
+											<select class="nice-select" id="country" name="country" required>
 												<option selected>Rwanda</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Province*</label>
-											<select class="nice-select" name="province" id="province">
-												<option selected>Select Province</option>
+											<select class="nice-select" name="province" id="province" required>
+												<option selected disabled>Select Province</option>
                         <?php
                         foreach ($provinces as $province) {
                             ?>
@@ -92,37 +93,37 @@
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>District*</label>
-											<select class="nice-select" name="district" id="district">
-												<option selected>Select District</option>
+											<select class="nice-select" name="district" id="district" required>
+												<option selected disabled>Select District</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Sector*</label>
-											<select class="nice-select" name="sector" id="sector">
-												<option selected>Select Sector</option>
+											<select class="nice-select" name="sector" id="sector" required>
+												<option selected disabled>Select Sector</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Cell*</label>
-											<select class="nice-select" name="cell" id="cell">
-												<option selected>Select Cell</option>
+											<select class="nice-select" name="cell" id="cell" required>
+												<option selected disabled>Select Cell</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Village*</label>
-											<select class="nice-select" name="village" id="village">
-												<option selected>Select Village</option>
+											<select class="nice-select" name="village" id="village" required>
+												<option selected disabled>Select Village</option>
 											</select>
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Password*</label>
-											<input type="password" placeholder="Password">
+											<input type="password" placeholder="Password" id="password" name="password" required>
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Confirm Password*</label>
-											<input type="password" placeholder="Confirm Password">
+											<input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
 										</div>
 
 										<div class="col-12 mb-20">
@@ -142,33 +143,33 @@
 
 								<!-- Shipping Address -->
 								<div id="shipping-form" class="mb-40">
-                  <h4 class="checkout-title">Shipping Address</h4>
+                  <h4 class="checkout-title">New Shipping Address</h4>
 
 									<div class="row">
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>First Name*</label>
-											<input type="text" placeholder="First Name">
+											<input type="text" placeholder="First Name" id="fname2" name="fname2">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Last Name*</label>
-											<input type="text" placeholder="Last Name">
+											<input type="text" placeholder="Last Name" id="lname2" name="lname2">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Email Address*</label>
-											<input type="email" placeholder="Email Address">
+											<input type="email" placeholder="Email Address" id="email2" name="email2">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Phone no*</label>
-											<input type="text" placeholder="Phone number">
+											<input type="text" placeholder="Phone number" id="phone2" name="phone2">
 										</div>
 
 										<div class="col-12 mb-20">
 											<label>National Id / Passport Id*</label>
-											<input type="text" placeholder="National Id / Passport Id">
+											<input type="text" placeholder="National Id / Passport Id" id="identity2" name="identity2">
 										</div>
 
 										<!-- <div class="col-12 mb-20">
@@ -179,14 +180,14 @@
 
                     <div class="col-md-6 col-12 mb-20">
 											<label>Country*</label>
-											<select class="nice-select">
+											<select class="nice-select" id="country2" name="country2">
 												<option selected>Rwanda</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Province*</label>
-											<select class="nice-select" name="province2" id="province2">
-												<option selected>Select Province</option>
+											<select class="nice-select" name="province2" id="province2" name="province2">
+												<option selected disabled>Select Province</option>
                         <?php
                         foreach ($provinces as $province) {
                             ?>
@@ -199,25 +200,25 @@
                     <div class="col-md-6 col-12 mb-20">
 											<label>District*</label>
 											<select class="nice-select" name="district2" id="district2">
-												<option selected>Select District</option>
+												<option selected disabled>Select District</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Sector*</label>
 											<select class="nice-select" name="sector2" id="sector2">
-												<option selected>Select Sector</option>
+												<option selected disabled>Select Sector</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Cell*</label>
 											<select class="nice-select" name="cell2" id="cell2">
-												<option selected>Select Cell</option>
+												<option selected disabled>Select Cell</option>
 											</select>
 										</div>
                     <div class="col-md-6 col-12 mb-20">
 											<label>Village*</label>
 											<select class="nice-select" name="village2" id="village2">
-												<option selected>Select Village</option>
+												<option selected disabled>Select Village</option>
 											</select>
 										</div>
 									</div>
@@ -283,9 +284,9 @@
 											</div>
 
 											<div class="single-method">
-												<input type="radio" id="payment_payoneer" name="payment-method" value="payoneer">
-												<label for="payment_payoneer">Pay with Mobile Money(Airtel Tigo, MTN)</label>
-												<p data-method="payoneer">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+												<input type="radio" id="payment_mobile" name="payment-method" value="mobile">
+												<label for="payment_mobile">Pay with Mobile Money(Airtel Tigo, MTN)</label>
+												<p data-method="mobile">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
 											</div>
 
 											<div class="single-method">
@@ -295,7 +296,7 @@
 
 										</div>
 
-										<button class="place-order">Place order</button>
+										<button type="button" class="place-order" id="checkout">Place order</button>
 
 									</div>
 

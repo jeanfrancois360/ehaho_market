@@ -75,7 +75,7 @@ function showCart() {
 					cart_data = '<div class="cart-float-single-item d-flex">';
 					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.market_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -91,7 +91,7 @@ function showCart() {
 					cart_data = '<div class="cart-float-single-item d-flex">';
 					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.m_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -129,7 +129,7 @@ function viewCart() {
 					$.each(response, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.m_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.m_id + '" id="market_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -144,7 +144,7 @@ function viewCart() {
 					$.each(order, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + 'assets/images/products/product01.jpg" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.market_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.market_id + '" id="market_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.unit_price + '&nbsp;RWF</span><input type="hidden" value="' + this.unit_price + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="' + this.qty + '" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -328,6 +328,9 @@ function updateTotal(array, total) {
 		array[i].grand_total = total;
 	}
 }
+
+//default shipping address localization
+
 $('#province').change(function() {
 
 	var form_data = {
@@ -433,6 +436,113 @@ $('#cell').change(function() {
 	});
 });
 
+// New shipping address localization
+
+$('#province2').change(function() {
+
+	var form_data = {
+		name: $('#province2').val()
+	};
+
+	$.ajax({
+		url: "food_market/get_districts",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + this.id + '">' + this.name + '</option>';
+			});
+			$("#district2 option").remove();
+			$("#district2").append('<option value="">-- Select a District --</option>');
+			$("#sector2 option").remove();
+			$("#sector2").append('<option value="">-- Select a Sector --</option>');
+			$("#cell2 option").remove();
+			$("#cell2").append('<option value="">-- Select a Cell --</option>');
+			$("#village2 option").remove();
+			$("#village2").append('<option value="">-- Select a Village --</option>');
+			$("#district2").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#district2').change(function() {
+
+	var form_data = {
+		name: $('#district2').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_sectors",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#sector2 option").remove();
+			$("#sector2").append('<option disabled selected>-- Select a Sector --</option>');
+			$("#cell2 option").remove();
+			$("#cell2").append('<option disabled selected>-- Select a Cell --</option>');
+			$("#village2 option").remove();
+			$("#village2").append('<option disabled selected>-- Select a Village --</option>');
+			$("#sector2").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#sector2').change(function() {
+
+	var form_data = {
+		name: $('#sector2').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_cells",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#cell2 option").remove();
+			$("#cell2").append('<option value="">-- Select a Cell --</option>');
+			$("#village2 option").remove();
+			$("#village2").append('<option value="">-- Select a Village --</option>');
+			$("#cell2").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#cell2').change(function() {
+
+	var form_data = {
+		name: $('#cell2').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_villages",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#village2 option").remove();
+			$("#village2").append('<option value="">-- Select a Village --</option>');
+			$("#village2").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+
 function addToStorage(market_id) {
 	$.ajax({
 		url: base_url + 'food_market/show_single_cart',
@@ -454,6 +564,10 @@ function addToStorage(market_id) {
 						product_name: this.product_name,
 						unit_price: this.price_unit,
 						qty: 1,
+						photo: this.photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
 						unit: this.unit,
 						shipping: "0",
 						total_price: this.price_unit,
@@ -476,6 +590,10 @@ function addToStorage(market_id) {
 						product_name: this.product_name,
 						unit_price: this.price_unit,
 						qty: 1,
+						photo: this.photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
 						unit: this.unit,
 						shipping: "0",
 						total_price: this.price_unit,
@@ -490,3 +608,85 @@ function addToStorage(market_id) {
 		}
 	});
 }
+$('#checkout').click(function(e) {
+	e.preventDefault();
+	fname = $('#fname').val();
+	lname = $('#lname').val();
+	names = fname + " " + lname;
+	email = $('#email').val();
+	phone = $('#phone').val();
+	identity = $('#identity').val();
+	country = $('#country').val();
+	province = $('#province').val();
+	district = $('#district').val();
+	sector = $('#sector').val();
+	cell = $('#cell').val();
+	village = $('#village').val();
+	password = $('#password').val();
+	confirm = $('#confirm').val();
+	fname2 = $('#fname2').val();
+	lname2 = $('#lname2').val();
+	names2 = fname2 + " " + lname2;
+	email2 = $('#email2').val();
+	phone2 = $('#phone2').val();
+	identity2 = $('#identity2').val();
+	country2 = $('#country2').val();
+	province2 = $('#province2').val();
+	district2 = $('#district2').val();
+	sector2 = $('#sector2').val();
+	cell2 = $('#cell2').val();
+	village2 = $('#village2').val();
+	payment_cash = $('#payment_cash').is(':checked') ? 1 : 0;
+	payment_paypal = $('#payment_paypal').is(':checked') ? 1 : 0;
+	payment_mobile = $('#payment_mobile').is(':checked') ? 1 : 0;
+	terms = $('#accept_terms').is(':checked') ? 1 : 0;
+	new_address = $('#shiping_address').is(':checked') ? 1 : 0;
+	alert('Hello This is Checkout ' + province + ", ship 2 " + province2 + " cash=" + payment_cash + " paypal=" + payment_paypal + " mobile=" + payment_mobile + " terms=" + terms + " new address? " + new_address);
+	order = JSON.stringify(JSON.parse(localStorage.getItem('order')));
+	console.log("order: " + order);
+	$.ajax({
+		url: base_url + 'food_market/checkout_process',
+		type: 'POST',
+		data: {
+			names,
+			email,
+			phone,
+			identity,
+			country,
+			province,
+			district,
+			sector,
+			cell,
+			village,
+			password,
+			confirm,
+			names2,
+			email2,
+			phone2,
+			identity2,
+			country2,
+			province2,
+			district2,
+			sector2,
+			cell2,
+			village2,
+			payment_cash,
+			payment_paypal,
+			payment_mobile,
+			new_address,
+			order,
+			terms
+		},
+		success: function(html, textStatus) {
+			var response = JSON.parse(html);
+			console.log(response);
+			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			var msg = (response.errors === null ? response.successes : response.errors);
+			$('#errors').html('');
+			$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			if (response.successes === "Order has been Successfully Made") {
+				localStorage.removeItem('order');
+			}
+		}
+	});
+});

@@ -10,6 +10,24 @@ class Food_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
+    //add user $credentials
+    public function add_user_credential($data)
+    {
+        $this->db->insert('users', $data);
+        return $this->db->insert_id();
+    }
+    // add user dataType
+    public function add_user_data($data)
+    {
+        $this->db->insert('buyer_seller', $data);
+        return $this->db->insert_id();
+    }
+    //add user order
+    public function add_user_order($data)
+    {
+        $this->db->insert_batch('buyer_orders', $data);
+        return $this->db->insert_id();
+    }
     // Count Total List
     public function count_list()
     {
@@ -354,7 +372,8 @@ class Food_model extends CI_Model
             $response['product_name'] = $row['product_name'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
-            $response['variety'] = "-";
+            $response['variety'] = $row['variety_id'];
+            $response['buyer_seller_id'] = $row['user_id'];
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -372,7 +391,7 @@ class Food_model extends CI_Model
             foreach ($var as $val22) {
                 $variety = $val22['variety_name'];
                 if (!empty($variety)) {
-                    $response['variety'] = $variety;
+                    $response['variety_name'] = $variety;
                 }
             }
             if ($row['role'] === 'farmer') {
