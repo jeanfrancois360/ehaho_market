@@ -129,7 +129,12 @@ function viewCart() {
 					$.each(response, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.m_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a>';
+						cart_data += '<input type="hidden" value="' + this.m_id + '" id="market_id' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.photo + '" id="photo' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety + '" id="variety' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety_name + '" id="variety_name' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.buyer_seller_id + '" id="buyer_seller_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.price_unit + '&nbsp;RWF</span><input type="hidden" value="' + this.price_unit + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="1" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -144,7 +149,12 @@ function viewCart() {
 					$.each(order, function(item, value) {
 						i++;
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a><input type="hidden" value="' + this.market_id + '" id="market_id' + i + '"></td>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a>';
+						cart_data += '<input type="hidden" value="' + this.m_id + '" id="market_id' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.photo + '" id="photo' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety + '" id="variety' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety_name + '" id="variety_name' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.buyer_seller_id + '" id="buyer_seller_id' + i + '"></td>';
 						cart_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
 						cart_data += '<td class="pro-price"><span>' + this.unit_price + '&nbsp;RWF</span><input type="hidden" value="' + this.unit_price + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
 						cart_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="' + this.qty + '" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
@@ -210,6 +220,10 @@ function checkout() {
 		product_name = $('#product_name' + i).val();
 		unit_price = $('#unit_price' + i).val();
 		qty = $('#qty' + i).val();
+		photo = $('#photo' + i).val();
+		variety = $('#variety' + i).val();
+		variety_name = $('#variety_name' + i).val();
+		buyer_seller_id = $('#buyer_seller_id' + i).val();
 		unit = $('#unit' + i).val();
 		total_price = $('#total_price' + i).val();
 		total = $('#total').val();
@@ -222,6 +236,10 @@ function checkout() {
 				product_name: product_name,
 				unit_price: unit_price,
 				qty: qty,
+				photo: photo,
+				variety: variety,
+				variety_name: variety_name,
+				buyer_seller_id: buyer_seller_id,
 				unit: unit,
 				shipping: "0",
 				total_price: total_price,
@@ -681,11 +699,36 @@ $('#checkout').click(function(e) {
 			var response = JSON.parse(html);
 			console.log(response);
 			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			if (response.successes === "Order has been Successfully Made") {
+				response.successes = "<p>Order has been Successfully Made And You're now registered.</p><p><b>Welcome To Ehaho! </b></p>'";
+				localStorage.removeItem('order');
+				subtotal = 0;
+				subtotal = subtotal + " RWF";
+				$('#cart-title').html("");
+				$('#subtotal').html("");
+				$('#cart-title').append(0 + " items" + " - " + subtotal);
+				$('#subtotal').append(subtotal);
+				$('#checkout_subtotal').html('');
+				$('#checkout_shipping').html('');
+				$('#checkout_total').html('');
+				$('#checkout_products').html('');
+				$('#checkout_subtotal').append("0" + '&nbsp;RWF');
+				$('#checkout_shipping').append("0" + '&nbsp;RWF');
+				$('#checkout_total').append("0" + '&nbsp;RWF');
+			}
 			var msg = (response.errors === null ? response.successes : response.errors);
 			$('#errors').html('');
 			$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			if (response.successes === "Order has been Successfully Made") {
-				localStorage.removeItem('order');
+			$("html, body").animate({
+				scrollTop: "0"
+			}, 500);
+			if (response.errors === null) {
+				$('#errors').append('<p class="text-danger">Logging In....</p>');
+				var delay = 2000;
+				var url = base_url + 'shop';
+				setTimeout(function() {
+					window.location = url;
+				}, delay);
 			}
 		}
 	});

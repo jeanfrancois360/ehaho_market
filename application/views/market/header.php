@@ -74,29 +74,34 @@
 						<!-- currncy language dropdown -->
 						<div class="lang-currency-dropdown">
 							<ul>
-								<li> <a href="#">English <i class="fa fa-chevron-down"></i></a>
-									<ul>
-										<li><a href="#">French</a></li>
-										<li><a href="#">Japanease</a></li>
+								<li style="<?php echo $this->session->loggedIn == true ? "display:none;" : ""; ?>"><a href="my-account">My account </span><i class="fa fa-chevron-down"></i></a>
+									<ul class="text-sm-left">
+										<li><a href="#">Login</a></li>
+										<li><a href="#">Register</a></li>
 									</ul>
 								</li>
-								<li><a href="#">Dollar <i class="fa fa-chevron-down"></i></a>
-									<ul>
-										<li><a href="#">Euro</a></li>
-									</ul>
-								</li>
+								<li><a href="wishlist">Wishlist</a></li>
+								<li><a href="checkout">Checkout</a></li>
 							</ul>
 						</div>
 						<!-- end of currncy language dropdown -->
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
 						<!-- header top menu -->
-						<div class="header-top-menu">
-							<ul>
-								<li><a href="my-account.html">My account</a></li>
-								<li><a href="wishlist.html">Wishlist</a></li>
-								<li><a href="checkout">Checkout</a></li>
-							</ul>
+						<div class="row">
+							<div class="col-md-6 header-top-menu">
+							</div>
+							<div class="col-md-6 lang-currency-dropdown" id="userMenu" style="<?php echo $this->session->loggedIn == true ? "display:block;" : "display:none;"; ?>">
+								<ul>
+									<li> <a href="#"><span id="username"><?php echo $this->session->userdata('names');?> </span><i class="fa fa-chevron-down"></i></a>
+										<ul class="text-sm-left">
+											<li><a href="#">Account</a></li>
+											<li><a href="#">Settings</a></li>
+											<li><a href="logout">Logout</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
 						</div>
 						<!-- end of header top menu -->
 					</div>

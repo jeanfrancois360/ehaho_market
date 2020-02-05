@@ -241,6 +241,15 @@ class Food_market extends CI_Controller
               'status' => 'Active'
             );
                 $user_id= $this->Food_model->add_user_credential($credentials);
+                if ($user_id > 0) {
+                    $session_data = array(
+                      "names" => $this->input->post('names'),
+                      "email" => $this->input->post('email'),
+                      "phone" => $this->input->post('phone'),
+                      "user_id" => $user_id,
+                      "loggedIn" => true
+                    );
+                }
                 $user_data = array(
                   'user_id' => $user_id,
                   'name' =>$this->input->post('names'),
@@ -284,6 +293,7 @@ class Food_market extends CI_Controller
                     $_SESSION['cart_items'] = array();
                     $response['errors'] = null;
                     $response['successes'] = "Order has been Successfully Made";
+                    $this->session->set_userdata($session_data);
                     echo json_encode($response);
                 } else {
                     $response['errors'] = "ordering failed. please try again!!";
@@ -292,5 +302,12 @@ class Food_market extends CI_Controller
                 }
             }
         }
+    }
+    public function logout()
+    {
+        //unset the logged_in session and redirect to login page
+        $session_data = array('names','email', 'phone','loggedIn');
+        $this->session->unset_userdata($session_data);
+        redirect(base_url().'shop');
     }
 }
