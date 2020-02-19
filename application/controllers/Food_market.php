@@ -162,7 +162,8 @@ class Food_market extends CI_Controller
         $terms = $this->input->post('terms');
         if (empty($order)) {
             $response['errors'] = "Cart is Empty";
-            $response['success'] = null;
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
             echo json_encode($response);
             return;
         }
@@ -170,13 +171,15 @@ class Food_market extends CI_Controller
             1 == 1;
         } else {
             $response['errors'] = "No Payment Method Selected";
-            $response['success'] = null;
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
             echo json_encode($response);
             return;
         }
         if ($terms != 1) {
             $response['errors'] = "Accept license Agreement";
-            $response['success'] = null;
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
             echo json_encode($response);
             return;
         }
@@ -189,8 +192,8 @@ class Food_market extends CI_Controller
         }
         $response = array();
         $order_data = array();
-        if ($this->session->userdata('logged_in')) {
-            if ($this->input->post('new_address')===1) {
+        if ($this->session->loggedIn == true) {
+            if ($this->input->post('new_address') === 1) {
                 $this->form_validation->set_rules('names2', 'Names', 'required|min_length[3]');
                 $this->form_validation->set_rules('email2', 'Email', 'required|valid_email');
                 $this->form_validation->set_rules('phone2', 'phone number', 'required|exact_length[10]');
@@ -201,6 +204,49 @@ class Food_market extends CI_Controller
                 $this->form_validation->set_rules('sector2', 'sector', 'required');
                 $this->form_validation->set_rules('cell2', 'cell', 'required');
                 $this->form_validation->set_rules('village2', 'village', 'required');
+            }
+                if ($this->form_validation->run() == false) {
+                    //set the validation errors in flashdata (one time session)
+                    $this->session->set_flashdata('errors', validation_errors());
+                    $response['errors'] = validation_errors();
+                    $response['successes'] = null;
+                    $response['is_user_new'] = null;
+                    echo json_encode($response);
+                } else {
+                    $add_order;
+                    $userId = $this->session->user_id;
+                    foreach ($order as $order) {
+                        $data = array(
+                        'order_id' => "PR/".time(),
+                        'user_id' => "$userId",
+                        'buyer_seller_id' => $order['buyer_seller_id'],
+                        'product_id' => $order['product_id'],
+                        'variety_id' => $order['variety'],
+                        'quantity' => $order['qty'],
+                        'price' => $order['total_price'],
+                        'subtotal' => $order['subtotal'],
+                        'balance' => 0,
+                        'zone_area' => 2,
+                        'status' => 'Pending',
+                        'market_p_id' => $order['market_id'],
+                        'payment_method' => $payment_method
+                      );
+                        array_push($order_data, $data);
+                    }
+                    $add_order = $this->Food_model->add_user_order($order_data);
+                    if ($add_order > 0) {
+                        $_SESSION['cart_items'] = array();
+                        $response['errors'] = null;
+                        $response['is_user_new'] = 0;
+                        $response['successes'] = "Order has been Successfully Made";
+                        echo json_encode($response);
+                    } else {
+                        $response['errors'] = "ordering failed. please try again!!";
+                        $response['successes'] = null;
+                        $response['is_user_new'] = null;
+                        echo json_encode($response);
+                    }
+                }
             }
         } else {
             $this->form_validation->set_rules('names', 'Names', 'required|min_length[3]');
@@ -231,7 +277,8 @@ class Food_market extends CI_Controller
                 //set the validation errors in flashdata (one time session)
                 $this->session->set_flashdata('errors', validation_errors());
                 $response['errors'] = validation_errors();
-                $response['success'] = null;
+                $response['successes'] = null;
+                $response['is_user_new'] = null;
                 echo json_encode($response);
             } else {
                 $credentials = array(
@@ -241,15 +288,6 @@ class Food_market extends CI_Controller
               'status' => 'Active'
             );
                 $user_id= $this->Food_model->add_user_credential($credentials);
-                if ($user_id > 0) {
-                    $session_data = array(
-                      "names" => $this->input->post('names'),
-                      "email" => $this->input->post('email'),
-                      "phone" => $this->input->post('phone'),
-                      "user_id" => $user_id,
-                      "loggedIn" => true
-                    );
-                }
                 $user_data = array(
                   'user_id' => $user_id,
                   'name' =>$this->input->post('names'),
@@ -269,6 +307,15 @@ class Food_market extends CI_Controller
                   'message' => 'No'
                 );
                 $userId = $this->Food_model->add_user_data($user_data);
+                if ($user_id > 0 && $userId > 0) {
+                    $session_data = array(
+                      "names" => $this->input->post('names'),
+                      "email" => $this->input->post('email'),
+                      "phone" => $this->input->post('phone'),
+                      "user_id" => $userId,
+                      "loggedIn" => true
+                    );
+                }
                 $add_order;
                 foreach ($order as $order) {
                     $data = array(
@@ -292,12 +339,14 @@ class Food_market extends CI_Controller
                 if ($add_order > 0) {
                     $_SESSION['cart_items'] = array();
                     $response['errors'] = null;
+                    $response['is_user_new'] = 1;
                     $response['successes'] = "Order has been Successfully Made";
                     $this->session->set_userdata($session_data);
                     echo json_encode($response);
                 } else {
                     $response['errors'] = "ordering failed. please try again!!";
                     $response['successes'] = null;
+                    $response['is_user_new'] = null;
                     echo json_encode($response);
                 }
             }

@@ -696,11 +696,15 @@ $('#checkout').click(function(e) {
 			terms
 		},
 		success: function(html, textStatus) {
-			var response = JSON.parse(html);
-			console.log(response);
+			// var response = JSON.parse(html);
+			// console.log(response);
+			console.log(html);
+			return;
 			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
 			if (response.successes === "Order has been Successfully Made") {
-				response.successes = "<p>Order has been Successfully Made And You're now registered.</p><p><b>Welcome To Ehaho! </b></p>'";
+				if (response.is_user_new === 1) {
+					response.successes = "<p>Order has been Successfully Made And You're now registered.</p><p><b>Welcome To Ehaho! </b></p>'";
+				}
 				localStorage.removeItem('order');
 				subtotal = 0;
 				subtotal = subtotal + " RWF";

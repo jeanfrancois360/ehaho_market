@@ -33,6 +33,15 @@ class Food_model extends CI_Model
     {
         return $this->db->count_all_results('market_place');
     }
+    // get buyer seller_id with $user_id
+    public function get_user_id($id)
+    {
+        $sql = $this->db->query("SELECT id FROM buyer_seller WHERE user_id = '$id'");
+        $row = $sql->row();
+        if (isset($row)) {
+            return $row->id;
+        }
+    }
     public function get_all_food($start)
     {
         $response = array();
