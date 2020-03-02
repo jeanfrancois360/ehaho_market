@@ -288,8 +288,8 @@
 								</div>
 
 								<!--=======  End of Sort by dropdown  =======-->
-
-								<p class="result-show-message">Showing 1–12 of 41 results</p>
+                <?php $from = 1; $to = 12;?>
+								<p class="result-show-message">Showing <?php echo intval($from) + intval($uri_segment);?> – <?php echo intval($to) + intval($uri_segment);?> of <?php echo $total_rows;?> results</p>
 							</div>
 						</div>
 					</div>
@@ -313,7 +313,11 @@
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
 											<!-- <img src="assets/images/products/<?php //echo $i > 9 ? $prod1 : $prod2;?>.jpg" class="img-fluid" alt=""> -->
-											<img src="<?php echo base_url(); ?>../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="" style="height: 200px;">
+											<img src="<?php if ($food['photo'] == $food['variety_photo']) {
+                                echo base_url().'../app/assets/img/products/'.$food['photo'];
+                            } else {
+                                echo base_url().'../app/assets/img/market_place/'.$food['photo'];
+                            } ?>" class="img-fluid" alt="" style="height: 200px;">
 										</a>
 										<div class="product-hover-icons">
 											<a href="#" data-tooltip="<?php echo in_array($food['m_id'], $_SESSION['cart_items'])? "Added to cart": "Add to cart"; ?>" id="add_to_cart<?php echo $food['m_id']; ?>"
@@ -345,7 +349,11 @@
 										<a href="single-product.html">
 											<span class="onsale">Sale!</span>
 											<!-- <img src="assets/images/products/<?php //echo $i > 9 ? $prod1 : $prod2;?>.jpg" class="img-fluid" alt=""> -->
-											<img src="<?php echo base_url(); ?>../app/assets/img/market_place/<?php echo $food['photo']; ?>" class="img-fluid" alt="" style="height: 200px;">
+											<img src="<?php if ($food['photo'] == $food['variety_photo']) {
+                                echo base_url().'../app/assets/img/products/'.$food['photo'];
+                            } else {
+                                echo base_url().'../app/assets/img/market_place/'.$food['photo'];
+                            } ?>" class="img-fluid" alt="" style="height: 200px;">
 										</a>
 										<div class="product-hover-icons">
 											<a href="#" data-tooltip="Quick view" data-toggle = "modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>

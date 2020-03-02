@@ -22,17 +22,58 @@ class Food_model extends CI_Model
         $this->db->insert('buyer_seller', $data);
         return $this->db->insert_id();
     }
+    //add shipping address
+    public function add_shipping_address($data)
+    {
+        $this->db->insert('shipping_address', $data);
+        return $this->db->insert_id();
+    }
     //add user order
     public function add_user_order($data)
     {
         $this->db->insert_batch('buyer_orders', $data);
         return $this->db->insert_id();
     }
+
     // Count Total List
     public function count_list()
     {
         return $this->db->count_all_results('market_place');
     }
+
+    //check user $credentials
+    public function user_auth($data)
+    {
+        $user = $data['user'];
+        $password = $data['password'];
+        $condition = "users.id = buyer_seller.user_id AND users.password = '$password' AND (users.username = '$user' OR buyer_seller.phone = '$user' OR buyer_seller.email = '$user') AND users.role ='Customer' AND buyer_seller.role = 'Customer' AND users.status = 'Active' AND buyer_seller.status = 'Active'";
+        $this->db->select('buyer_seller.*,users.*');
+        $this->db->from('buyer_seller, users');
+        $this->db->where($condition);
+        $query = $this->db->get();
+        $response = array();
+        if ($query->num_rows() == 1) {
+            $row = $query->result_array();
+            foreach ($row as $row) {
+                $response['names'] = $row['name'];
+                $response['email'] = $row['email'];
+                $response['phone'] = $row['phone'];
+                $response['province'] = $row['province'];
+                $response['district'] = $row['district'];
+                $response['sector'] = $row['sector'];
+                $response['cell'] = $row['cell'];
+                $response['village'] = $row['village'];
+                $response['national_id'] = $row['national_id'];
+                $response['user_id'] = $row['id'];
+                $response['loggedIn'] = true;
+            }
+            return $response;
+        } else {
+            $response['loggedIn'] = false;
+            return $response;
+        }
+    }
+
     // get buyer seller_id with $user_id
     public function get_user_id($id)
     {
@@ -85,14 +126,16 @@ class Food_model extends CI_Model
                 $response['quantity'] = $_quantity;
             }
             $this->db->reset_query();
-            $this->db->select('variety_name');
+            $this->db->select('variety_name,photo');
             $this->db->where('id', $row['variety_id']);
             $query22 = $this->db->get('variety');
             $var = $query22->result_array();
             foreach ($var as $val22) {
                 $variety = $val22['variety_name'];
+                $variety_photo = $val22['photo'];
                 if (!empty($variety)) {
                     $response['variety'] = $variety;
+                    $response['variety_photo'] = $variety_photo;
                 }
             }
             if ($row['role'] === 'farmer') {
@@ -168,6 +211,9 @@ class Food_model extends CI_Model
                     }
                 }
             }
+            if ($response['photo'] == 'no_image.jpg') {
+                $response['photo'] = $response['variety_photo'];
+            }
             array_push($response_list, $response);
         }
         return $response_list;
@@ -223,14 +269,16 @@ class Food_model extends CI_Model
                     $response['quantity'] = $_quantity;
                 }
                 $this->db->reset_query();
-                $this->db->select('variety_name');
+                $this->db->select('variety_name,photo');
                 $this->db->where('id', $row['variety_id']);
                 $query22 = $this->db->get('variety');
                 $var = $query22->result_array();
                 foreach ($var as $val22) {
                     $variety = $val22['variety_name'];
+                    $variety_photo = $val22['photo'];
                     if (!empty($variety)) {
                         $response['variety'] = $variety;
+                        $response['variety_photo'] = $variety_photo;
                     }
                 }
                 if ($row['role'] === 'farmer') {
@@ -307,6 +355,9 @@ class Food_model extends CI_Model
                     }
                 }
             }
+            if ($response['photo'] == 'no_image.jpg') {
+                $response['photo'] = $response['variety_photo'];
+            }
             array_push($response_list, $response);
         }
         return json_encode($response_list);
@@ -342,6 +393,71 @@ class Food_model extends CI_Model
         $this->db->from("village");
         $query = $this->db->get();
         return $query->result();
+    }
+    public function get_province($id)
+    {
+        $this->db->select('name');
+        $this->db->from('province');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $row = $query->result_array();
+        $name = "";
+        foreach ($row as $row) {
+            $name = $row['name'];
+        }
+        return $name;
+    }
+    public function get_district($id)
+    {
+        $this->db->select('name');
+        $this->db->from('district');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $row = $query->result_array();
+        $name = "";
+        foreach ($row as $row) {
+            $name = $row['name'];
+        }
+        return $name;
+    }
+    public function get_sector($id)
+    {
+        $this->db->select('name');
+        $this->db->from('sector');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $row = $query->result_array();
+        $name = "";
+        foreach ($row as $row) {
+            $name = $row['name'];
+        }
+        return $name;
+    }
+    public function get_cell($id)
+    {
+        $this->db->select('name');
+        $this->db->from('cell');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $row = $query->result_array();
+        $name = "";
+        foreach ($row as $row) {
+            $name = $row['name'];
+        }
+        return $name;
+    }
+    public function get_village($id)
+    {
+        $this->db->select('name');
+        $this->db->from('village');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $row = $query->result_array();
+        $name = "";
+        foreach ($row as $row) {
+            $name = $row['name'];
+        }
+        return $name;
     }
     public function all_location($table, $where)
     {
@@ -393,14 +509,16 @@ class Food_model extends CI_Model
                 $response['quantity'] = $_quantity;
             }
             $this->db->reset_query();
-            $this->db->select('variety_name');
+            $this->db->select('variety_name,photo');
             $this->db->where('id', $row['variety_id']);
             $query22 = $this->db->get('variety');
             $var = $query22->result_array();
             foreach ($var as $val22) {
                 $variety = $val22['variety_name'];
+                $variety_photo = $val22['photo'];
                 if (!empty($variety)) {
                     $response['variety_name'] = $variety;
+                    $response['variety_photo'] = $variety_photo;
                 }
             }
             if ($row['role'] === 'farmer') {
@@ -475,6 +593,9 @@ class Food_model extends CI_Model
                         $response['sector'] = $sector;
                     }
                 }
+            }
+            if ($response['photo'] == 'no_image.jpg') {
+                $response['photo'] = $response['variety_photo'];
             }
             array_push($response_list, $response);
         }

@@ -66,4 +66,6 @@ $route['cart'] = 'food_market/cart';
 $route['wishlist'] = 'food_market/wishlist';
 $route['compare'] = 'food_market/compare';
 $route['checkout'] = 'food_market/checkout';
+$route['login'] = 'food_market/login';
+$route['register'] = 'food_market/register';
 $route['logout'] = 'food_market/logout';

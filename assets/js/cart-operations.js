@@ -72,10 +72,14 @@ function showCart() {
 				var order = JSON.parse(localStorage.getItem('order'));
 				$.each(order, function(item, value) {
 					i++;
+					var img_url = "../app/assets/img/market_place/";
+					if (this.photo == this.variety_photo) {
+						img_url = "../app/assets/img/products/";
+					}
 					cart_data = '<div class="cart-float-single-item d-flex">';
 					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.market_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -88,10 +92,14 @@ function showCart() {
 			} else {
 				$.each(response, function(item, value) {
 					i++;
+					var img_url = "../app/assets/img/market_place/";
+					if (this.photo == this.variety_photo) {
+						img_url = "../app/assets/img/products/";
+					}
 					cart_data = '<div class="cart-float-single-item d-flex">';
-					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.m_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
+					cart_data += '<span class="remove-item"><a href="#" onclick="remove_from_cart(' + this.market_id + ', event)"><i class="fa fa-times" style="color:red;"></i></a></span>';
 					cart_data += '<div class="cart-float-single-item-image">';
-					cart_data += '<a href="single-product.html"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt=""></a>';
+					cart_data += '<a href="single-product.html"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt=""></a>';
 					cart_data += '</div>';
 					cart_data += '<div class="cart-float-single-item-desc">';
 					cart_data += '<p class="product-title" id="product-title"> <a href="single-product.html">' + this.product_name + '</a></p>';
@@ -128,10 +136,15 @@ function viewCart() {
 				if (localStorage.getItem('order') === null) {
 					$.each(response, function(item, value) {
 						i++;
+						var img_url = "../app/assets/img/market_place/";
+						if (this.photo == this.variety_photo) {
+							img_url = "../app/assets/img/products/";
+						}
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a>';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt="Product"></a>';
 						cart_data += '<input type="hidden" value="' + this.m_id + '" id="market_id' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.photo + '" id="photo' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety_photo + '" id="variety_photo' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.variety + '" id="variety' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.variety_name + '" id="variety_name' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.buyer_seller_id + '" id="buyer_seller_id' + i + '"></td>';
@@ -148,10 +161,15 @@ function viewCart() {
 					var order = JSON.parse(localStorage.getItem('order'));
 					$.each(order, function(item, value) {
 						i++;
+						var img_url = "../app/assets/img/market_place/";
+						if (this.photo == this.variety_photo) {
+							img_url = "../app/assets/img/products/";
+						}
 						cart_data = '<tr>';
-						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + '../app/assets/img/market_place/' + this.photo + '" class="img-fluid" alt="Product"></a>';
-						cart_data += '<input type="hidden" value="' + this.m_id + '" id="market_id' + i + '">';
+						cart_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt="Product"></a>';
+						cart_data += '<input type="hidden" value="' + this.market_id + '" id="market_id' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.photo + '" id="photo' + i + '">';
+						cart_data += '<input type="hidden" value="' + this.variety_photo + '" id="variety_photo' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.variety + '" id="variety' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.variety_name + '" id="variety_name' + i + '">';
 						cart_data += '<input type="hidden" value="' + this.buyer_seller_id + '" id="buyer_seller_id' + i + '"></td>';
@@ -221,6 +239,7 @@ function checkout() {
 		unit_price = $('#unit_price' + i).val();
 		qty = $('#qty' + i).val();
 		photo = $('#photo' + i).val();
+		variety_photo = $('#variety_photo' + i).val();
 		variety = $('#variety' + i).val();
 		variety_name = $('#variety_name' + i).val();
 		buyer_seller_id = $('#buyer_seller_id' + i).val();
@@ -237,6 +256,7 @@ function checkout() {
 				unit_price: unit_price,
 				qty: qty,
 				photo: photo,
+				variety_photo: variety_photo,
 				variety: variety,
 				variety_name: variety_name,
 				buyer_seller_id: buyer_seller_id,
@@ -577,12 +597,13 @@ function addToStorage(market_id) {
 					i++;
 					order.push({
 						num: i,
-						market_id: this.m_id,
+						market_id: market_id,
 						product_id: this.product_id,
 						product_name: this.product_name,
 						unit_price: this.price_unit,
 						qty: 1,
 						photo: this.photo,
+						variety_photo: this.variety_photo,
 						buyer_seller_id: this.buyer_seller_id,
 						variety: this.variety,
 						variety_name: this.variety_name,
@@ -603,12 +624,13 @@ function addToStorage(market_id) {
 					total += parseInt(this.price_unit);
 					current_order.push({
 						num: i,
-						market_id: this.m_id,
+						market_id: market_id,
 						product_id: this.product_id,
 						product_name: this.product_name,
 						unit_price: this.price_unit,
 						qty: 1,
 						photo: this.photo,
+						variety_photo: this.variety_photo,
 						buyer_seller_id: this.buyer_seller_id,
 						variety: this.variety,
 						variety_name: this.variety_name,
@@ -631,6 +653,9 @@ $('#checkout').click(function(e) {
 	fname = $('#fname').val();
 	lname = $('#lname').val();
 	names = fname + " " + lname;
+	if (fname == undefined && lname == undefined) {
+		names = $('#names').val();
+	}
 	email = $('#email').val();
 	phone = $('#phone').val();
 	identity = $('#identity').val();
@@ -659,7 +684,7 @@ $('#checkout').click(function(e) {
 	payment_mobile = $('#payment_mobile').is(':checked') ? 1 : 0;
 	terms = $('#accept_terms').is(':checked') ? 1 : 0;
 	new_address = $('#shiping_address').is(':checked') ? 1 : 0;
-	alert('Hello This is Checkout ' + province + ", ship 2 " + province2 + " cash=" + payment_cash + " paypal=" + payment_paypal + " mobile=" + payment_mobile + " terms=" + terms + " new address? " + new_address);
+	// alert('Hello This is Checkout ' + province + ", ship 2 " + province2 + " cash=" + payment_cash + " paypal=" + payment_paypal + " mobile=" + payment_mobile + " terms=" + terms + " new address? " + new_address);
 	order = JSON.stringify(JSON.parse(localStorage.getItem('order')));
 	console.log("order: " + order);
 	$.ajax({
@@ -696,10 +721,10 @@ $('#checkout').click(function(e) {
 			terms
 		},
 		success: function(html, textStatus) {
-			// var response = JSON.parse(html);
-			// console.log(response);
-			console.log(html);
-			return;
+			var response = JSON.parse(html);
+			console.log(response);
+			// console.log(html);
+			// return;
 			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
 			if (response.successes === "Order has been Successfully Made") {
 				if (response.is_user_new === 1) {
@@ -726,13 +751,125 @@ $('#checkout').click(function(e) {
 			$("html, body").animate({
 				scrollTop: "0"
 			}, 500);
-			if (response.errors === null) {
-				$('#errors').append('<p class="text-danger">Logging In....</p>');
+			// if (response.errors === null ) {
+			// 	$('#errors').html('');
+			// 	$('#errors').append('<p class="text-danger">Logging In....</p>');
+			// 	var delay = 2000;
+			// 	var url = base_url + 'shop';
+			// 	setTimeout(function() {
+			// 		window.location = url;
+			// 	}, delay);
+			// }
+		}
+	});
+});
+$('#login').click(function(e) {
+	e.preventDefault();
+	var user = $('#user').val();
+	var password = $('#password').val();
+	$.ajax({
+		url: base_url + "food_market/login_process",
+		type: 'POST',
+		cache: false,
+		data: {
+			user,
+			password
+		},
+		success: function(html) {
+			var response = JSON.parse(html);
+			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			var msg = (response.errors === null ? response.successes : response.errors);
+			if (response.loggedIn === true) {
 				var delay = 2000;
-				var url = base_url + 'shop';
+				var url = '';
+				var redirect_url = redirect_to.split('/');
+				console.log(redirect_url);
+				if (redirect_url[2] !== 'login' && redirect_url[2] !== 'register') {
+					url = base_url + redirect_url[2];
+				} else {
+					url = base_url + 'shop';
+				}
+				$('#errors').html('');
+				$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$("html, body").animate({
+					scrollTop: "0"
+				}, 500);
 				setTimeout(function() {
 					window.location = url;
 				}, delay);
+			}
+			if (response.errors !== null) {
+				$('#errors').html('');
+				$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$("html, body").animate({
+					scrollTop: "0"
+				}, 500);
+			}
+		}
+	});
+});
+$('#register').click(function() {
+	fname = $('#fname').val();
+	lname = $('#lname').val();
+	names = fname + " " + lname;
+	email = $('#email').val();
+	phone = $('#phone').val();
+	identity = $('#identity').val();
+	country = $('#country').val();
+	province = $('#province').val();
+	district = $('#district').val();
+	sector = $('#sector').val();
+	cell = $('#cell').val();
+	village = $('#village').val();
+	password = $('#password').val();
+	confirm = $('#confirm').val();
+	$.ajax({
+		url: base_url + "food_market/register_process",
+		cache: false,
+		type: "POST",
+		data: {
+			names,
+			email,
+			phone,
+			identity,
+			country,
+			province,
+			district,
+			sector,
+			cell,
+			village,
+			password,
+			confirm,
+		},
+		success: function(html) {
+			var response = JSON.parse(html);
+			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			var msg = (response.errors === null ? response.successes : response.errors);
+			if (response.loggedIn === true) {
+				var delay = 2000;
+				var url = '';
+				var redirect_url = redirect_to.split('/');
+				console.log(redirect_url);
+				if (redirect_url[2] !== 'login' && redirect_url[2] !== 'register') {
+					url = base_url + redirect_url[2];
+				} else {
+					url = base_url + 'shop';
+				}
+				$('#errors').html('');
+				$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$("html, body").animate({
+					scrollTop: "0"
+				}, 500);
+				setTimeout(function() {
+					window.location = url;
+				}, delay);
+			}
+			if (response.errors !== null) {
+				$('#errors').html('');
+				$('#errors').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$("html, body").animate({
+					scrollTop: "0"
+				}, 500);
 			}
 		}
 	});

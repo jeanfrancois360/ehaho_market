@@ -8,7 +8,7 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                            <li><a href="index"><i class="fa fa-home"></i> Home</a></li>
                             <li class="active">Checkout</li>
                         </ul>
                     </div>
@@ -41,7 +41,75 @@
 
 									<div class="row">
 
-										<div class="col-md-6 col-12 mb-20">
+                    <?php if ($this->session->loggedIn == true) {?>
+
+                      <div class="col-md-12 col-12 mb-20">
+  											<label for="names">Names*</label>
+  											<input type="text" placeholder="Names" id="names" name="names" value="<?php echo $this->session->names; ?>" disabled>
+  										</div>
+
+  										<div class="col-md-6 col-12 mb-20">
+  											<label>Email Address*</label>
+  											<input type="email" placeholder="Email Address" id="email" name="email" value="<?php echo $this->session->email; ?>" disabled>
+  										</div>
+
+  										<div class="col-md-6 col-12 mb-20">
+  											<label>Phone no*</label>
+  											<input type="tel" placeholder="Phone number" id="phone" name="phone" min="10" max="10" value="<?php echo $this->session->phone; ?>" disabled>
+  										</div>
+
+  										<div class="col-12 mb-20">
+  											<label>National Id / Passport Id*</label>
+  											<input type="text" placeholder="National Id / Passport Id" id="identity" name="identity" min="16" max="16" value="<?php echo $this->session->national_id; ?>" disabled>
+  										</div>
+
+  										<!-- <div class="col-12 mb-20">
+  											<label>Address*</label>
+  											<input type="text" placeholder="Address line 1">
+  											<input type="text" placeholder="Address line 2">
+  										</div> -->
+
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>Country*</label>
+  											<select class="nice-select" id="country" name="country" required>
+  												<option selected>Rwanda</option>
+  											</select>
+  										</div>
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>Province*</label>
+  											<select class="nice-select" name="province" id="province">
+  												<option selected><?php echo $this->session->province; ?></option>
+  											</select>
+  										</div>
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>District*</label>
+  											<select class="nice-select" name="district" id="district">
+  												<option selected><?php echo $this->session->district; ?></option>
+  											</select>
+  										</div>
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>Sector*</label>
+  											<select class="nice-select" name="sector" id="sector">
+  												<option selected><?php echo $this->session->sector; ?></option>
+  											</select>
+  										</div>
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>Cell*</label>
+  											<select class="nice-select" name="cell" id="cell">
+  												<option selected><?php echo $this->session->cell; ?></option>
+  											</select>
+  										</div>
+                      <div class="col-md-6 col-12 mb-20">
+  											<label>Village*</label>
+  											<select class="nice-select" name="village" id="village">
+  												<option selected><?php echo $this->session->village; ?></option>
+  											</select>
+  										</div>
+                      <input type="hidden" id="password" value="0"/>
+                      <input type="hidden" id="confirm" value="0"/>
+                    <?php } else { ?>
+
+                    <div class="col-md-6 col-12 mb-20">
 											<label for="fname">First Name*</label>
 											<input type="text" placeholder="First Name" id="fname" name="fname" required>
 										</div>
@@ -85,7 +153,7 @@
                         <?php
                         foreach ($provinces as $province) {
                             ?>
-						<option value="<?php echo $province->id; ?>"><?php echo $province->name; ?></option>
+						             <option value="<?php echo $province->id; ?>"><?php echo $province->name; ?></option>
 						<?php
                         }
                         ?>
@@ -125,7 +193,7 @@
 											<label>Confirm Password*</label>
 											<input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
 										</div>
-
+                  <?php } ?>
 										<div class="col-12 mb-20">
 											<div class="check-box">
 												<input type="checkbox" id="create_account" checked disabled>

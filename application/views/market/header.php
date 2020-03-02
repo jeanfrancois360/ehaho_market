@@ -76,8 +76,11 @@
 							<ul>
 								<li style="<?php echo $this->session->loggedIn == true ? "display:none;" : ""; ?>"><a href="my-account">My account </span><i class="fa fa-chevron-down"></i></a>
 									<ul class="text-sm-left">
-										<li><a href="#">Login</a></li>
-										<li><a href="#">Register</a></li>
+										<?php
+                                        $actual_link = $_SERVER['REQUEST_URI'];
+                                        ?>
+										<li><a href="login?redirect_to=<?php echo $actual_link;?>">Login</a></li>
+										<li><a href="register?redirect_to=<?php echo $actual_link;?>">Register</a></li>
 									</ul>
 								</li>
 								<li><a href="wishlist">Wishlist</a></li>
@@ -97,7 +100,7 @@
 										<ul class="text-sm-left">
 											<li><a href="#">Account</a></li>
 											<li><a href="#">Settings</a></li>
-											<li><a href="logout">Logout</a></li>
+											<li><a href="logout?redirect_to=<?php echo $actual_link;?>">Logout</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -119,7 +122,7 @@
 					<div class="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
 						<!-- logo -->
 						<div class="logo mt-15 mb-15">
-							<a href="index.html">
+							<a href="shop">
 								<img src="<?php echo base_url();?>assets/images/logo-login.png" class="img-fluid" style="max-height:110px !important;" alt="">
 							</a>
 						</div>
@@ -183,16 +186,18 @@
 						<div class="main-menu">
 							<nav>
 								<ul>
-									<li class="active menu-item-has-children"><a href="#">HOME</a>
+									<!-- <li class="active menu-item-has-children"><a href="#">HOME</a>
 										<ul class="sub-menu">
 											<li><a href="index.html">Home Shop 1</a></li>
 											<li><a href="index-2.html">Home Shop 2</a></li>
 											<li><a href="index-3.html">Home Shop 3</a></li>
 											<li><a href="index-4.html">Home Shop 4</a></li>
 										</ul>
-									</li>
-									<li class="menu-item-has-children"><a href="shop-left-sidebar.html">Shop</a>
-										<ul class="sub-menu">
+									</li> -->
+									<li class=""><a href="shop">SHOP</a></li>
+									<li class=""><a href="cart">CART</a></li>
+									<li class=""><a href="checkout">CHECKOUT</a></li>
+										<!-- <ul class="sub-menu">
 											<li class="menu-item-has-children"><a href="shop-4-column.html">shop grid</a>
 												<ul class="sub-menu">
 													<li><a href="shop-3-column.html">shop 3 column</a></li>
@@ -224,9 +229,9 @@
 
 												</ul>
 											</li>
-										</ul>
-									</li>
-									<li class="menu-item-has-children"><a href="#">PAGES</a>
+										</ul> -->
+									<!-- </li> -->
+									<!-- <li class="menu-item-has-children"><a href="#">PAGES</a>
 										<ul class="mega-menu three-column">
 											<li><a href="#">Column One</a>
 												<ul>
@@ -250,8 +255,8 @@
 												</ul>
 											</li>
 										</ul>
-									</li>
-									<li class="menu-item-has-children"><a href="#">BLOG</a>
+									</li> -->
+									<!-- <li class="menu-item-has-children"><a href="#">BLOG</a>
 										<ul class="sub-menu">
 											<li><a href="blog-3-column.html">Blog 3 column</a></li>
 											<li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
@@ -265,7 +270,7 @@
 											<li><a href="blog-post-audio-format.html">Blog Post Audio Format</a></li>
 											<li><a href="blog-post-video-format.html">Blog Post Video Format</a></li>
 										</ul>
-									</li>
+									</li> -->
 									<li><a href="contact.html">CONTACT</a></li>
 								</ul>
 							</nav>

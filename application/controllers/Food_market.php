@@ -10,6 +10,7 @@ class Food_market extends CI_Controller
         $this->load->model('Food_model');
         $this->load->library('form_validation');
         $this->load->library('pagination');
+        $this->load->helper('security');
         if (empty($_SESSION['cart_items'])) {
             $_SESSION['cart_items'] = array();
         }
@@ -57,9 +58,11 @@ class Food_market extends CI_Controller
         $data['title'] = 'Ehaho - Shop';
         $start = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
         $data['content'] = $this->Food_model->get_all_food($start);
+        $data_['total_rows'] =  $this->Food_model->count_list();
+        $data_['uri_segment'] = $start;
         // var_dump($data);
         $this->load->view('market/header', $data);
-        $this->load->view('market/food_shop.php');
+        $this->load->view('market/food_shop', $data_);
         $this->load->view('market/footer');
     }
     public function cart()
@@ -75,6 +78,21 @@ class Food_market extends CI_Controller
         $data['provinces'] = $this->Food_model->all_provinces();
         $this->load->view('market/header', $data);
         $this->load->view('market/checkout');
+        $this->load->view('market/footer');
+    }
+    public function login()
+    {
+        $data['title'] = 'Ehaho - Login';
+        $this->load->view('market/header', $data);
+        $this->load->view('market/login');
+        $this->load->view('market/footer');
+    }
+    public function register()
+    {
+        $data['title'] = 'Ehaho - Register';
+        $data['provinces'] = $this->Food_model->all_provinces();
+        $this->load->view('market/header', $data);
+        $this->load->view('market/register');
         $this->load->view('market/footer');
     }
     public function wishlist()
@@ -113,7 +131,9 @@ class Food_market extends CI_Controller
     public function compare()
     {
         $data['title'] = 'Ehaho - Product Comparison';
-        $this->load->view('market/compare', $data);
+        $this->load->view('market/header', $data);
+        $this->load->view('market/compare');
+        $this->load->view('market/footer');
     }
     public function get_districts()
     {
@@ -193,30 +213,60 @@ class Food_market extends CI_Controller
         $response = array();
         $order_data = array();
         if ($this->session->loggedIn == true) {
-            if ($this->input->post('new_address') === 1) {
-                $this->form_validation->set_rules('names2', 'Names', 'required|min_length[3]');
-                $this->form_validation->set_rules('email2', 'Email', 'required|valid_email');
-                $this->form_validation->set_rules('phone2', 'phone number', 'required|exact_length[10]');
-                $this->form_validation->set_rules('identity2', 'national id', 'required|exact_length[16]');
-                $this->form_validation->set_rules('country2', 'country', 'required');
-                $this->form_validation->set_rules('province2', 'province', 'required');
-                $this->form_validation->set_rules('district2', 'district', 'required');
-                $this->form_validation->set_rules('sector2', 'sector', 'required');
-                $this->form_validation->set_rules('cell2', 'cell', 'required');
-                $this->form_validation->set_rules('village2', 'village', 'required');
+            $this->form_validation->set_rules('names', 'Names', 'required|min_length[3]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+            $this->form_validation->set_rules('phone', 'phone number', 'required|exact_length[10]');
+            $this->form_validation->set_rules('identity', 'national id', 'required|exact_length[16]');
+            $this->form_validation->set_rules('country', 'country', 'required');
+            $this->form_validation->set_rules('province', 'province', 'required');
+            $this->form_validation->set_rules('district', 'district', 'required');
+            $this->form_validation->set_rules('sector', 'sector', 'required');
+            $this->form_validation->set_rules('cell', 'cell', 'required');
+            $this->form_validation->set_rules('village', 'village', 'required');
+            $this->form_validation->set_rules('password', 'password', 'required');
+            $this->form_validation->set_rules('confirm', 'password confirmation', 'required|matches[password]');
+            if ($this->input->post('new_address') == 1) {
+                $this->form_validation->set_rules('names2', 'New shipping Names', 'required|min_length[3]');
+                $this->form_validation->set_rules('email2', 'New Shipping Email', 'required|valid_email');
+                $this->form_validation->set_rules('phone2', 'New Shipping phone number', 'required|exact_length[10]');
+                $this->form_validation->set_rules('identity2', 'New Shipping National id', 'required|exact_length[16]');
+                $this->form_validation->set_rules('country2', 'New Shipping Country', 'required');
+                $this->form_validation->set_rules('province2', 'New Shipping Province', 'required');
+                $this->form_validation->set_rules('district2', 'New Shipping District', 'required');
+                $this->form_validation->set_rules('sector2', 'New Shipping Sector', 'required');
+                $this->form_validation->set_rules('cell2', 'New Shipping Cell', 'required');
+                $this->form_validation->set_rules('village2', 'New Shipping Village', 'required');
             }
-                if ($this->form_validation->run() == false) {
-                    //set the validation errors in flashdata (one time session)
-                    $this->session->set_flashdata('errors', validation_errors());
-                    $response['errors'] = validation_errors();
-                    $response['successes'] = null;
-                    $response['is_user_new'] = null;
-                    echo json_encode($response);
-                } else {
-                    $add_order;
-                    $userId = $this->session->user_id;
-                    foreach ($order as $order) {
-                        $data = array(
+            if ($this->form_validation->run() === false) {
+                //set the validation errors in flashdata (one time session)
+                $this->session->set_flashdata('errors', validation_errors());
+                $response['errors'] = validation_errors()."<br />Error.........";
+                $response['successes'] = null;
+                $response['is_user_new'] = null;
+                echo json_encode($response);
+            } elseif ($this->form_validation->run() == true) {
+                $shipping_address = 0;
+                if ($this->input->post('new_address') == 1) {
+                    $shipping_info = array(
+                      'names' =>$this->input->post('names2'),
+                      'email' => $this->input->post('email2'),
+                      'phone' => $this->input->post('phone2'),
+                      'national_id' => $this->input->post('identity2'),
+                      'country' => $this->input->post('country2'),
+                      'province' => $this->input->post('province2'),
+                      'district' => $this->input->post('district2'),
+                      'sector' => $this->input->post('sector2'),
+                      'cell' => $this->input->post('cell2'),
+                      'village' => $this->input->post('village2'),
+                      'type' => "Food",
+                      'deleted' => 'No'
+                    );
+                    $shipping_address = $this->Food_model->add_shipping_address($shipping_info);
+                }
+                $add_order = 0;
+                $userId = $this->session->user_id;
+                foreach ($order as $order) {
+                    $data = array(
                         'order_id' => "PR/".time(),
                         'user_id' => "$userId",
                         'buyer_seller_id' => $order['buyer_seller_id'],
@@ -229,23 +279,23 @@ class Food_market extends CI_Controller
                         'zone_area' => 2,
                         'status' => 'Pending',
                         'market_p_id' => $order['market_id'],
-                        'payment_method' => $payment_method
+                        'payment_method' => $payment_method,
+                        'shipping_address' => $shipping_address
                       );
-                        array_push($order_data, $data);
-                    }
-                    $add_order = $this->Food_model->add_user_order($order_data);
-                    if ($add_order > 0) {
-                        $_SESSION['cart_items'] = array();
-                        $response['errors'] = null;
-                        $response['is_user_new'] = 0;
-                        $response['successes'] = "Order has been Successfully Made";
-                        echo json_encode($response);
-                    } else {
-                        $response['errors'] = "ordering failed. please try again!!";
-                        $response['successes'] = null;
-                        $response['is_user_new'] = null;
-                        echo json_encode($response);
-                    }
+                    array_push($order_data, $data);
+                }
+                $add_order = $this->Food_model->add_user_order($order_data);
+                if ($add_order > 0) {
+                    $_SESSION['cart_items'] = array();
+                    $response['errors'] = null;
+                    $response['is_user_new'] = 0;
+                    $response['successes'] = "Order has been Successfully Made";
+                    echo json_encode($response);
+                } else {
+                    $response['errors'] = "ordering failed. please try again!!";
+                    $response['successes'] = null;
+                    $response['is_user_new'] = null;
+                    echo json_encode($response);
                 }
             }
         } else {
@@ -312,10 +362,37 @@ class Food_market extends CI_Controller
                       "names" => $this->input->post('names'),
                       "email" => $this->input->post('email'),
                       "phone" => $this->input->post('phone'),
+                      "national_id" => $this->input->post('national_id'),
+                      "province" => $this->Food_model->get_province($this->input->post('province')),
+                      'district' => $this->Food_model->get_district($this->input->post('district')),
+                      'sector' => $this->Food_model->get_sector($this->input->post('sector')),
+                      'cell' => $this->Food_model->get_cell($this->input->post('cell')),
+                      'village' => $this->Food_model->get_village($this->input->post('village')),
                       "user_id" => $userId,
                       "loggedIn" => true
                     );
                 }
+
+                $shipping_address = 0;
+                if ($this->input->post('new_address') == 1) {
+                    $shipping_info = array(
+                      'names' =>$this->input->post('names2'),
+                      'email' => $this->input->post('email2'),
+                      'phone' => $this->input->post('phone2'),
+                      'national_id' => $this->input->post('identity2'),
+                      'country' => $this->input->post('country2'),
+                      'province' => $this->input->post('province2'),
+                      'district' => $this->input->post('district2'),
+                      'sector' => $this->input->post('sector2'),
+                      'cell' => $this->input->post('cell2'),
+                      'village' => $this->input->post('village2'),
+                      'type' => "Food",
+                      'deleted' => 'No'
+                    );
+                    $shipping_address = $this->Food_model->add_shipping_address($shipping_info);
+                }
+
+                //user order processing
                 $add_order;
                 foreach ($order as $order) {
                     $data = array(
@@ -331,7 +408,8 @@ class Food_market extends CI_Controller
                       'zone_area' => 2,
                       'status' => 'Pending',
                       'market_p_id' => $order['market_id'],
-                      'payment_method' => $payment_method
+                      'payment_method' => $payment_method,
+                      'shipping_address' => $shipping_address
                     );
                     array_push($order_data, $data);
                 }
@@ -349,6 +427,117 @@ class Food_market extends CI_Controller
                     $response['is_user_new'] = null;
                     echo json_encode($response);
                 }
+            }
+        }
+    }
+    public function login_process()
+    {
+        $this->form_validation->set_rules('user', 'Phone or Email', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            $response['errors'] = validation_errors();
+            $response['successes'] = null;
+            $response['loggedIn'] = false;
+            echo json_encode($response);
+        } else {
+            $data = array('user' => $this->input->post('user'),'password' => md5($this->input->post('password')));
+            $check = $this->Food_model->user_auth($data);
+            if ($check['loggedIn'] == true) {
+                $session_data_ = array(
+                "names" => $check['names'],
+                "email" => $check['email'],
+                "phone" => $check['phone'],
+                "national_id" => $check['national_id'],
+                "province" => $this->Food_model->get_province($check['province']),
+                "district" => $this->Food_model->get_district($check['district']),
+                "sector" => $this->Food_model->get_sector($check['sector']),
+                "cell" => $this->Food_model->get_cell($check['cell']),
+                "village" => $this->Food_model->get_village($check['village']),
+                "user_id" => $check['user_id'],
+                "loggedIn" => true
+              );
+                $this->session->set_userdata($session_data_);
+                $response['errors'] = null;
+                $response['successes'] = "Logged In Successfully!! Wait while redirecting....";
+                $response['loggedIn'] = $check['loggedIn'];
+                echo json_encode($response);
+            } else {
+                $response['errors'] = "Invalid Login, Please try again!!";
+                $response['successes'] = null;
+                $response['loggedIn'] = $check['loggedIn'];
+                echo json_encode($response);
+            }
+        }
+    }
+    public function register_process()
+    {
+        $this->form_validation->set_rules('names', 'Names', 'required|min_length[3]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[buyer_seller.email]');
+        $this->form_validation->set_rules('phone', 'phone number', 'required|exact_length[10]|is_unique[users.username]');
+        $this->form_validation->set_rules('identity', 'national id', 'required|exact_length[16]');
+        $this->form_validation->set_rules('country', 'country', 'required');
+        $this->form_validation->set_rules('province', 'province', 'required');
+        $this->form_validation->set_rules('district', 'district', 'required');
+        $this->form_validation->set_rules('sector', 'sector', 'required');
+        $this->form_validation->set_rules('cell', 'cell', 'required');
+        $this->form_validation->set_rules('village', 'village', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[3]|max_length[10]');
+        $this->form_validation->set_rules('confirm', 'password confirmation', 'required|matches[password]');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            $response['errors'] = validation_errors();
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
+            $response['loggedIn'] = false;
+            echo json_encode($response);
+        } else {
+            $credentials = array(
+          'username' => $this->input->post('phone'),
+          'password' => md5($this->input->post('password')),
+          'role' => 'Customer',
+          'status' => 'Active'
+        );
+            $user_id= $this->Food_model->add_user_credential($credentials);
+            $user_data = array(
+          'user_id' => $user_id,
+          'name' =>$this->input->post('names'),
+          'national_id' => $this->input->post('identity'),
+          'phone' => $this->input->post('phone'),
+          'email' => $this->input->post('email'),
+          'province' => $this->input->post('province'),
+          'district' => $this->input->post('district'),
+          'sector' => $this->input->post('sector'),
+          'cell' => $this->input->post('cell'),
+          'village' => $this->input->post('village'),
+          'role' => 'Customer',
+          'status' => 'Active',
+          'agent_id' => 0,
+          'about' => null,
+          'photo' => null,
+          'message' => 'No'
+        );
+            $userId = $this->Food_model->add_user_data($user_data);
+            if ($user_id > 0 && $userId > 0) {
+                $session_data__ = array(
+                  "names" => $this->input->post('names'),
+                  "email" => $this->input->post('email'),
+                  "phone" => $this->input->post('phone'),
+                  "national_id" => $this->input->post('identity'),
+                  "province" => $this->Food_model->get_province($this->input->post('province')),
+                  'district' => $this->Food_model->get_district($this->input->post('district')),
+                  'sector' => $this->Food_model->get_sector($this->input->post('sector')),
+                  'cell' => $this->Food_model->get_cell($this->input->post('cell')),
+                  'village' => $this->Food_model->get_village($this->input->post('village')),
+                  "user_id" => $userId,
+                  "loggedIn" => true
+                );
+                $response['errors'] = null;
+                $response['is_user_new'] = 1;
+                $response['successes'] = "You have been registered and Logged In Successfully!! Redirecting in While ...........";
+                $response['loggedIn'] = true;
+                $this->session->set_userdata($session_data__);
+                echo json_encode($response);
             }
         }
     }

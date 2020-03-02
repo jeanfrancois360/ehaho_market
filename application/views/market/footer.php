@@ -61,7 +61,7 @@
             <h2>Follow us</h2>
             <div class="social-links">
               <a class="facebook" href="http://www.facebook.com/" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
-              <a class="twitter" href="http://www.twitter.com/" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+              <a class="twitter" href="http://www.twitter.com/spiderbit" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
               <a class="instagram" href="http://www.instagram.com/" data-tooltip="Instagram"><i class="fa fa-instagram"></i></a>
               <a class="linkedin" href="http://www.linkedin.com/" data-tooltip="Linkedin"><i class="fa fa-linkedin"></i></a>
               <a class="rss" href="http://www.rss.com/" data-tooltip="RSS"><i class="fa fa-rss"></i></a>
@@ -87,7 +87,7 @@
                   <span class="icon_pin_alt"></span>
                 </div>
                 <div class="contact-info">
-                  <p>Address: <span>123 New Design Str, Melbourne, Australia</span></p>
+                  <p>Address: <span>Kimironko,Kigali Rwanda</span></p>
                 </div>
               </div>
 
@@ -99,7 +99,7 @@
                   <span class="icon_mobile"></span>
                 </div>
                 <div class="contact-info">
-                  <p>Phone: <span>1-888-123-456-89</span></p>
+                  <p>Phone: <span>0788647117</span></p>
                 </div>
               </div>
 
@@ -111,7 +111,7 @@
                   <span class="icon_mail_alt"></span>
                 </div>
                 <div class="contact-info">
-                  <p>Email: <span>support@hastech.company</span></p>
+                  <p>Email: <span>support@spiderbit.rw</span></p>
                 </div>
               </div>
 
@@ -135,13 +135,13 @@
 
   <!--=======  footer navigation  =======-->
 
-  <div class="footer-navigation-section pt-40 pb-40">
+  <!-- <div class="footer-navigation-section pt-40 pb-40">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30"> -->
           <!--=======  single navigation section  =======-->
 
-          <div class="single-navigation-section">
+          <!-- <div class="single-navigation-section">
             <h3 class="nav-section-title">INFORMATION</h3>
             <ul>
               <li> <a href="about-us.html">About Us</a></li>
@@ -149,29 +149,29 @@
               <li> <a href="#">Privacy Policy</a></li>
               <li> <a href="#">Terms & Condition</a></li>
             </ul>
-          </div>
+          </div> -->
 
           <!--=======  End of single navigation section  =======-->
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+        <!-- </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30"> -->
           <!--=======  single navigation section  =======-->
 
-          <div class="single-navigation-section">
+          <!-- <div class="single-navigation-section">
             <h3 class="nav-section-title">MY ACCOUNT</h3>
             <ul>
               <li> <a href="my-account.html">My Account</a></li>
               <li> <a href="wishlist.html">Wishlist</a></li>
               <li> <a href="cart">Shopping Cart</a></li>
-              <li> <a href="#">Newsletter</a></li>
-            </ul>
-          </div>
+              <li> <a href="#">Newsletter</a></li> -->
+            <!-- </ul>
+          </div> -->
 
           <!--=======  End of single navigation section  =======-->
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+        <!-- </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30"> -->
           <!--=======  single navigation section  =======-->
 
-          <div class="single-navigation-section">
+          <!-- <div class="single-navigation-section">
             <h3 class="nav-section-title">CUSTOMER SERVICE</h3>
             <ul>
               <li> <a href="contact.html">Contact</a></li>
@@ -179,14 +179,14 @@
               <li> <a href="#">RETURNS</a></li>
               <li> <a href="#">SITE MAP</a></li>
             </ul>
-          </div>
+          </div> -->
 
           <!--=======  End of single navigation section  =======-->
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <!-- </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"> -->
           <!--=======  single navigation section  =======-->
 
-          <div class="single-navigation-section">
+          <!-- <div class="single-navigation-section">
             <h3 class="nav-section-title">Extras</h3>
             <ul>
               <li> <a href="contact.html">BRANDS</a></li>
@@ -194,13 +194,13 @@
               <li> <a href="#">AFFILIATES</a></li>
               <li> <a href="#">SPECIALS</a></li>
             </ul>
-          </div>
+          </div> -->
 
           <!--=======  End of single navigation section  =======-->
-        </div>
+        <!-- </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!--=======  End of footer navigation  =======-->
 
@@ -219,7 +219,7 @@
               <span class="separator">|</span>
               <a href="#">Term and conditions</a>
             </p>
-            <p class="copyright-text">&copy; 2018 <a href="http://demo.devitems.com/">Greenfarm</a>. All Rights Reserved</p>
+            <p class="copyright-text">&copy; <?php date_default_timezone_set('Africa/Kigali'); echo date('Y');?> <a href="https://spiderbit.rw">Spiderbit</a>. All Rights Reserved</p>
           </div>
 
           <!--=======  End of copyright text	  =======-->
@@ -228,9 +228,9 @@
         <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
           <!--=======  payment info  =======-->
 
-          <div class="payment-info text-center text-md-right">
+          <!-- <div class="payment-info text-center text-md-right">
             <p>Allow payment base on <img src="<?php echo base_url();?>assets/images/payment-icon.png" class="img-fluid" alt=""></p>
-          </div>
+          </div> -->
 
           <!--=======  End of payment info  =======-->
 
@@ -270,7 +270,14 @@
 
 <!-- base_url -->
 <script>var base_url = '<?php echo base_url() ?>';</script>
-
+<?php
+if (isset($_GET['redirect_to'])) {
+    ?>
+<script>var redirect_to = '<?php echo $_GET['redirect_to']; ?>';</script>
+<?php
+} else {?>
+<script>var redirect_to = '';</script>
+<?php } ?>
 <!-- add to cart script -->
 <script src="<?php echo base_url();?>assets/js/cart-operations.js"></script>
 <script>
