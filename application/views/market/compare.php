@@ -33,8 +33,8 @@
 						<!-- Compare Table -->
 						<div class="compare-table table-responsive">
 							<table class="table mb-0">
-								<tbody>
-									<tr>
+								<tbody id="viewCompare">
+									<!-- <tr>
 										<td class="first-column">Product</td>
 										<td class="product-image-title">
 											<a href="#" class="image"><img src="assets/images/products/product01.jpg" class="img-fluid" alt="Compare Product"></a>
@@ -111,7 +111,7 @@
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star-o"></i>
 										</td>
-									</tr>
+									</tr> -->
 								</tbody>
 							</table>
 						</div>

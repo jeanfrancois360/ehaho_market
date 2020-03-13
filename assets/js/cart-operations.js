@@ -23,6 +23,52 @@ function addToCart(market_id, e) {
 	}
 }
 
+function addToWishlist(market_id, e) {
+	e.preventDefault();
+	if (market_id != "") {
+		jQuery.ajax({
+			url: base_url + 'food_market/add_to_wishlist',
+			data: {
+				market_id: market_id
+			},
+			type: 'POST',
+			success: function(data) {
+				$('#add_to_wishlist' + market_id).css("background", "red");
+				$("#add_to_wishlist" + market_id).attr("data-tooltip", "Added to Wishlist");
+				$("#add_to_wishlist" + market_id).attr("onclick", "remove_from_wishlist(" + market_id + ",event)");
+				$('#add_to_wishlist_list' + market_id).css("background", "red");
+				$("#add_to_wishlist_list" + market_id).attr("data-tooltip", "Added to Wishlist");
+				$("#add_to_wishlist_list" + market_id).attr("onclick", "remove_from_wishlist(" + market_id + ",event)");
+				addToWishlistStorage(market_id);
+				viewWishlist();
+			}
+		});
+	}
+}
+
+function addToCompare(market_id, e) {
+	e.preventDefault();
+	if (market_id != "") {
+		jQuery.ajax({
+			url: base_url + 'food_market/add_to_compare',
+			data: {
+				market_id: market_id
+			},
+			type: 'POST',
+			success: function(data) {
+				console.log(JSON.parse(data));
+				$('#add_to_compare' + market_id).css("background", "red");
+				$("#add_to_compare" + market_id).attr("data-tooltip", "Added to Compare");
+				$("#add_to_compare" + market_id).attr("onclick", "remove_from_compare(" + market_id + ",event)");
+				$('#add_to_compare_list' + market_id).css("background", "red");
+				$("#add_to_compare_list" + market_id).attr("data-tooltip", "Added to Compare");
+				$("#add_to_compare_list" + market_id).attr("onclick", "remove_from_compare(" + market_id + ",event)");
+				addToCompareStorage(market_id);
+			}
+		});
+	}
+}
+
 function remove_from_cart(id, e) {
 	e.preventDefault();
 	if (id != "") {
@@ -52,6 +98,72 @@ function remove_from_cart(id, e) {
 				showCart();
 				viewCart();
 				checkout_processing();
+			}
+		});
+	}
+}
+
+function remove_from_wishlist(id, e) {
+	e.preventDefault();
+	if (id != "") {
+		jQuery.ajax({
+			url: base_url + 'food_market/removeWishlistItem',
+			data: {
+				id: id
+			},
+			type: 'POST',
+			success: function(data) {
+				$("#add_to_wishlist" + id).css("background", "#3a8245");
+				$("#add_to_wishlist" + id).attr("onclick", "addToWishlist(" + id + ",event)");
+				$("#add_to_wishlist" + id).attr("data-tooltip", "Add to Wishlist");
+				$('#add_to_wishlist_list' + id).css("background", "#3a8245");
+				$("#add_to_wishlist_list" + id).attr("data-tooltip", "Add to Wishlist");
+				$("#add_to_wishlist_list" + id).attr("onclick", "addToWishlist(" + id + ",event)");
+				var wishlist = JSON.parse(localStorage.getItem('wishlist'));
+				var toRemove = findIndex(wishlist, id);
+				// console.log(wishlist[1]);
+				console.log("WishlistoRemove: " + toRemove);
+				// wishlist.splice(0, 1);
+				wishlist.splice(toRemove, 1);
+				localStorage.removeItem('wishlist');
+				var total = getTotal(wishlist);
+				updateTotal(wishlist, total);
+				localStorage.setItem("wishlist", JSON.stringify(wishlist));
+				// showCart();
+				viewWishlist();
+			}
+		});
+	}
+}
+
+function remove_from_compare(id, e) {
+	e.preventDefault();
+	if (id != "") {
+		jQuery.ajax({
+			url: base_url + 'food_market/removeCompareItem',
+			data: {
+				id: id
+			},
+			type: 'POST',
+			success: function(data) {
+				$("#add_to_compare" + id).css("background", "#3a8245");
+				$("#add_to_compare" + id).attr("onclick", "addToCompare(" + id + ",event)");
+				$("#add_to_compare" + id).attr("data-tooltip", "Add to Compare");
+				$('#add_to_compare_list' + id).css("background", "#3a8245");
+				$("#add_to_compare_list" + id).attr("data-tooltip", "Add to Compare");
+				$("#add_to_compare_list" + id).attr("onclick", "addToCompare(" + id + ",event)");
+				var compare = JSON.parse(localStorage.getItem('compare'));
+				var toRemove = findIndex(compare, id);
+				// console.log(compare[1]);
+				console.log("ComparetoRemove: " + toRemove);
+				// compare.splice(0, 1);
+				compare.splice(toRemove, 1);
+				localStorage.removeItem('compare');
+				var total = getTotal(compare);
+				updateTotal(compare, total);
+				localStorage.setItem("compare", JSON.stringify(compare));
+				showCompare();
+				viewCompare();
 			}
 		});
 	}
@@ -116,6 +228,29 @@ function showCart() {
 			$('#subtotal').append(subtotal);
 		}
 	});
+}
+
+function showCompare() {
+	$('#compare_items').html("");
+	var i = 0;
+	if (localStorage.getItem('compare') !== null) {
+		var compare = JSON.parse(localStorage.getItem('compare'));
+		$.each(compare, function(item, value) {
+			i++;
+			var img_url = "../app/assets/img/market_place/";
+			if (this.photo == this.variety_photo) {
+				img_url = "../app/assets/img/products/";
+			}
+			compare_data = '<ul class="product-list">';
+			compare_data += '<li>';
+			compare_data += '<a href="#" class="remove" title="Remove" onclick="remove_from_compare(' + this.market_id + ',event)">x</a>';
+			compare_data += '<a class="title" href="#">' + this.product_name + '</a>';
+			compare_data += '(<a href="#">' + this.variety_name + '</a>)';
+			compare_data += '</li>';
+			compare_data += '</ul>';
+			$('#compare_items').append(compare_data);
+		});
+	}
 }
 
 function viewCart() {
@@ -199,6 +334,148 @@ function viewCart() {
 			$('#overall_total').val(total);
 		}
 	});
+}
+
+function viewWishlist() {
+	var i = 0;
+	$('#viewWishlist').html("");
+	if (localStorage.getItem('wishlist') === null) {
+		wishlist_datae = '<tr><td colspan="7"><h4>Wishlist is empty</h4></td></tr>';
+		$('#viewWishlist').append(wishlist_datae);
+	} else {
+		var wishlist = JSON.parse(localStorage.getItem('wishlist'));
+		if (wishlist.length === 0) {
+			wishlist_datae = '<tr><td colspan="7"><h4>Wishlist is empty</h4></td></tr>';
+			$('#viewWishlist').append(wishlist_datae);
+			return;
+		}
+		$.each(wishlist, function(item, value) {
+			i++;
+			var img_url = "../app/assets/img/market_place/";
+			if (this.photo == this.variety_photo) {
+				img_url = "../app/assets/img/products/";
+			}
+			wishlist_data = '<tr>';
+			wishlist_data += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt="Product"></a>';
+			wishlist_data += '<input type="hidden" value="' + this.market_id + '" id="market_id' + i + '">';
+			wishlist_data += '<input type="hidden" value="' + this.photo + '" id="photo' + i + '">';
+			wishlist_data += '<input type="hidden" value="' + this.variety_photo + '" id="variety_photo' + i + '">';
+			wishlist_data += '<input type="hidden" value="' + this.variety + '" id="variety' + i + '">';
+			wishlist_data += '<input type="hidden" value="' + this.variety_name + '" id="variety_name' + i + '">';
+			wishlist_data += '<input type="hidden" value="' + this.buyer_seller_id + '" id="buyer_seller_id' + i + '"></td>';
+			wishlist_data += '<td class="pro-title"><a href="#">' + this.product_name + '</a><input type="hidden" value="' + this.product_id + '" id="product_id' + i + '"><input type="hidden" value="' + this.product_name + '" id="product_name' + i + '"></td>';
+			wishlist_data += '<td class="pro-price"><span>' + this.unit_price + '&nbsp;RWF</span><input type="hidden" value="' + this.unit_price + '" id="unit_price' + i + '"><input type="hidden" value="' + this.unit + '" id="unit' + i + '"></td>';
+			wishlist_data += '<td class="pro-quantity"><div class="pro-qty" id="pro-qty' + i + '"><input type="text" value="' + this.qty + '" onkeyup="calc(' + i + ')" id="qty' + i + '"></div></td>';
+			wishlist_data += '<td class="pro-subtotal"><span id="pro-subtotal' + i + '">' + this.total_price + '&nbsp;RWF</span><input type="hidden" value="' + this.total_price + '" id="total_price' + i + '"></td>';
+			wishlist_data += '<td class="pro-remove"><a href="#" onclick="remove_from_wishlist(' + this.market_id + ', event)"><i class="fa fa-trash-o"></i></a><td>';
+			wishlist_data += '<tr>';
+			$('#viewWishlist').append(wishlist_data);
+			subtotal += parseInt(this.total_price);
+		});
+	}
+	// total = subtotal;
+	// subtotal = subtotal + " RWF";
+	// $('#cart-title').html("");
+	// $('#cart-title').append(i + " items" + " - " + subtotal);
+	// items = i;
+	// $('tbody').data("subtotal", subtotal);
+	// $('#subtotal').append(subtotal);
+	// $('#total').val(total);
+	// $('#overall_subtotal').html('');
+	// $('#overall_subtotal').append(subtotal + '&nbsp;RWF');
+	// $('#grand_total').html('');
+	// $('#grand_total').append(subtotal + '&nbsp;RWF');
+	// $('#overall_total').val(total);
+}
+
+function viewCompare() {
+	var i = 0;
+	$('#viewCompare').html("");
+	if (localStorage.getItem('compare') === null) {
+		compare_datae = '<tr><td colspan="7"><h4>Compare is empty</h4></td></tr>';
+		$('#viewCompare').append(compare_datae);
+	} else {
+		var compare = JSON.parse(localStorage.getItem('compare'));
+		if (compare.length === 0) {
+			compare_datae = '<tr><td colspan="7"><h4>Compare is empty</h4></td></tr>';
+			$('#viewCompare').append(compare_datae);
+			return;
+		}
+		var img_url = "../app/assets/img/market_place/";
+		if (this.photo == this.variety_photo) {
+			img_url = "../app/assets/img/products/";
+		}
+		tbody = '';
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Product</td>';
+		$.each(compare, function(item, value) {
+			i++;
+			compare_data += '<td class="product-image-title">';
+			compare_data += '<a href="#" class="image"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt="Compare Product"></a>';
+			compare_data += '<a href="#" class="category">' + this.variety_name + '</a>';
+			compare_data += '<a href="#" class="title">' + this.product_name + '</a>';
+			compare_data += '</td>';
+		});
+		compare_data += '</tr>';
+		tbody = compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Description</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-desc"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis veritatis culpa asperiores fugit omnis ducimus ullam facilis magnam quo vitae.</p></td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Price</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-price">' + this.unit_price + '&nbspRWF/' + this.unit + '</td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Variety</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-stock">' + this.variety + '</td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Add to cart</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-addtocart"><a href="#" class="add-to-cart" tabindex="0" onclick="addToCart(' + this.market_id + ',event)"><span><i class="fa fa-shopping-cart"></i> ADD TO CART</span></a></td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Delete</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-remove"><button onclick="remove_from_compare(' + this.market_id + ', event)"><i class="fa fa-trash-o"></i></button></td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		compare_data = '<tr>';
+		compare_data += '<td class="first-column">Rating</td>';
+		$.each(compare, function(item, value) {
+			compare_data += '<td class="pro-ratting"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></td>';
+		});
+		compare_data += '</tr>';
+		tbody += compare_data;
+		$('#viewCompare').append(tbody);
+		// subtotal += parseInt(this.total_price);
+	}
+	// total = subtotal;
+	// subtotal = subtotal + " RWF";
+	// $('#cart-title').html("");
+	// $('#cart-title').append(i + " items" + " - " + subtotal);
+	// items = i;
+	// $('tbody').data("subtotal", subtotal);
+	// $('#subtotal').append(subtotal);
+	// $('#total').val(total);
+	// $('#overall_subtotal').html('');
+	// $('#overall_subtotal').append(subtotal + '&nbsp;RWF');
+	// $('#grand_total').html('');
+	// $('#grand_total').append(subtotal + '&nbsp;RWF');
+	// $('#overall_total').val(total);
 }
 
 function calc(t) {
@@ -648,6 +925,156 @@ function addToStorage(market_id) {
 		}
 	});
 }
+
+function addToWishlistStorage(market_id) {
+	$.ajax({
+		url: base_url + 'food_market/show_single_cart',
+		type: 'POST',
+		data: {
+			market_id: market_id
+		},
+		success: function(html, textStatus) {
+			var response = JSON.parse(html);
+			var wishlist = [];
+			if (localStorage.getItem('wishlist') === null) {
+				i = 0;
+				$.each(response, function(item, value) {
+					i++;
+					wishlist.push({
+						num: i,
+						market_id: market_id,
+						product_id: this.product_id,
+						product_name: this.product_name,
+						unit_price: this.price_unit,
+						qty: 1,
+						photo: this.photo,
+						variety_photo: this.variety_photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
+						unit: this.unit,
+						shipping: "0",
+						total_price: this.price_unit,
+						subtotal: this.price_unit,
+						grand_total: this.price_unit
+					});
+				});
+				localStorage.setItem("wishlist", JSON.stringify(wishlist));
+			} else {
+				current_wishlist = JSON.parse(localStorage.getItem('wishlist'));
+				i = current_wishlist.length;
+				var total = getTotal(current_wishlist);
+				$.each(response, function(item, value) {
+					i++;
+					total += parseInt(this.price_unit);
+					current_wishlist.push({
+						num: i,
+						market_id: market_id,
+						product_id: this.product_id,
+						product_name: this.product_name,
+						unit_price: this.price_unit,
+						qty: 1,
+						photo: this.photo,
+						variety_photo: this.variety_photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
+						unit: this.unit,
+						shipping: "0",
+						total_price: this.price_unit,
+						subtotal: this.price_unit,
+						grand_total: this.price_unit
+					});
+				});
+				updateTotal(current_wishlist, total);
+				localStorage.removeItem('wishlist');
+				localStorage.setItem('wishlist', JSON.stringify(current_wishlist));
+			}
+		}
+	});
+}
+
+function addToCompareStorage(market_id) {
+	$.ajax({
+		url: base_url + 'food_market/show_single_cart',
+		type: 'POST',
+		data: {
+			market_id: market_id
+		},
+		success: function(html, textStatus) {
+			var response = JSON.parse(html);
+			var compare = [];
+			if (localStorage.getItem('compare') === null) {
+				i = 0;
+				$.each(response, function(item, value) {
+					i++;
+					compare.push({
+						num: i,
+						market_id: market_id,
+						product_id: this.product_id,
+						product_name: this.product_name,
+						unit_price: this.price_unit,
+						qty: 1,
+						photo: this.photo,
+						variety_photo: this.variety_photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
+						unit: this.unit,
+						shipping: "0",
+						total_price: this.price_unit,
+						subtotal: this.price_unit,
+						grand_total: this.price_unit
+					});
+				});
+				localStorage.setItem("compare", JSON.stringify(compare));
+			} else {
+				var current_compare = JSON.parse(localStorage.getItem('compare'));
+				i = current_compare.length;
+				var total = getTotal(current_compare);
+				$.each(response, function(item, value) {
+					i++;
+					total += parseInt(this.price_unit);
+					current_compare.push({
+						num: i,
+						market_id: market_id,
+						product_id: this.product_id,
+						product_name: this.product_name,
+						unit_price: this.price_unit,
+						qty: 1,
+						photo: this.photo,
+						variety_photo: this.variety_photo,
+						buyer_seller_id: this.buyer_seller_id,
+						variety: this.variety,
+						variety_name: this.variety_name,
+						unit: this.unit,
+						shipping: "0",
+						total_price: this.price_unit,
+						subtotal: this.price_unit,
+						grand_total: this.price_unit
+					});
+				});
+				updateTotal(current_compare, total);
+				localStorage.removeItem('compare');
+				localStorage.setItem('compare', JSON.stringify(current_compare));
+				showCompare();
+				viewCompare();
+			}
+		}
+	});
+}
+$('#clear_compare').click(function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: "food_market/clear_compare",
+		data: {},
+		success: function(html) {
+			localStorage.removeItem('compare');
+			showCompare();
+			viewCompare();
+		}
+	})
+});
 $('#checkout').click(function(e) {
 	e.preventDefault();
 	fname = $('#fname').val();

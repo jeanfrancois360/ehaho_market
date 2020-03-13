@@ -61,7 +61,7 @@
             <h2>Follow us</h2>
             <div class="social-links">
               <a class="facebook" href="http://www.facebook.com/" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
-              <a class="twitter" href="http://www.twitter.com/spiderbit" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+              <a class="twitter" href="http://www.twitter.com/SpiderbitRwa" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
               <a class="instagram" href="http://www.instagram.com/" data-tooltip="Instagram"><i class="fa fa-instagram"></i></a>
               <a class="linkedin" href="http://www.linkedin.com/" data-tooltip="Linkedin"><i class="fa fa-linkedin"></i></a>
               <a class="rss" href="http://www.rss.com/" data-tooltip="RSS"><i class="fa fa-rss"></i></a>
@@ -111,7 +111,7 @@
                   <span class="icon_mail_alt"></span>
                 </div>
                 <div class="contact-info">
-                  <p>Email: <span>support@spiderbit.rw</span></p>
+                  <p>Email: <span>info@ehaho.rw</span></p>
                 </div>
               </div>
 
@@ -284,7 +284,10 @@ if (isset($_GET['redirect_to'])) {
 $(document).ready(function(){
   $("select").niceSelect();
   showCart();
+  showCompare();
   viewCart();
+  viewWishlist();
+  viewCompare();
   checkout_processing();
 });
 </script>

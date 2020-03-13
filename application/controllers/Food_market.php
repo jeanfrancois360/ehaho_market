@@ -14,6 +14,12 @@ class Food_market extends CI_Controller
         if (empty($_SESSION['cart_items'])) {
             $_SESSION['cart_items'] = array();
         }
+        if (empty($_SESSION['wishlist_items'])) {
+            $_SESSION['wishlist_items'] = array();
+        }
+        if (empty($_SESSION['compare_items'])) {
+            $_SESSION['compare_items'] = array();
+        }
     }
     public function index()
     {
@@ -60,6 +66,109 @@ class Food_market extends CI_Controller
         $data['content'] = $this->Food_model->get_all_food($start);
         $data_['total_rows'] =  $this->Food_model->count_list();
         $data_['uri_segment'] = $start;
+        $data['categories'] = $this->Food_model->get_product_categories();
+        $data['tags'] = $this->Food_model->get_product_tags();
+        $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
+        $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
+        $this->load->view('market/header', $data);
+        $this->load->view('market/food_shop', $data_);
+        $this->load->view('market/footer');
+    }
+    public function food_shop_by_category()
+    {
+        // Pagination Configuration Start
+        $category = ($this->uri->segment(2) == "category") ? $this->uri->segment(3) : 0;
+        $config['base_url'] = base_url()."shop/category/".$category;
+        $config['total_rows'] = $this->Food_model->count_list_by_category($category);
+        $config['per_page'] = 12;
+        $config['uri_segment'] = 4;
+        $config['full_tag_open'] = '<div class="pagination-content text-center"><ul>';
+        $config['full_tag_close'] = '</ul></div>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '<';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li><a class="active" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+        // Pagination Configuration End
+
+        $data['title'] = 'Ehaho - Shop';
+        $start = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $data['content'] = $this->Food_model->get_all_food_by_category($start, $category);
+        $data_['total_rows'] =  $this->Food_model->count_list_by_category($category);
+        $data_['uri_segment'] = $start;
+        $data['categories'] = $this->Food_model->get_product_categories();
+        $data['tags'] = $this->Food_model->get_product_tags();
+        $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
+        $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
+        // var_dump($data);
+        $this->load->view('market/header', $data);
+        $this->load->view('market/food_shop', $data_);
+        $this->load->view('market/footer');
+    }
+    public function food_shop_by_tag()
+    {
+        // Pagination Configuration Start
+        $tag = ($this->uri->segment(2) == "tag") ? $this->uri->segment(3) : 0;
+        $config['base_url'] = base_url()."shop/tag/".$tag;
+        $config['total_rows'] = $this->Food_model->count_list_by_tag($tag);
+        $config['per_page'] = 12;
+        $config['uri_segment'] = 4;
+        $config['full_tag_open'] = '<div class="pagination-content text-center"><ul>';
+        $config['full_tag_close'] = '</ul></div>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '<';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li><a class="active" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+        // Pagination Configuration End
+
+        $data['title'] = 'Ehaho - Shop';
+        $start = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $data['content'] = $this->Food_model->get_all_food_by_tag($start, $tag);
+        $data_['total_rows'] =  $this->Food_model->count_list_by_tag($tag);
+        $data_['uri_segment'] = $start;
+        $data['categories'] = $this->Food_model->get_product_categories();
+        $data['tags'] = $this->Food_model->get_product_tags();
+        $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
+        $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
         // var_dump($data);
         $this->load->view('market/header', $data);
         $this->load->view('market/food_shop', $data_);
@@ -98,7 +207,9 @@ class Food_market extends CI_Controller
     public function wishlist()
     {
         $data['title'] = 'Ehaho - Wishlist';
-        $this->load->view('market/wishlist', $data);
+        $this->load->view('market/header', $data);
+        $this->load->view('market/wishlist');
+        $this->load->view('market/footer');
     }
     public function add_to_cart($market_id = "")
     {
@@ -111,6 +222,32 @@ class Food_market extends CI_Controller
                 array_push($_SESSION['cart_items'], $market_id);
             }
             echo json_encode($_SESSION['cart_items']);
+        }
+    }
+    public function add_to_wishlist($market_id = "")
+    {
+        if (isset($_POST['market_id'])) {
+            $market_id = $_POST['market_id'];
+            if (empty($_SESSION['cart_items'])) {
+                $_SESSION['wishlist_items'] = array();
+            }
+            if (!in_array($market_id, $_SESSION['wishlist_items'])) {
+                array_push($_SESSION['wishlist_items'], $market_id);
+            }
+            echo json_encode($_SESSION['wishlist_items']);
+        }
+    }
+    public function add_to_compare($market_id = "")
+    {
+        if (isset($_POST['market_id'])) {
+            $market_id = $_POST['market_id'];
+            if (empty($_SESSION['compare_items'])) {
+                $_SESSION['compare_items'] = array();
+            }
+            if (!in_array($market_id, $_SESSION['compare_items'])) {
+                array_push($_SESSION['compare_items'], $market_id);
+            }
+            echo json_encode($_SESSION['compare_items']);
         }
     }
     public function show_cart()
@@ -127,6 +264,18 @@ class Food_market extends CI_Controller
         $id = $_POST['id'];
         $key = array_search($id, $_SESSION['cart_items']);
         unset($_SESSION['cart_items'][$key]);
+    }
+    public function removeWishlistItem()
+    {
+        $id = $_POST['id'];
+        $key = array_search($id, $_SESSION['wishlist_items']);
+        unset($_SESSION['wishlist_items'][$key]);
+    }
+    public function removeCompareItem()
+    {
+        $id = $_POST['id'];
+        $key = array_search($id, $_SESSION['compare_items']);
+        unset($_SESSION['compare_items'][$key]);
     }
     public function compare()
     {
@@ -170,6 +319,11 @@ class Food_market extends CI_Controller
         $data['villages']=$this->Food_model->all_location($table, $where);
         $sc=json_encode($data['villages']);
         echo $sc;
+    }
+    public function clear_compare()
+    {
+        $_SESSION['compare_items'] = array();
+        echo "compare is empty!!!";
     }
     public function checkout_process()
     {

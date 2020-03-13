@@ -4240,6 +4240,10 @@ p.result-show-message {
         background-color: #3a8245;
         color: #fff;
         border-color: #3a8245; }
+      .sidebar-area .sidebar ul.tag-container li a.active {
+        background-color: #3a8245;
+        color: #fff;
+        border-color: #3a8245; }
   .sidebar-area .sidebar .top-rated-product-container .single-top-rated-product {
     margin-bottom: 20px; }
     .sidebar-area .sidebar .top-rated-product-container .single-top-rated-product p {
