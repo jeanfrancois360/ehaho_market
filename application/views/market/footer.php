@@ -288,6 +288,7 @@ $(document).ready(function(){
   viewCart();
   viewWishlist();
   viewCompare();
+  viewMyOrders();
   checkout_processing();
 });
 </script>

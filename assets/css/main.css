@@ -4770,6 +4770,18 @@ p.result-show-message {
   font-size: 14px;
   color: #666666;
   margin-bottom: 15px; }
+  
+.checkout-form textarea {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #999999;
+  border-radius: 50px;
+  line-height: 23px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 15px; }
+
   .checkout-form input[type="checkbox"] {
     width: auto; }
 
@@ -6250,3 +6262,8 @@ footer {
     color: #3a8245; }
 
 /*=====  End of 22. Footer ======*/
+
+/* badge borders */
+.badge{
+  border: 0;
+}

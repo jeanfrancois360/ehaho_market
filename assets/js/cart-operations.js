@@ -478,6 +478,53 @@ function viewCompare() {
 	// $('#overall_total').val(total);
 }
 
+function viewMyOrders() {
+	var i = 0;
+	var response = [];
+	$('#viewMyOrders').html("");
+	$.ajax({
+		url: base_url + "food_market/get_single_buyer_orders",
+		type: 'POST',
+		data: '',
+		success: function(html, textStatus) {
+			response = JSON.parse(html);
+			console.log(response);
+			if (response.length === 0) {
+				myOrders_datae = '<tr><td colspan="7"><h4>Your Orders are empty</h4></td></tr>';
+				$('#viewMyOrders').append(myOrders_datae);
+				return;
+			}
+			$.each(response, function(item, value) {
+				i++;
+				order_id = "'" + this.order_id + "'";
+				myOrders_data = '<tr>';
+				myOrders_data += '<td class="pro-thumbnail">' + this.order_id + '</td>';
+				myOrders_data += '<td class="pro-title"><a href="#">' + this.payment_method + '</a></td>';
+				myOrders_data += '<td class="pro-subtotal"><span>' + this.subtotal + '&nbsp;RWF</span></td>';
+				myOrders_data += '<td class="pro-title">' + this.status + '</td>';
+				myOrders_data += '<td class="pro-title">' + this.date + '</td>';
+				myOrders_data += '<td class="pro-removee"><a class="badge badge-info" href="#" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="order_info(' + order_id + ', event)"><i class="fa fa-info"></i> Details</a><br><a class="badge badge-primary" href="#" data-toggle="modal" data-target=".bd-example-modal-lgg" onclick="order_offers(' + order_id + ', event)"><i class="fa fa-gift"></i> Offers</a><br><a class="badge badge-danger" href="#" onclick="remove_from_myOrders(' + order_id + ', event)"><i class="fa fa-trash-o"></i> Cancel</a><td>';
+				myOrders_data += '<tr>';
+				$('#viewMyOrders').append(myOrders_data);
+				// subtotal += parseInt(this.total_price);
+			});
+		}
+	});
+	// total = subtotal;
+	// subtotal = subtotal + " RWF";
+	// $('#cart-title').html("");
+	// $('#cart-title').append(i + " items" + " - " + subtotal);
+	// items = i;
+	// $('tbody').data("subtotal", subtotal);
+	// $('#subtotal').append(subtotal);
+	// $('#total').val(total);
+	// $('#overall_subtotal').html('');
+	// $('#overall_subtotal').append(subtotal + '&nbsp;RWF');
+	// $('#grand_total').html('');
+	// $('#grand_total').append(subtotal + '&nbsp;RWF');
+	// $('#overall_total').val(total);
+}
+
 function calc(t) {
 	var subtotal, price_unit, total_price, old_price, quantity;
 	old_price = $('#total_price' + t).val();
@@ -751,6 +798,116 @@ $('#cell').change(function() {
 	});
 });
 
+//supplier offer address
+
+function province_change(id) {
+
+	var form_data = {
+		name: $('#province' + id).val()
+	};
+
+	$.ajax({
+		url: "food_market/get_districts",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + this.id + '">' + this.name + '</option>';
+			});
+			$("#district" + id + " option").remove();
+			$("#district" + id).append('<option value="">-- Select a District --</option>');
+			$("#sector" + id + " option").remove();
+			$("#sector" + id).append('<option value="">-- Select a Sector --</option>');
+			$("#cell" + id + " option").remove();
+			$("#cell" + id).append('<option value="">-- Select a Cell --</option>');
+			$("#village" + id + " option").remove();
+			$("#village" + id).append('<option value="">-- Select a Village --</option>');
+			$("#district" + id).append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+}
+
+function district_change(id) {
+
+	var form_data = {
+		name: $('#district' + id).val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_sectors",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#sector" + id + " option").remove();
+			$("#sector" + id).append('<option value="">-- Select a Sector --</option>');
+			$("#cell" + id + " option").remove();
+			$("#cell" + id).append('<option value="">-- Select a Cell --</option>');
+			$("#village" + id + " option").remove();
+			$("#village" + id).append('<option value="">-- Select a Village --</option>');
+			$("#sector" + id).append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+}
+
+function sector_change(id) {
+
+	var form_data = {
+		name: $('#sector' + id).val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_cells",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#cell" + id + " option").remove();
+			$("#cell" + id).append('<option value="">-- Select a Cell --</option>');
+			$("#village" + id + " option").remove();
+			$("#village" + id).append('<option value="">-- Select a Village --</option>');
+			$("#cell" + id).append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+}
+
+function cell_change(id) {
+
+	var form_data = {
+		name: $('#cell' + id).val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_villages",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#village" + id + " option").remove();
+			$("#village" + id).append('<option value="">-- Select a Village --</option>');
+			$("#village" + id).append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+}
+
 // New shipping address localization
 
 $('#province2').change(function() {
@@ -853,6 +1010,112 @@ $('#cell2').change(function() {
 			$("#village2 option").remove();
 			$("#village2").append('<option value="">-- Select a Village --</option>');
 			$("#village2").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+
+// pre_order  localization
+$('#province_').change(function() {
+
+	var form_data = {
+		name: $('#province_').val()
+	};
+
+	$.ajax({
+		url: "food_market/get_districts",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + this.id + '">' + this.name + '</option>';
+			});
+			$("#district_ option").remove();
+			$("#district_").append('<option value="">-- Select a District --</option>');
+			$("#sector_ option").remove();
+			$("#sector_").append('<option value="">-- Select a Sector --</option>');
+			$("#cell_ option").remove();
+			$("#cell_").append('<option value="">-- Select a Cell --</option>');
+			$("#village_ option").remove();
+			$("#village_").append('<option value="">-- Select a Village --</option>');
+			$("#district_").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#district_').change(function() {
+
+	var form_data = {
+		name: $('#district_').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_sectors",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#sector_ option").remove();
+			$("#sector_").append('<option disabled selected>-- Select a Sector --</option>');
+			$("#cell_ option").remove();
+			$("#cell_").append('<option disabled selected>-- Select a Cell --</option>');
+			$("#village_ option").remove();
+			$("#village_").append('<option disabled selected>-- Select a Village --</option>');
+			$("#sector_").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#sector_').change(function() {
+
+	var form_data = {
+		name: $('#sector_').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_cells",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#cell_ option").remove();
+			$("#cell_").append('<option value="">-- Select a Cell --</option>');
+			$("#village_ option").remove();
+			$("#village_").append('<option value="">-- Select a Village --</option>');
+			$("#cell_").append(sc);
+			$("select").niceSelect('update');
+		}
+	});
+});
+$('#cell_').change(function() {
+
+	var form_data = {
+		name: $('#cell_').val()
+	};
+
+	$.ajax({
+		url: "Food_market/get_villages",
+		type: 'POST',
+		dataType: 'json',
+		data: form_data,
+		success: function(msg) {
+			var sc = '';
+			$.each(msg, function(key, val) {
+				sc += '<option value="' + val.id + '">' + val.name + '</option>';
+			});
+			$("#village_ option").remove();
+			$("#village_").append('<option value="">-- Select a Village --</option>');
+			$("#village_").append(sc);
 			$("select").niceSelect('update');
 		}
 	});
@@ -1301,3 +1564,235 @@ $('#register').click(function() {
 		}
 	});
 });
+
+function supplier_offer(id) {
+	names = $('#supplier_name' + id).val();
+	email = $('#supplier_email' + id).val();
+	phone = $('#supplier_phone' + id).val();
+	identity = $('#supplier_identity' + id).val();
+	order_id = $('#order_id' + id).val();
+	console.log("order id: " + order_id);
+	product_id = $('#product_id' + id).val();
+	variety_id = $('#variety_id' + id).val();
+	unit = $('#unit' + id).val();
+	country = $('#country' + id).val();
+	qty = $('#supplier_qty' + id).val();
+	unit_price = $('#supplier_price' + id).val();
+	province = $('#province' + id).val();
+	district = $('#district' + id).val();
+	sector = $('#sector' + id).val();
+	cell = $('#cell' + id).val();
+	village = $('#village' + id).val();
+	delivery_date = $('#delivery_date' + id).val();
+	comment = $('#comment' + id).val();
+	$.ajax({
+		url: base_url + "food_market/supplier_offer",
+		cache: false,
+		type: "POST",
+		data: {
+			names,
+			email,
+			phone,
+			identity,
+			country,
+			order_id,
+			product_id,
+			variety_id,
+			unit,
+			qty,
+			unit_price,
+			province,
+			district,
+			sector,
+			cell,
+			village,
+			delivery_date,
+			comment
+		},
+		success: function(html) {
+			var response = JSON.parse(html);
+			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			var msg = (response.errors === null ? response.successes : response.errors);
+			if (response.errors !== null) {
+				$('#status' + id).html('');
+				$('#status' + id).append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			} else {
+				$('#supplier_name' + id).val('');
+				$('#supplier_email' + id).val('');
+				$('#supplier_phone' + id).val('');
+				$('#supplier_identity' + id).val('');
+				$('#unit' + id).val('');
+				$('#supplier_qty' + id).val('');
+				$('#supplier_price' + id).val('');
+				$('#delivery_date' + id).val('');
+				$('#comment' + id).val('');
+				$('#status' + id).html('');
+				$('#status' + id).append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			}
+		}
+	});
+}
+
+function order_info(id) {
+	$.ajax({
+		url: base_url + "food_market/order_info",
+		type: "POST",
+		data: {
+			id
+		},
+		success: function(html, textStatus) {
+			$('#order_info').html('');
+			$("#order_total").html('');
+			response = JSON.parse(html);
+			if (response.length === 0) {
+				info = '<tr><td colspan="7"><h4 class="text-center">No Details Info</h4></td></tr>';
+				$('#order_info').append(info);
+				return;
+			}
+			var total = 0;
+			$.each(response, function() {
+				img_url = "../app/assets/img/products/";
+				info = '<tr>';
+				info += '<td class="pro-thumbnail"><a href="#"><img src="' + base_url + img_url + this.photo + '" class="img-fluid" alt="Product" style="height:50px !important;"></a>';
+				info += '<td class="pro-title"><a href="#">' + this.product_name + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.variety_name + '</a></td>';
+				info += '<td class="pro-quantity"><a href="#">' + this.quantity + ' /' + this.unit_name + '</a></td>';
+				info += '<td class="pro-price"><a href="#">' + this.price + '&nbsp;RWF</a></td>';
+				info += '<td class="pro-subtotal"><span>' + (parseInt(this.quantity) * parseInt(this.price)) + '&nbsp;RWF</span></td>';
+				info += '</tr>';
+				total = this.subtotal;
+				$('#order_info').append(info);
+			});
+			$("#order_total").append("<strong>" + total + "&nbsp;RWF</strong>");
+		}
+	});
+}
+
+function order_offers(id) {
+	o_id = "'" + id + "'";
+	approved = "'Approved'";
+	declined = "'Declined'";
+	cancelled = "'Cancelled'";
+	$.ajax({
+		url: base_url + "food_market/order_offers",
+		type: "POST",
+		data: {
+			id
+		},
+		success: function(html, textStatus) {
+			$('#order_offer').html('');
+			response = JSON.parse(html);
+			if (response.length === 0) {
+				info = '<tr><td colspan="15"><h4 class="text-center">No Supplier Offers Yet</h4></td></tr>';
+				$('#order_offer').append(info);
+				return;
+			}
+			$.each(response, function() {
+				info = '<tr>';
+				info += '<td class="pro-title"><a href="#">' + this.names + '</a>';
+				info += '<td class="pro-title"><a href="#">' + this.phone + '</a>';
+				info += '<td class="pro-title"><a href="#">' + this.email + '</a>';
+				info += '<td class="pro-title"><a href="#">' + this.product_name + '</a>';
+				info += '<td class="pro-title"><a href="#">' + this.variety_name + '</a>';
+				info += '<td class="pro-quantity"><a href="#">' + this.offer_quantity + ' /' + this.unit_name + '</a></td>';
+				info += '<td class="pro-price"><a href="#">' + this.unit_price + '&nbsp;RWF</a></td>';
+				info += '<td class="pro-subtotal"><a href="#">' + (parseInt(this.offer_quantity) * parseInt(this.unit_price)) + '&nbsp;RWF</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.country + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.province + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.district + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.sector + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.cell + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.village + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.delivery_date + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.comment + '</a></td>';
+				info += '<td class="pro-title"><a href="#">' + this.status + '</a></td>';
+				if (this.status == "Pending") {
+					info += '<td class="pro-title"><a class="badge badge-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a> | <a class="badge badge-danger" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + declined + ')"><i class="fa fa-times"></i> Decline</a></td>';
+					info += "<tr>";
+				} else if (this.status == "Approved") {
+					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-success" href="#" ><strong><i class="fa fa-check"></i> Approved</strong></a> | <a class="text-danger" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + cancelled + ')"><i class="fa fa-times"></i> Cancel</a></td>';
+					info += "<tr>";
+				} else if (this.status == "Cancelled") {
+					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-danger" href="#"><strong><i class="fa fa-times"></i> Cancelled</strong></a> | <a class="text-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a></td>';
+					info += "<tr>";
+				}
+				$('#order_offer').append(info);
+			});
+		}
+	});
+}
+
+function offer_action(offer_id, order_id, status) {
+	$.ajax({
+		url: base_url + "food_market/offer_action",
+		type: 'POST',
+		data: {
+			offer_id,
+			status
+		},
+		success: function(html, textStatus) {
+			order_offers(order_id);
+		}
+	});
+}
+
+function load_prediction(id) {
+	$('#prediction_id').val(id);
+}
+$('#pre_order').click(function() {
+	names = $('#names').val();
+	email = $('#email').val();
+	phone = $('#phone').val();
+	identity = $('#identity').val();
+	prediction_id = $('#prediction_id').val();
+	console.log("prediction id: " + prediction_id);
+	country = $('#country').val();
+	qty = $('#qty').val();
+	province = $('#province_').val();
+	district = $('#district_').val();
+	sector = $('#sector_').val();
+	cell = $('#cell_').val();
+	village = $('#village_').val();
+	delivery_date = $('#delivery_date_').val();
+	comment = $('#comment_').val();
+	$.ajax({
+		url: base_url + "food_market/pre_order",
+		cache: false,
+		type: "POST",
+		data: {
+			names,
+			email,
+			phone,
+			identity,
+			country,
+			prediction_id,
+			qty,
+			province,
+			district,
+			sector,
+			cell,
+			village,
+			delivery_date,
+			comment
+		},
+		success: function(html) {
+			var response = JSON.parse(html);
+			var classT = (response.errors !== null ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show");
+			var msg = (response.errors === null ? response.successes : response.errors);
+			if (response.errors !== null) {
+				$('#status').html('');
+				$('#status').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			} else {
+				$('#names').val('');
+				$('#email').val('');
+				$('#phone').val('');
+				$('#identity').val('');
+				$('#qty').val('');
+				$('#comment_').val('');
+				$('#delivery_date_').val('');
+				$('#status').html('');
+				$('#status').append("<div class='" + classT + "' role='alert'>" + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			}
+		}
+	});
+})

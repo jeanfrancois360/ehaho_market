@@ -16,10 +16,22 @@ class Food_model extends CI_Model
         $this->db->insert('users', $data);
         return $this->db->insert_id();
     }
-    // add user dataType
+    // add user data
     public function add_user_data($data)
     {
         $this->db->insert('buyer_seller', $data);
+        return $this->db->insert_id();
+    }
+    // add user supplier offer
+    public function add_supplier_offer($data)
+    {
+        $this->db->insert('supplier_offers', $data);
+        return $this->db->insert_id();
+    }
+    // add pre order
+    public function pre_order($data)
+    {
+        $this->db->insert('pre_orders', $data);
         return $this->db->insert_id();
     }
     //add shipping address
@@ -33,6 +45,14 @@ class Food_model extends CI_Model
     {
         $this->db->insert_batch('buyer_orders', $data);
         return $this->db->insert_id();
+    }
+
+    //offer status update
+    public function offer_update($id, $status)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('supplier_offers', array('status' => $status));
+        return true;
     }
 
     // Count Total List
@@ -139,7 +159,7 @@ class Food_model extends CI_Model
         $sector = "";
         $district = "";
         $variety = "";
-        $this->db->select('market_place.*,product.product_name,unit.name AS unit');
+        $this->db->select('market_place.*,product.product_name,product.description,unit.name AS unit');
         $this->db->from('market_place,product,unit');
         $this->db->where('market_place.product_id = product.id');
         $this->db->where('market_place.unit = unit.id');
@@ -157,9 +177,11 @@ class Food_model extends CI_Model
             $response['date'] = $row['date'];
             $response['photo'] = $row['photo'];
             $response['product_name'] = $row['product_name'];
+            $response['description'] = $row['description'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
             $response['variety'] = "-";
+            $response['variety_photo'] = 'no_image.jpg';
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -274,7 +296,7 @@ class Food_model extends CI_Model
         $sector = "";
         $district = "";
         $variety = "";
-        $this->db->select('market_place.*,product.product_name,unit.name AS unit');
+        $this->db->select('market_place.*,product.product_name,product.description,unit.name AS unit');
         $this->db->from('market_place,product_category_associations,product,unit');
         $this->db->where('market_place.product_id = product.id');
         $this->db->where('market_place.unit = unit.id');
@@ -295,9 +317,11 @@ class Food_model extends CI_Model
             $response['date'] = $row['date'];
             $response['photo'] = $row['photo'];
             $response['product_name'] = $row['product_name'];
+            $response['description'] = $row['description'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
             $response['variety'] = "-";
+            $response['variety_photo'] = 'no_image.jpg';
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -412,7 +436,7 @@ class Food_model extends CI_Model
         $sector = "";
         $district = "";
         $variety = "";
-        $this->db->select('market_place.*,product.product_name,unit.name AS unit');
+        $this->db->select('market_place.*,product.product_name,product.description,unit.name AS unit');
         $this->db->from('market_place,tags_associations,product,unit');
         $this->db->where('market_place.product_id = product.id');
         $this->db->where('market_place.unit = unit.id');
@@ -434,9 +458,11 @@ class Food_model extends CI_Model
             $response['date'] = $row['date'];
             $response['photo'] = $row['photo'];
             $response['product_name'] = $row['product_name'];
+            $response['description'] = $row['description'];
             $response['product_id'] = $row['product_id'];
             $response['unit'] = $row['unit'];
             $response['variety'] = "-";
+            $response['variety_photo'] = 'no_image.jpg';
             $this->db->reset_query();
             $this->db->limit(1, 0);
             $this->db->select_sum('quantity')->where('market_p_id', $row['m_id']);
@@ -596,7 +622,7 @@ class Food_model extends CI_Model
     {
         $response = array();
         $response_list = array();
-        $this->db->select('buyer_orders.*,buyer_seller.*,market_place.photo AS m_photo,market_place.role AS seller_role,unit.name AS unit,product.product_name,variety.variety_name,variety.photo AS variety_photo,province.name AS province,district.name AS district,sector.name AS sector,cell.name AS cell,village.name AS village');
+        $this->db->select('buyer_orders.*,buyer_seller.*,market_place.photo AS m_photo,market_place.role AS seller_role,unit.name AS unit_name,product.product_name,variety.variety_name,variety.photo AS variety_photo,province.name AS province,district.name AS district,sector.name AS sector,cell.name AS cell,village.name AS village');
         $this->db->from('buyer_orders,buyer_seller,market_place,product,variety,unit,province,district,sector,cell,village');
         $this->db->where('buyer_orders.user_id = buyer_seller.user_id');
         $this->db->where('buyer_orders.product_id = product.id');
@@ -611,6 +637,8 @@ class Food_model extends CI_Model
         $rows = $this->db->get()->result_array();
         foreach ($rows as $row) {
             $response['id'] = $row['id'];
+            $response['o_id'] = $row['o_id'];
+            $response['order_id'] = $row['order_id'];
             $response['user_id'] = $row['user_id'];
             $response['user_name'] = $row['name'];
             $response['national_id'] = $row['national_id'];
@@ -624,10 +652,13 @@ class Food_model extends CI_Model
             $response['seller'] = $this->get_seller_name($row['seller_role'], $row['buyer_seller_id']);
             $response['product_name'] = $row['product_name'];
             $response['variety_name'] = $row['variety_name'];
+            $response['product_id'] = $row['product_id'];
+            $response['variety_id'] = $row['variety_id'];
+            $response['unit_id'] = $row['unit'];
             $response['photo'] = $row['m_photo'];
             $response['quantity'] = $row['quantity'];
             $response['unit_price'] = $row['price'];
-            $response['unit'] = $row['unit'];
+            $response['unit'] = $row['unit_name'];
             $response['payment_method'] = $row['payment_method'];
             $response['status'] = $row['status'];
             $response['date'] = $row['date'];
@@ -683,6 +714,7 @@ class Food_model extends CI_Model
         $this->db->where("predictions.variety_id = variety.id");
         $rows = $this->db->get()->result_array();
         foreach ($rows as $row) {
+            $response['id'] = $row['id'];
             $response['farmer_name'] = $row['name'];
             $response['product'] = $row['product_name'];
             $response['variety'] = $row['variety_name'];
@@ -952,7 +984,7 @@ class Food_model extends CI_Model
         $sector = "";
         $district = "";
         $variety = "";
-        $this->db->select('market_place.*,product.product_name,unit.name AS unit');
+        $this->db->select('market_place.*,product.product_name,unit.id AS unit');
         $this->db->from('market_place,product,unit');
         $this->db->where('market_place.product_id = product.id');
         $this->db->where('market_place.unit = unit.id');
@@ -1076,5 +1108,44 @@ class Food_model extends CI_Model
             array_push($response_list, $response);
         }
         return json_encode($response_list);
+    }
+    public function get_single_buyer_orders($user_id)
+    {
+        $condition = "(buyer_seller.id ='$user_id' OR buyer_seller.user_id = '$user_id')";
+        $this->db->select('buyer_orders.*');
+        $this->db->from('buyer_orders,buyer_seller');
+        $this->db->where('buyer_orders.user_id = buyer_seller.user_id');
+        $this->db->where($condition);
+        $this->db->group_by('order_id');
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    public function order_info($id)
+    {
+        $this->db->select('buyer_orders.*,product.product_name,variety.variety_name,variety.photo,unit.name AS unit_name');
+        $this->db->from('buyer_orders,product,variety,unit');
+        $this->db->where('product.id = buyer_orders.product_id');
+        $this->db->where('variety.id = buyer_orders.variety_id');
+        $this->db->where('unit.id = buyer_orders.unit');
+        $this->db->where('buyer_orders.order_id', $id);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    public function order_offers($id)
+    {
+        $this->db->select('supplier_offers.*,product.product_name,variety.variety_name,variety.photo,unit.name AS unit_name,province.name AS province,district.name AS district,sector.name AS sector,cell.name AS cell,village.name AS village');
+        $this->db->from('supplier_offers,buyer_orders,product,variety,unit,province,district,sector,cell,village');
+        $this->db->where('product.id = buyer_orders.product_id');
+        $this->db->where('variety.id = buyer_orders.variety_id');
+        $this->db->where('province.id = supplier_offers.province');
+        $this->db->where('district.id = supplier_offers.district');
+        $this->db->where('sector.id = supplier_offers.sector');
+        $this->db->where('cell.id = supplier_offers.cell');
+        $this->db->where('village.id = supplier_offers.village');
+        $this->db->where('unit.id = buyer_orders.unit');
+        $this->db->where('supplier_offers.order_id = buyer_orders.o_id');
+        $this->db->where('buyer_orders.order_id', $id);
+        $query = $this->db->get()->result_array();
+        return $query;
     }
 }

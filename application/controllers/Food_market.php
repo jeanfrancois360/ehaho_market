@@ -70,6 +70,7 @@ class Food_market extends CI_Controller
         $data['tags'] = $this->Food_model->get_product_tags();
         $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
         $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
+        $data['provinces'] = $this->Food_model->all_provinces();
         $this->load->view('market/header', $data);
         $this->load->view('market/food_shop', $data_);
         $this->load->view('market/footer');
@@ -119,6 +120,7 @@ class Food_market extends CI_Controller
         $data['tags'] = $this->Food_model->get_product_tags();
         $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
         $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
+        $data['provinces'] = $this->Food_model->all_provinces();
         // var_dump($data);
         $this->load->view('market/header', $data);
         $this->load->view('market/food_shop', $data_);
@@ -169,6 +171,7 @@ class Food_market extends CI_Controller
         $data['tags'] = $this->Food_model->get_product_tags();
         $data['buyer_orders'] = $this->Food_model->get_buyer_orders();
         $data['pre_harvest'] = $this->Food_model->get_pre_harvest();
+        $data['provinces'] = $this->Food_model->all_provinces();
         // var_dump($data);
         $this->load->view('market/header', $data);
         $this->load->view('market/food_shop', $data_);
@@ -210,6 +213,30 @@ class Food_market extends CI_Controller
         $this->load->view('market/header', $data);
         $this->load->view('market/wishlist');
         $this->load->view('market/footer');
+    }
+    public function my_orders()
+    {
+        $data['title'] = 'Ehaho - My Orders';
+        $this->load->view('market/header', $data);
+        $this->load->view('market/myOrders');
+        $this->load->view('market/footer');
+    }
+    public function get_single_buyer_orders()
+    {
+        $results = $this->Food_model->get_single_buyer_orders($this->session->user_id);
+        echo json_encode($results);
+    }
+    public function order_info()
+    {
+        $id = $this->input->post('id');
+        $results = $this->Food_model->order_info($id);
+        echo json_encode($results);
+    }
+    public function order_offers()
+    {
+        $id = $this->input->post('id');
+        $results = $this->Food_model->order_offers($id);
+        echo json_encode($results);
     }
     public function add_to_cart($market_id = "")
     {
@@ -426,6 +453,7 @@ class Food_market extends CI_Controller
                         'buyer_seller_id' => $order['buyer_seller_id'],
                         'product_id' => $order['product_id'],
                         'variety_id' => $order['variety'],
+                        'unit' => $order['unit'],
                         'quantity' => $order['qty'],
                         'price' => $order['total_price'],
                         'subtotal' => $order['subtotal'],
@@ -555,6 +583,7 @@ class Food_market extends CI_Controller
                       'buyer_seller_id' => $order['buyer_seller_id'],
                       'product_id' => $order['product_id'],
                       'variety_id' => $order['variety'],
+                      'unit' => $order['unit'],
                       'quantity' => $order['qty'],
                       'price' => $order['total_price'],
                       'subtotal' => $order['subtotal'],
@@ -694,6 +723,126 @@ class Food_market extends CI_Controller
                 echo json_encode($response);
             }
         }
+    }
+    public function supplier_offer()
+    {
+        $this->form_validation->set_rules('names', 'Names', 'required|min_length[3]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|exact_length[10]');
+        $this->form_validation->set_rules('identity', 'National id', 'required|exact_length[16]');
+        $this->form_validation->set_rules('country', 'Country', 'required');
+        $this->form_validation->set_rules('province', 'Province', 'required');
+        $this->form_validation->set_rules('district', 'District', 'required');
+        $this->form_validation->set_rules('sector', 'Sector', 'required');
+        $this->form_validation->set_rules('cell', 'Cell', 'required');
+        $this->form_validation->set_rules('village', 'Village', 'required');
+        $this->form_validation->set_rules('qty', 'Quantity', 'required');
+        $this->form_validation->set_rules('unit_price', 'Unit Price', 'required');
+        $this->form_validation->set_rules('order_id', 'Order Id', 'required');
+        $this->form_validation->set_rules('delivery_date', 'Delivery Date', 'required');
+        $this->form_validation->set_rules('comment', 'Comment', 'required|min_length[3]');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            $response['errors'] = validation_errors();
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
+            $response['loggedIn'] = false;
+            echo json_encode($response);
+        } else {
+            $offer_data = array(
+          'names' =>$this->input->post('names'),
+          'national_id' => $this->input->post('identity'),
+          'phone' => $this->input->post('phone'),
+          'email' => $this->input->post('email'),
+          'country' => $this->input->post('country'),
+          'province' => $this->input->post('province'),
+          'district' => $this->input->post('district'),
+          'sector' => $this->input->post('sector'),
+          'cell' => $this->input->post('cell'),
+          'village' => $this->input->post('village'),
+          'order_id' => $this->input->post('order_id'),
+          'offer_quantity' => $this->input->post('qty'),
+          'unit_price' => $this->input->post('unit_price'),
+          'delivery_date' => $this->input->post('delivery_date'),
+          'comment' => $this->input->post('comment'),
+          'status' => "Pending",
+          'deleted' => "No"
+        );
+            $offer_id = $this->Food_model->add_supplier_offer($offer_data);
+            if ($offer_id > 0) {
+                $response['errors'] = null;
+                $response['is_user_new'] = null;
+                $response['successes'] = "Offer Received Successfully!!";
+                echo json_encode($response);
+            } else {
+                $response['errors'] = "Offer Failed. Try Again!!";
+                $response['is_user_new'] = null;
+                $response['successes'] = null;
+                echo json_encode($response);
+            }
+        }
+    }
+    public function pre_order()
+    {
+        $this->form_validation->set_rules('names', 'Names', 'required|min_length[3]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|exact_length[10]');
+        $this->form_validation->set_rules('identity', 'National id', 'required|exact_length[16]');
+        $this->form_validation->set_rules('country', 'Country', 'required');
+        $this->form_validation->set_rules('province', 'Province', 'required');
+        $this->form_validation->set_rules('district', 'District', 'required');
+        $this->form_validation->set_rules('sector', 'Sector', 'required');
+        $this->form_validation->set_rules('cell', 'Cell', 'required');
+        $this->form_validation->set_rules('village', 'Village', 'required');
+        $this->form_validation->set_rules('prediction_id', 'Prediction Id', 'required');
+        $this->form_validation->set_rules('delivery_date', 'Delivery Date', 'required');
+        $this->form_validation->set_rules('comment', 'Comment', 'required|min_length[3]');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            $response['errors'] = validation_errors();
+            $response['successes'] = null;
+            $response['is_user_new'] = null;
+            $response['loggedIn'] = false;
+            echo json_encode($response);
+        } else {
+            $order_data = array(
+          'names' =>$this->input->post('names'),
+          'identity' => $this->input->post('identity'),
+          'phone' => $this->input->post('phone'),
+          'email' => $this->input->post('email'),
+          'country' => $this->input->post('country'),
+          'province' => $this->input->post('province'),
+          'district' => $this->input->post('district'),
+          'sector' => $this->input->post('sector'),
+          'cell' => $this->input->post('cell'),
+          'village' => $this->input->post('village'),
+          'prediction_id' => $this->input->post('prediction_id'),
+          'quantity' => $this->input->post('qty'),
+          'delivery_date' => $this->input->post('delivery_date'),
+          'comment' => $this->input->post('comment'),
+          'status' => "Pending",
+          'deleted' => "No"
+        );
+            $pre_order_id = $this->Food_model->pre_order($order_data);
+            if ($pre_order_id > 0) {
+                $response['errors'] = null;
+                $response['is_user_new'] = null;
+                $response['successes'] = "Pre-order made Successfully!!";
+                echo json_encode($response);
+            } else {
+                $response['errors'] = "Pre-order Failed. Try Again!!";
+                $response['is_user_new'] = null;
+                $response['successes'] = null;
+                echo json_encode($response);
+            }
+        }
+    }
+    public function offer_action()
+    {
+        $id = $this->input->post('offer_id');
+        $status = $this->input->post('status');
+        $res = $this->Food_model->offer_update($id, $status);
+        return $res;
     }
     public function logout()
     {

@@ -68,6 +68,7 @@ $route['shop/tag/(:num)'] = 'food_market/food_shop_by_tag';
 $route['shop/tag/(:num)/(:num)'] = 'food_market/food_shop_by_tag';
 $route['cart'] = 'food_market/cart';
 $route['wishlist'] = 'food_market/wishlist';
+$route['myOrders'] = 'food_market/my_orders';
 $route['compare'] = 'food_market/compare';
 $route['checkout'] = 'food_market/checkout';
 $route['login'] = 'food_market/login';

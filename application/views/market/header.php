@@ -83,6 +83,7 @@
 										<li><a href="register?redirect_to=<?php echo $actual_link;?>">Register</a></li>
 									</ul>
 								</li>
+								<li style="<?php echo $this->session->loggedIn == true ? "" : "display:none;"; ?>"><a href="myOrders">My Orders </span></a>
 								<li><a href="wishlist">Wishlist</a></li>
 								<li><a href="checkout">Checkout</a></li>
 							</ul>
