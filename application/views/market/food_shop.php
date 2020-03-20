@@ -556,7 +556,7 @@
           <div class="row">
           <div class="col-md-6 mb-5">
             <label for="recipient-name" class="col-form-label">Names:</label>
-            <input type="text" class="form-control" id="supplier_name">
+            <input type="text" class="form-control" id="supplier_name<?php echo $order['o_id']; ?>">
             <input type="hidden" id="order_id<?php echo $order['o_id']; ?>" value="">
             <input type="hidden" id="product_id<?php echo $order['o_id']; ?>" value="<?php echo $order['product_id'];?>">
             <input type="hidden" id="variety_id<?php echo $order['o_id']; ?>" value="<?php echo $order['variety_id'];?>">
@@ -564,33 +564,33 @@
           </div>
           <div class="col-md-6 mb-5">
             <label for="message-text" class="col-form-label">Phone Number:</label>
-            <input type="text" class="form-control" id="supplier_phone">
+            <input type="text" class="form-control" id="supplier_phone<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-12 mb-5">
             <label for="message-text" class="col-form-label">National Id / Passport:</label>
-            <input type="text" class="form-control" id="supplier_identity">
+            <input type="text" class="form-control" id="supplier_identity<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-6 mb-5">
             <label for="message-text" class="col-form-label">Email Address:</label>
-            <input type="text" class="form-control" id="supplier_email">
+            <input type="text" class="form-control" id="supplier_email<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-3 mb-5">
             <label for="message-text" class="col-form-label">Quantity To Offer:</label>
-            <input type="text" class="form-control" id="supplier_qty">
+            <input type="text" class="form-control" id="supplier_qty<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-3 mb-5">
             <label for="message-text" class="col-form-label">Unit Price(RWF):</label>
-            <input type="text" class="form-control" id="supplier_price">
+            <input type="text" class="form-control" id="supplier_price<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>Country*</label>
-            <select class="nice-select" id="country" name="country">
+            <select class="nice-select" id="country<?php echo $order['o_id']; ?>" name="country">
               <option selected>Rwanda</option>
             </select>
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>Province*</label>
-            <select class="nice-select" id="province" name="province" onchange="province_change()">
+            <select class="nice-select" id="province<?php echo $order['o_id']; ?>" name="province" onchange="province_change(<?php echo $order['o_id']; ?>)">
               <option selected disabled>Select Province</option>
               <?php
               foreach ($provinces as $province) {
@@ -603,35 +603,35 @@
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>District*</label>
-            <select class="nice-select" name="district" id="district" onchange="district_change()">
+            <select class="nice-select" name="district" id="district<?php echo $order['o_id']; ?>" onchange="district_change(<?php echo $order['o_id']; ?>)">
               <option selected disabled>Select District</option>
             </select>
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>Sector*</label>
-            <select class="nice-select" name="sector" id="sector" onchange="sector_change()">
+            <select class="nice-select" name="sector" id="sector<?php echo $order['o_id']; ?>" onchange="sector_change(<?php echo $order['o_id']; ?>)">
               <option selected disabled>Select Sector</option>
             </select>
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>Cell*</label>
-            <select class="nice-select" name="cell" id="cell" onchange="cell_change()">
+            <select class="nice-select" name="cell" id="cell<?php echo $order['o_id']; ?>" onchange="cell_change(<?php echo $order['o_id']; ?>)">
               <option selected disabled>Select Cell</option>
             </select>
           </div>
           <div class="col-md-6 col-12 mb-5">
             <label>Village*</label>
-            <select class="nice-select" name="village" id="village">
+            <select class="nice-select" name="village" id="village<?php echo $order['o_id']; ?>">
               <option selected disabled>Select Village</option>
             </select>
           </div>
           <div class="col-md-4 mb-5">
             <label for="message-text" class="col-form-label">Delivery Date:</label>
-            <input type="date" class="form-control" id="delivery_date">
+            <input type="date" class="form-control" id="delivery_date<?php echo $order['o_id']; ?>">
           </div>
           <div class="col-md-8 mb-5">
             <label for="message-text" class="col-form-label">Comment:</label>
-            <textarea class="form-control" id="comment"></textarea>
+            <textarea class="form-control" id="comment<?php echo $order['o_id']; ?>"></textarea>
           </div>
           <div class="col-md-12 col-12 mb-5" id="status<?php echo $order['o_id']; ?>">
           </div>
@@ -640,115 +640,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="supplier_offer(<?php echo $order['o_id']; ?>)">Send Offer</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<?php } ?>
-  <!--=====  Supplier offer modal  ======-->
-  <!--=============================================
-  =            Supplier Offer modal         =
-  =============================================-->
-  <?php foreach ($buyer_orders as $order) {?>
-  <div class="modal fade supplier-offer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Supplier Offer Form</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="checkout-form" name="supplierOfferForm">
-          <div class="row">
-          <div class="col-md-6 mb-5">
-            <label for="recipient-name" class="col-form-label">Names:</label>
-            <input type="text" class="form-control" id="supplier_name">
-            <input type="hidden" id="order_id<?php echo $order['o_id']; ?>" value="">
-            <input type="hidden" id="product_id<?php echo $order['o_id']; ?>" value="<?php echo $order['product_id'];?>">
-            <input type="hidden" id="variety_id<?php echo $order['o_id']; ?>" value="<?php echo $order['variety_id'];?>">
-            <input type="hidden" id="unit<?php echo $order['o_id']; ?>" value="<?php echo $order['unit_id'];?>">
-          </div>
-          <div class="col-md-6 mb-5">
-            <label for="message-text" class="col-form-label">Phone Number:</label>
-            <input type="text" class="form-control" id="supplier_phone">
-          </div>
-          <div class="col-md-12 mb-5">
-            <label for="message-text" class="col-form-label">National Id / Passport:</label>
-            <input type="text" class="form-control" id="supplier_identity">
-          </div>
-          <div class="col-md-6 mb-5">
-            <label for="message-text" class="col-form-label">Email Address:</label>
-            <input type="text" class="form-control" id="supplier_email">
-          </div>
-          <div class="col-md-3 mb-5">
-            <label for="message-text" class="col-form-label">Quantity To Offer:</label>
-            <input type="text" class="form-control" id="supplier_qty">
-          </div>
-          <div class="col-md-3 mb-5">
-            <label for="message-text" class="col-form-label">Unit Price(RWF):</label>
-            <input type="text" class="form-control" id="supplier_price">
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>Country*</label>
-            <select class="nice-select" id="country" name="country">
-              <option selected>Rwanda</option>
-            </select>
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>Province*</label>
-            <select class="nice-select" id="province" name="province" onchange="province_change()">
-              <option selected disabled>Select Province</option>
-              <?php
-              foreach ($provinces as $province) {
-                  ?>
-  <option value="<?php echo $province->id; ?>"><?php echo $province->name; ?></option>
-  <?php
-              }
-              ?>
-            </select>
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>District*</label>
-            <select class="nice-select" name="district" id="district" onchange="district_change()">
-              <option selected disabled>Select District</option>
-            </select>
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>Sector*</label>
-            <select class="nice-select" name="sector" id="sector" onchange="sector_change()">
-              <option selected disabled>Select Sector</option>
-            </select>
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>Cell*</label>
-            <select class="nice-select" name="cell" id="cell" onchange="cell_change()">
-              <option selected disabled>Select Cell</option>
-            </select>
-          </div>
-          <div class="col-md-6 col-12 mb-5">
-            <label>Village*</label>
-            <select class="nice-select" name="village" id="village">
-              <option selected disabled>Select Village</option>
-            </select>
-          </div>
-          <div class="col-md-4 mb-5">
-            <label for="message-text" class="col-form-label">Delivery Date:</label>
-            <input type="date" class="form-control" id="delivery_date">
-          </div>
-          <div class="col-md-8 mb-5">
-            <label for="message-text" class="col-form-label">Comment:</label>
-            <textarea class="form-control" id="comment"></textarea>
-          </div>
-          <div class="col-md-12 col-12 mb-5" id="status<?php echo $order['o_id']; ?>">
-          </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" onclick="supplier_offer(<?php echo $order['o_id']; ?>)">Send Offer</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -850,8 +741,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="pre_order">Pre Order</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success rounded-pill" id="pre_order">Pre Order</button>
+        <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -889,27 +780,27 @@
                     </div>
                     <!--Single Product Image End-->
                   </div>
-                  <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
+                  <!-- <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2"> -->
                     <!--Single Product Image Start-->
-                    <div class="single-product-img img-full">
+                    <!-- <div class="single-product-img img-full">
                       <img src="assets/images/products/product02.jpg" class="img-fluid" alt="">
-                    </div>
+                    </div> -->
                     <!--Single Product Image End-->
-                  </div>
-                  <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
+                  <!-- </div> -->
+                  <!-- <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3"> -->
                     <!--Single Product Image Start-->
-                    <div class="single-product-img img-full">
+                    <!-- <div class="single-product-img img-full">
                       <img src="assets/images/products/product03.jpg" class="img-fluid" alt="">
-                    </div>
+                    </div> -->
                     <!--Single Product Image End-->
-                  </div>
-                  <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
+                  <!-- </div> -->
+                  <!-- <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4"> -->
                     <!--Single Product Image Start-->
-                    <div class="single-product-img img-full">
+                    <!-- <div class="single-product-img img-full">
                       <img src="assets/images/products/product04.jpg" class="img-fluid" alt="">
-                    </div>
+                    </div> -->
                     <!--Single Product Image End-->
-                  </div>
+                  <!-- </div> -->
                 </div>
                 <!--Modal Content End-->
                 <!--Modal Tab Menu Start-->

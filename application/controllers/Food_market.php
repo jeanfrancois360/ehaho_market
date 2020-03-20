@@ -844,6 +844,12 @@ class Food_market extends CI_Controller
         $res = $this->Food_model->offer_update($id, $status);
         return $res;
     }
+    public function update_supplied()
+    {
+        $id = $this->input->post('id');
+        $toUpdate = $this->input->post('toUpdate');
+        echo $this->Food_model->update_supplied($id, $toUpdate);
+    }
     public function logout()
     {
         //unset the logged_in session and redirect to login page

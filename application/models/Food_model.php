@@ -55,6 +55,14 @@ class Food_model extends CI_Model
         return true;
     }
 
+    //update supplied quantity
+    public function update_supplied($id, $toUpdate)
+    {
+        $this->db->where('o_id', $id);
+        $this->db->update('buyer_orders', array('quantity' => $toUpdate));
+        return true;
+    }
+
     // Count Total List
     public function count_list()
     {

@@ -82,6 +82,7 @@
                   <th class="pro-quantity">Quantity</th>
                   <th class="pro-price">Unit Price</th>
                   <th class="pro-subtotal">Total</th>
+                  <th class="pro-remove">Action</th>
                   <th class="pro-remove"></th>
                 </tr>
               </thead>
@@ -152,3 +153,38 @@
   </div>
 </div>
     <!--========== end of orders modals ============-->
+
+    <!-- ===============================
+              =   edit supplier quantity modal =
+    ======================================-->
+<div class="modal fade" id="updateForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Update Supplied Quantity</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="msg">
+        </div>
+        <form class="form-inline checkout-form">
+          <div class="row">
+            <div class="col-md-5 mb-2">
+              <label for="recipient-name" class="col-form-label">Ordered Quantity:</label>
+              <input type="hidden" id="tid">
+              <input type="hidden" id="order_id">
+              <input type="text" class="form-control" id="ordered" placeholder="Ordered Quantity" readonly>
+            </div>
+            <div class="col-md-5 mx-sm-3 mb-2">
+              <label for="recipient-name" class="col-form-label">Supplied Quantity:</label>
+              <input type="text" class="form-control" id="supplied" placeholder="Supplied Quantity">
+            </div>
+          </div>
+            <button type="button" class="btn btn-success mb-2" id="updateSupplied">Update</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

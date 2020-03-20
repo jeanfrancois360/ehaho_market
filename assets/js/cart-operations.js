@@ -700,7 +700,7 @@ $('#province').change(function() {
 	};
 
 	$.ajax({
-		url: "food_market/get_districts",
+		url: base_url + "food_market/get_districts",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -729,7 +729,7 @@ $('#district').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_sectors",
+		url: base_url + "food_market/get_sectors",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -756,7 +756,7 @@ $('#sector').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_cells",
+		url: base_url + "food_market/get_cells",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -781,7 +781,7 @@ $('#cell').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_villages",
+		url: base_url + "food_market/get_villages",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -807,7 +807,7 @@ function province_change(id) {
 	};
 
 	$.ajax({
-		url: "food_market/get_districts",
+		url: base_url + "food_market/get_districts",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -837,7 +837,7 @@ function district_change(id) {
 	};
 
 	$.ajax({
-		url: "Food_market/get_sectors",
+		url: base_url + "food_market/get_sectors",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -865,7 +865,7 @@ function sector_change(id) {
 	};
 
 	$.ajax({
-		url: "Food_market/get_cells",
+		url: base_url + "food_market/get_cells",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -891,7 +891,7 @@ function cell_change(id) {
 	};
 
 	$.ajax({
-		url: "Food_market/get_villages",
+		url: base_url + "food_market/get_villages",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -917,7 +917,7 @@ $('#province2').change(function() {
 	};
 
 	$.ajax({
-		url: "food_market/get_districts",
+		url: base_url + "food_market/get_districts",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -946,7 +946,7 @@ $('#district2').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_sectors",
+		url: base_url + "food_market/get_sectors",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -973,7 +973,7 @@ $('#sector2').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_cells",
+		url: base_url + "food_market/get_cells",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -998,7 +998,7 @@ $('#cell2').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_villages",
+		url: base_url + "food_market/get_villages",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -1023,7 +1023,7 @@ $('#province_').change(function() {
 	};
 
 	$.ajax({
-		url: "food_market/get_districts",
+		url: base_url + "food_market/get_districts",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -1052,7 +1052,7 @@ $('#district_').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_sectors",
+		url: base_url + "food_market/get_sectors",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -1079,7 +1079,7 @@ $('#sector_').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_cells",
+		url: base_url + "food_market/get_cells",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -1104,7 +1104,7 @@ $('#cell_').change(function() {
 	};
 
 	$.ajax({
-		url: "Food_market/get_villages",
+		url: base_url + "food_market/get_villages",
 		type: 'POST',
 		dataType: 'json',
 		data: form_data,
@@ -1329,7 +1329,7 @@ function addToCompareStorage(market_id) {
 $('#clear_compare').click(function(e) {
 	e.preventDefault();
 	$.ajax({
-		url: "food_market/clear_compare",
+		url: base_url + "food_market/clear_compare",
 		data: {},
 		success: function(html) {
 			localStorage.removeItem('compare');
@@ -1634,6 +1634,7 @@ function supplier_offer(id) {
 }
 
 function order_info(id) {
+	m_id = "'" + id + "'";
 	$.ajax({
 		url: base_url + "food_market/order_info",
 		type: "POST",
@@ -1659,6 +1660,8 @@ function order_info(id) {
 				info += '<td class="pro-quantity"><a href="#">' + this.quantity + ' /' + this.unit_name + '</a></td>';
 				info += '<td class="pro-price"><a href="#">' + this.price + '&nbsp;RWF</a></td>';
 				info += '<td class="pro-subtotal"><span>' + (parseInt(this.quantity) * parseInt(this.price)) + '&nbsp;RWF</span></td>';
+				info += '<td><a href="" data-toggle="modal" data-target="#updateForm" onclick="update_supplied(' + m_id + ',' + this.o_id + ',' + this.quantity + ')" class="badge badge-primary"><i class="fa fa-pencil"></i>Update</a></td>';
+				info += '<td></td>';
 				info += '</tr>';
 				total = this.subtotal;
 				$('#order_info').append(info);
@@ -1710,10 +1713,13 @@ function order_offers(id) {
 					info += '<td class="pro-title"><a class="badge badge-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a> | <a class="badge badge-danger" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + declined + ')"><i class="fa fa-times"></i> Decline</a></td>';
 					info += "<tr>";
 				} else if (this.status == "Approved") {
-					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-success" href="#" ><strong><i class="fa fa-check"></i> Approved</strong></a> | <a class="text-danger" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + cancelled + ')"><i class="fa fa-times"></i> Cancel</a></td>';
+					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-success" href="#" ><strong>Approved</strong></a> | <a class="badge badge-danger" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + cancelled + ')"><i class="fa fa-times"></i> Cancel</a></td>';
 					info += "<tr>";
 				} else if (this.status == "Cancelled") {
-					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-danger" href="#"><strong><i class="fa fa-times"></i> Cancelled</strong></a> | <a class="text-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a></td>';
+					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-danger" href="#"><strong>Cancelled</strong></a> | <a class="badge badge-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a></td>';
+					info += "<tr>";
+				} else if (this.status == "Declined") {
+					info += '<td class="pro-title" style="font-size:12px !important;"><a class="text-danger" href="#"><strong>Declined</strong></a> | <a class="badge badge-success" href="#" onclick="offer_action(' + this.id + ',' + o_id + ',' + approved + ')"><i class="fa fa-check"></i> Approve</a></td>';
 					info += "<tr>";
 				}
 				$('#order_offer').append(info);
@@ -1746,7 +1752,7 @@ $('#pre_order').click(function() {
 	identity = $('#identity').val();
 	prediction_id = $('#prediction_id').val();
 	console.log("prediction id: " + prediction_id);
-	country = $('#country').val();
+	country = $('#country_').val();
 	qty = $('#qty').val();
 	province = $('#province_').val();
 	district = $('#district_').val();
@@ -1795,4 +1801,43 @@ $('#pre_order').click(function() {
 			}
 		}
 	});
-})
+});
+$('#supplied').keyup(function() {
+	ordered = $('#ordered').val();
+	supplied = $('#supplied').val();
+	if (parseFloat(supplied) > parseFloat(ordered)) {
+		$(this).val(ordered);
+	}
+});
+$('#updateSupplied').click(function() {
+	ordered = $('#ordered').val();
+	supplied = $('#supplied').val();
+	order_id = $('#order_id').val();
+	id = $('#tid').val();
+	toUpdate = parseFloat(ordered) - parseFloat(supplied);
+	$.ajax({
+		url: base_url + "food_market/update_supplied",
+		type: "POST",
+		data: {
+			toUpdate,
+			id
+		},
+		success: function(html) {
+			$('#msg').html('');
+			if (html == true) {
+				$('#supplied').val('');
+				$('#msg').append('<p class="text-success">Succefully Updated!!</p>');
+			} else {
+				$('#msg').append('<p class="text-danger">Failed to Update. Try Again!!!</p>');
+			}
+			order_info(order_id);
+
+		}
+	})
+});
+
+function update_supplied(o_id, id, qty) {
+	$('#ordered').val(qty);
+	$('#tid').val(id);
+	$('#order_id').val(o_id);
+}
